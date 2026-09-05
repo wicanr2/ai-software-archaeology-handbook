@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://wicanr2.github.io/ai-software-archaeology-handbook/sitemap.xml

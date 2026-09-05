@@ -8,6 +8,10 @@
 本節保留階段閘門。第 0 階段已交付；專案負責人後續明確要求「完成手冊」，
 目前授權為第 1 階段正文、完整教學例子與三語版本。這不授權自動進入第 2 階段工具工作。
 
+後續另已授權 PDF 發行與宣傳網站。使用者確認以「王俊又 wicanr2、三語手冊＋七個案例」
+為宣傳範圍，採深色版面，網站完成後公開本儲存庫並啟用 GitHub Pages；不擴充完整個人
+作品集、不改變其他案例儲存庫設定，也不因此授權 `osa` 工具實作。決定見 `docs/site-release.md`。
+
 ## 0. Project Mission
 
 Build a reusable, evidence-first methodology and reference toolkit for **AI-assisted software archaeology**.
