@@ -67,17 +67,17 @@ class Diagram:
 def generate(out: Path, lang: str):
     labels = LABELS[lang]
     out.mkdir(parents=True, exist_ok=True)
-    d = Diagram(labels["titles"][0], 520, lang)
-    coords = [(28,105),(273,105),(518,105),(763,105),(763,275),(518,275),(273,275)]
+    d = Diagram(labels["titles"][0], 440, lang)
+    coords = [(28,85),(273,85),(518,85),(763,85),(763,210),(518,210),(273,210)]
     for i, ((x,y), (title, sub)) in enumerate(zip(coords,labels["stages"])):
-        d.card(x,y,209,125,title,sub,f"0{i+1}",i==6)
-    for x in (237,482,727): d.arrow(f"M{x} 165 H{x+30}")
-    d.arrow("M867 230 V266")
-    d.arrow("M763 335 H736")
-    d.arrow("M518 335 H491")
-    d.arrow("M622 400 V425 H90 V242", True)
-    d.text(125,459,labels["loop"],20)
-    d.text(28,497,labels["legend"],17)
+        d.card(x,y,209,100,title,sub,f"0{i+1}",i==6)
+    for x in (237,482,727): d.arrow(f"M{x} 135 H{x+30}")
+    d.arrow("M867 185 V204")
+    d.arrow("M763 260 H736")
+    d.arrow("M518 260 H491")
+    d.arrow("M622 310 V340 H90 V197", True)
+    d.text(125,380,labels["loop"],20)
+    d.text(28,417,labels["legend"],17)
     d.save(out/f"lifecycle-{lang}.svg")
     d = Diagram(labels["titles"][1], 350, lang)
     for i,state in enumerate(("DRAFT","READY","CONFORMED")):
