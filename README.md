@@ -6,6 +6,10 @@
 
 **閱讀：[繁體中文](docs/handbook/README.md) · [English](docs/handbook/en/README.md) · [日本語](docs/handbook/ja/README.md)**
 
+**PDF 與推廣圖：[v.1.0.0-20260905](https://github.com/wicanr2/ai-software-archaeology-handbook/releases/tag/v.1.0.0-20260905)**
+提供三語完整 PDF、可點選目錄及三組美化流程圖；儲存庫維持私人，下載需要存取權。
+重建及附件說明見 [PDF 發行入口](docs/pdf-release.md)。
+
 核心流程是：證據 → 假說 → 規格 → 行為基準 → 實作 → 差分驗證 → 符合性。
 三個語言版本共用章節編號、案例出處與信心等級；繁體中文是先完成的原稿。
 

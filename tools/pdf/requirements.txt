@@ -1,0 +1,14 @@
+weasyprint==66.0
+pydyf==0.11.0
+cffi==1.17.1
+tinyhtml5==2.0.0
+tinycss2==1.4.0
+cssselect2==0.8.0
+Pyphen==0.17.2
+Pillow==11.3.0
+fonttools==4.59.2
+brotli==1.1.0
+zopfli==0.2.3.post1
+webencodings==0.5.1
+pycparser==2.22
+PyMuPDF==1.26.4
