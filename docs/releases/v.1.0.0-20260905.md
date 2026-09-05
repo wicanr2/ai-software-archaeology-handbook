@@ -13,6 +13,8 @@ AI 可以很快產生看似合理的實作，但如何知道它真的符合目�
 選擇檔名中的 `zh-Hant`、`en` 或 `ja` 下載對應版本；`promo` 壓縮包供製作介紹材料。
 封裝及重建方式見 [PDF 發行說明](https://github.com/wicanr2/ai-software-archaeology-handbook/blob/v.1.0.0-20260905/docs/pdf-release.md)。
 
-儲存庫維持私人，附件需有存取權才能下載。本次未變更公開方式或新增散布授權。
+首次發行時儲存庫為私人，後續依專案負責人的宣傳授權轉為公開，目前可直接下載。
+正式網站：[王俊又 wicanr2｜讓 AI 的實作經得起驗證](https://wicanr2.github.io/ai-software-archaeology-handbook/)。
+既有 tag 與附件未被覆寫；附件內的私人狀態記錄首次生成時的事實。本次未新增授權條款。
 手冊不含原版遊戲檔案；歷史結果未在本次重新執行，合成例子不冒稱真實原版行為。
 這是手冊發行，不是 `osa` 命令列工具或 PLAN 第 2–7 階段的交付。

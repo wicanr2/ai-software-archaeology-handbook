@@ -73,3 +73,11 @@
 - 驗收：1440、768、390、320 像素寬度均無水平溢出，七案例、三語 PDF 與全部內部錨點存在；鍵盤跳轉、展開限制說明、減少動態效果及無 JavaScript 閱讀通過。剪貼簿驗收需給無介面瀏覽器完整的文字寫入權限，補齊後真實讀回網址吻合，未用假成功取代。
 - 目視：檢視桌面分段接觸表、手機首屏及分享圖；保留 `work/site-qa/` 的截圖與報告。這是 Chromium 的有界驗收，不宣稱所有瀏覽器或社群平台都已測過。
 - 此筆保存公開前的已完成工作；網站提交、轉公開與 Pages 正式回讀在後續追加。既有 Release tag 及附件不覆寫。
+
+### 網站發布設定回讀
+
+- 網站提交 `05d9752267fcb6d1a5bdc333fb64da1915229bca` 已推送至 `main`，完成本機驗收後才執行公開操作。
+- 依明確授權將 `wicanr2/ai-software-archaeology-handbook` 轉為 `PUBLIC`，並設定首頁與繁體中文專案介紹；未更動其他儲存庫。
+- Pages 已建立，回讀發布來源為 `main:/docs`、`build_type=legacy`、`public=true`、`https_enforced=true`。正式網址為 `https://wicanr2.github.io/ai-software-archaeology-handbook/`。
+- README 與現況文件改述目前公開狀態；既有私人建立／發行歷史不刪除，Release 說明只補上後續公開事實，不覆寫 tag 或附件。
+- 部署完成與未登入瀏覽器／下載回讀尚待下一筆記錄，不把設定 API 成功等同網站已可用。

@@ -1,5 +1,7 @@
 # AI 輔助軟體考古手冊
 
+**[王俊又 wicanr2｜正式宣傳網站](https://wicanr2.github.io/ai-software-archaeology-handbook/)**
+
 如何讓 AI 產生的重寫程式，有可回查的證據支持，而不只是一份看起來合理的實作。
 本手冊從七個軟體考古專案萃取方法，說明如何保存證據、反駁假說、審查規格，
 以及用原版或明確指定的行為基準驗證候選實作。
@@ -7,7 +9,7 @@
 **閱讀：[繁體中文](docs/handbook/README.md) · [English](docs/handbook/en/README.md) · [日本語](docs/handbook/ja/README.md)**
 
 **PDF 與推廣圖：[v.1.0.0-20260905](https://github.com/wicanr2/ai-software-archaeology-handbook/releases/tag/v.1.0.0-20260905)**
-提供三語完整 PDF、可點選目錄及三組美化流程圖；儲存庫維持私人，下載需要存取權。
+提供三語完整 PDF、可點選目錄及三組美化流程圖；儲存庫與附件已公開，可直接閱讀與下載。
 重建及附件說明見 [PDF 發行入口](docs/pdf-release.md)。
 
 核心流程是：證據 → 假說 → 規格 → 行為基準 → 實作 → 差分驗證 → 符合性。
@@ -30,6 +32,7 @@
 - [案例與固定來源索引](docs/inventory.md)
 - [跨專案模式](docs/pattern-matrix.md)與[完整失敗研究紀錄](docs/failure-patterns.md)
 - [手冊驗收紀錄](docs/handbook-review.md)
+- [網站製作、驗收與公開說明](docs/site-release.md)
 - [專案規則](AGENTS.md)、[工作歷程](WORKLOG.md)
 
 修正文句時一併檢查其他語言的相同章節；修正技術結論時保留舊證據及訂正原因。

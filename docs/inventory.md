@@ -4,7 +4,7 @@
 
 | 日期 | 授權階段 | 現有程式 | 本輪驗證範圍 | 交付與下一閘門 |
 |---|---|---|---|---|
-| 2026-09-05 | 第 0、1 階段已交付；後續授權 PDF、美化流程圖與私人 Release | 無 `osa` 工具實作；文件驗收與 PDF 排版腳本 | 固定來源靜態核對；三語正文、演練、連結、PDF 文字及版面驗收；未重跑原版 | [三語手冊](handbook/README.md)、[驗收紀錄](handbook-review.md)、[PDF 發行入口](pdf-release.md)；第 2–7 階段不在本次交付範圍 |
+| 2026-09-05 | 第 0、1 階段及 PDF 已交付；後續確認宣傳網站與儲存庫公開 | 無 `osa` 工具實作；文件工具與靜態宣傳網站 | 三語文件／PDF 驗收；網站四種寬度、導覽及無 JavaScript 閱讀；未重跑原版 | [宣傳網站](https://wicanr2.github.io/ai-software-archaeology-handbook/)、[三語手冊](handbook/README.md)、[PDF](pdf-release.md)；儲存庫已公開，第 2–7 階段不在本次交付範圍 |
 
 這張表是專案的唯一目前狀態表。一般作業歷程另見 [WORKLOG.md](../WORKLOG.md)。
 手冊先完成並審讀繁體中文，再擴充英文與日文；以下案例盤點保留第 0 階段的取證邊界。
