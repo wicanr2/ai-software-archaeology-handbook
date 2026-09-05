@@ -1,0 +1,144 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AI 輔助軟體考古手冊｜AI 軟體考古</title><link rel="canonical" href="https://wicanr2.github.io/ai-software-archaeology-handbook/handbook/README.html"><link rel="stylesheet" href="../assets/reader.css"><link rel="icon" href="../assets/favicon.svg"></head><body><a class="skip" href="#content">跳至內文</a><header><a href="../index.html">王俊又 wicanr2</a><nav><a href="../library.html">全部文件 · All pages · 全ページ</a></nav></header><div class="layout"><aside><details open><summary>章節導覽</summary><nav><ul><li class="current"><a href="README.html">AI 輔助軟體考古手冊</a></li><li><a href="00-principles.html">00　先證明題目，再證明答案</a></li><li><a href="01-evidence.html">01　讓證據能被另一個人重新找到</a></li><li><a href="02-hypotheses.html">02　讓假說有機會失敗</a></li><li><a href="03-specification-gates.html">03　規格是實作前的證據審查</a></li><li><a href="04-oracles.html">04　行為基準也有能力邊界</a></li><li><a href="05-differential-testing.html">05　比較同一件事，保留第一個分歧</a></li><li><a href="06-conformance.html">06　把完成聲明寫成可稽核的結論</a></li><li><a href="07-agent-workflows.html">07　讓代理帶著證據交接，而不是帶著印象</a></li><li><a href="08-failure-patterns.html">08　從錯誤形成方式選下一個觀測</a></li><li><a href="worked-example.html">附錄　從證據到符合性報告：一個完整演練</a></li></ul></nav></details><details><summary>研究與專案文件</summary><nav><ul><li><a href="../project/AGENTS.html">AGENTS.md — Oracle-Driven Software Archaeology</a></li><li><a href="../project/PLAN.html">PLAN.md — Oracle-Driven Software Archaeology</a></li><li><a href="../project/README.html">AI 輔助軟體考古手冊</a></li><li><a href="../project/WORKLOG.html">工作歷程</a></li><li><a href="../failure-patterns.html">有來源的失敗模式</a></li><li><a href="../handbook-review.html">手冊交付驗收</a></li><li><a href="../inventory.html">案例盤點與證據索引</a></li><li><a href="../methodology-draft.html">以證據驅動的軟體考古：方法草案</a></li><li><a href="../pattern-matrix.html">跨專案模式矩陣</a></li><li><a href="../pdf-release.html">PDF 排版與發行</a></li><li><a href="../releases/v.1.0.0-20260905.html">三語手冊 PDF 與流程圖</a></li><li><a href="../site-release.html">宣傳網站與公開交付</a></li></ul></nav></details></aside><main id="content"><div class="languages"><a href="README.html">繁體中文</a> · <a href="en/README.html">English</a> · <a href="ja/README.html">日本語</a></div><details class="toc"><summary>本頁目錄</summary><ul><li class="depth-2"><a href="#目錄">目錄</a></li><li class="depth-2"><a href="#如何閱讀證據等級">如何閱讀證據等級</a></li><li class="depth-2"><a href="#術語對照">術語對照</a></li></ul></details><article><h1 id="ai-輔助軟體考古手冊">AI 輔助軟體考古手冊</h1>
+<p>繁體中文 · <a href="en/README.html">English</a> · <a href="ja/README.html">日本語</a></p>
+<p>這本手冊寫給能讀程式、但不一定做過逆向工程的工程師，以及協助他們工作的 AI 代理。 你不需要先會操作 IDA 或模擬器；先學會問「這個結論憑什麼成立」，再選擇取得證據的工具。</p>
+<p>讀完後，你應能為一個小功能寫出可反駁的假說、帶證據的規格、可重播的比較條件， 以及不誇大範圍的符合性聲明。這本書不教逐行反編譯，也不把有限測試當成所有行為的數學證明。</p>
+<h2 id="目錄">目錄</h2>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr class="header">
+<th>章</th>
+<th>主題</th>
+<th>你會完成什麼</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>00</td>
+<td><a href="00-principles.html">原則</a></td>
+<td>區分程式自洽、參考一致與交付可用</td>
+</tr>
+<tr class="even">
+<td>01</td>
+<td><a href="01-evidence.html">證據</a></td>
+<td>保存能回查的觀測，檢查工具是否看得到目標</td>
+</tr>
+<tr class="odd">
+<td>02</td>
+<td><a href="02-hypotheses.html">假說</a></td>
+<td>設計能區分候選解釋的檢驗</td>
+</tr>
+<tr class="even">
+<td>03</td>
+<td><a href="03-specification-gates.html">規格閘門</a></td>
+<td>判斷何時可以實作，何時必須退回調查</td>
+</tr>
+<tr class="odd">
+<td>04</td>
+<td><a href="04-oracles.html">行為基準</a></td>
+<td>選擇有裁決範圍的參考，固定觀測條件</td>
+</tr>
+<tr class="even">
+<td>05</td>
+<td><a href="05-differential-testing.html">差分測試</a></td>
+<td>找出第一個分歧，正確處理缺失與容差</td>
+</tr>
+<tr class="odd">
+<td>06</td>
+<td><a href="06-conformance.html">符合性</a></td>
+<td>寫出可稽核且有範圍的完成聲明</td>
+</tr>
+<tr class="even">
+<td>07</td>
+<td><a href="07-agent-workflows.html">代理工作流程</a></td>
+<td>分配任務、停在正確閘門、留下可接手紀錄</td>
+</tr>
+<tr class="odd">
+<td>08</td>
+<td><a href="08-failure-patterns.html">失敗模式</a></td>
+<td>從八個案例辨認相似的錯誤形成方式</td>
+</tr>
+<tr class="even">
+<td>附錄</td>
+<td><a href="worked-example.html">從證據到報告的完整案例</a></td>
+<td>手算一條完整驗證鏈，包含錯誤候選與缺失觀測</td>
+</tr>
+</tbody>
+</table></div>
+<p>第一次閱讀依章節順序；正在處理差異時先讀 04–06，再回 01–03 檢查前提。 附錄有自我檢核與答案，能在不執行原版軟體的情況下演練流程。</p>
+<h2 id="如何閱讀證據等級">如何閱讀證據等級</h2>
+<p>歷史案例沿用<a href="../inventory.html#固定來源索引">固定來源索引</a>的 M1、S3、O2 等 ID。 這些來源的存在及本文所指出的內容經靜態核對；歷史執行結果是原專案的紀錄， 不是本手冊新做的原版實驗。各章的「來源與主張範圍」說明這個界線。</p>
+<p>工程規則是從這些案例萃取的建議，多數屬 <code>STRONG_INFERENCE</code>； 本專案強制遵守的工作規範則是規範，不偽裝成經驗定律。 合成案例的預期值由其教學契約定義，不當成任何歷史軟體的發現。</p>
+<h2 id="術語對照">術語對照</h2>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr class="header">
+<th>繁體中文</th>
+<th>English</th>
+<th>日本語</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>證據／原始觀測</td>
+<td>evidence / raw observation</td>
+<td>証拠／生の観測</td>
+</tr>
+<tr class="even">
+<td>主張／假說</td>
+<td>claim / hypothesis</td>
+<td>主張／仮説</td>
+</tr>
+<tr class="odd">
+<td>來源追溯</td>
+<td>provenance</td>
+<td>来歴</td>
+</tr>
+<tr class="even">
+<td>行為基準</td>
+<td>oracle</td>
+<td>判定基準（オラクル）</td>
+</tr>
+<tr class="odd">
+<td>候選實作</td>
+<td>candidate implementation</td>
+<td>候補実装</td>
+</tr>
+<tr class="even">
+<td>差分驗證</td>
+<td>differential validation</td>
+<td>差分検証</td>
+</tr>
+<tr class="odd">
+<td>符合性</td>
+<td>conformance</td>
+<td>適合性</td>
+</tr>
+<tr class="even">
+<td>觀測邊界</td>
+<td>observation boundary</td>
+<td>観測境界</td>
+</tr>
+<tr class="odd">
+<td>已證實</td>
+<td><code>CONFIRMED</code></td>
+<td>確認済み</td>
+</tr>
+<tr class="even">
+<td>強推論</td>
+<td><code>STRONG_INFERENCE</code></td>
+<td>強い推論</td>
+</tr>
+<tr class="odd">
+<td>假說</td>
+<td><code>HYPOTHESIS</code></td>
+<td>仮説</td>
+</tr>
+<tr class="even">
+<td>未知</td>
+<td><code>UNKNOWN</code></td>
+<td>不明</td>
+</tr>
+</tbody>
+</table></div>
+<p><code>DRAFT</code>、<code>READY</code>、<code>CONFORMED</code> 是規格狀態，不是上表信心等級的替代詞。 書中的工作表為閱讀與規劃用途，不是已發布的資料綱要或工具 API。</p>
+</article></main></div><footer><a href="../index.html">王俊又 wicanr2</a> · AI 輔助軟體考古手冊 · <a href="../library.html">全部文件 · All pages · 全ページ</a><p>證據先行，保留未知。 Evidence first. Keep uncertainty visible.</p></footer></body></html>

@@ -1,0 +1,57 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>00 — Establish the Question Before the Answer｜AI 軟體考古</title><link rel="canonical" href="https://wicanr2.github.io/ai-software-archaeology-handbook/handbook/en/00-principles.html"><link rel="stylesheet" href="../../assets/reader.css"><link rel="icon" href="../../assets/favicon.svg"></head><body><a class="skip" href="#content">Skip to content</a><header><a href="../../index.html">王俊又 wicanr2</a><nav><a href="../../library.html">全部文件 · All pages · 全ページ</a></nav></header><div class="layout"><aside><details open><summary>Chapters</summary><nav><ul><li><a href="README.html">AI-Assisted Software Archaeology Handbook</a></li><li class="current"><a href="00-principles.html">00 — Establish the Question Before the Answer</a></li><li><a href="01-evidence.html">01 — Make Evidence Findable by Someone Else</a></li><li><a href="02-hypotheses.html">02 — Give a Hypothesis a Chance to Fail</a></li><li><a href="03-specification-gates.html">03 — Review Evidence Before Authorizing Implementation</a></li><li><a href="04-oracles.html">04 — An Oracle Has Limits Too</a></li><li><a href="05-differential-testing.html">05 — Compare the Same Thing and Preserve the First Divergence</a></li><li><a href="06-conformance.html">06 — Make Completion an Auditable Conclusion</a></li><li><a href="07-agent-workflows.html">07 — Hand Off Evidence, Not Impressions</a></li><li><a href="08-failure-patterns.html">08 — Use Failure Mechanisms to Choose the Next Observation</a></li><li><a href="worked-example.html">Appendix — A Complete Chain from Evidence to a Report</a></li></ul></nav></details><details><summary>研究與專案文件</summary><nav><ul><li><a href="../../project/AGENTS.html">AGENTS.md — Oracle-Driven Software Archaeology</a></li><li><a href="../../project/PLAN.html">PLAN.md — Oracle-Driven Software Archaeology</a></li><li><a href="../../project/README.html">AI 輔助軟體考古手冊</a></li><li><a href="../../project/WORKLOG.html">工作歷程</a></li><li><a href="../../failure-patterns.html">有來源的失敗模式</a></li><li><a href="../../handbook-review.html">手冊交付驗收</a></li><li><a href="../../inventory.html">案例盤點與證據索引</a></li><li><a href="../../methodology-draft.html">以證據驅動的軟體考古：方法草案</a></li><li><a href="../../pattern-matrix.html">跨專案模式矩陣</a></li><li><a href="../../pdf-release.html">PDF 排版與發行</a></li><li><a href="../../releases/v.1.0.0-20260905.html">三語手冊 PDF 與流程圖</a></li><li><a href="../../site-release.html">宣傳網站與公開交付</a></li></ul></nav></details></aside><main id="content"><div class="languages"><a href="../00-principles.html">繁體中文</a> · <a href="00-principles.html">English</a> · <a href="../ja/00-principles.html">日本語</a></div><details class="toc"><summary>On this page</summary><ul><li class="depth-2"><a href="#three-distinct-successes">Three distinct successes</a></li><li class="depth-2"><a href="#a-traceable-chain">A traceable chain</a></li><li class="depth-2"><a href="#four-everyday-questions">Four everyday questions</a></li><li class="depth-2"><a href="#start-with-a-narrow-complete-path">Start with a narrow, complete path</a></li><li class="depth-3"><a href="#sources-and-claim-scope">Sources and claim scope</a></li></ul></details><article><h1 id="00--establish-the-question-before-the-answer">00 — Establish the Question Before the Answer</h1>
+<p><a href="README.html">Contents</a> · <a href="01-evidence.html">Next</a></p>
+<p>An AI can turn a plausible story into executable code. Software archaeology requires more: you must know whether that story explains the existing system. Unsupported constants, field names guessed from a screen, and tests that check only the implementation's own expectations can make speculation look like sound engineering.</p>
+<p>Define the behavior first: which version, inputs, path, and observable results? “A complete remake” is a goal, not a directly testable question. “For this version, do coordinates and dialogue agree when replaying the route from a fresh-game menu to the temple?” has an experimental boundary.</p>
+<h2 id="three-distinct-successes">Three distinct successes</h2>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr class="header">
+<th>Claim</th>
+<th>Required evidence</th>
+<th>What it does not also establish</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Internally consistent</td>
+<td>Local checks of parsing, transitions, and boundaries</td>
+<td>That the rules are the original rules</td>
+</tr>
+<tr class="even">
+<td>Agrees with a declared reference</td>
+<td>Differential results for the same version, inputs, and state</td>
+<td>Agreement for untested cases, other platforms, or physical hardware</td>
+</tr>
+<tr class="odd">
+<td>Users can complete a path</td>
+<td>The delivered artifact, normal entry, actions, and resulting output</td>
+<td>Equality of every internal field with the original</td>
+</tr>
+</tbody>
+</table></div>
+<p>MM2 had a blank-text problem that offscreen tests and package startup checks missed: text was cleared in the final display transfer. The missing evidence concerned the product's output boundary. Repeating the same local tests would not cover it. M1 also illustrates why unlike kinds of passing checks should not be added into one completion percentage.</p>
+<h2 id="a-traceable-chain">A traceable chain</h2>
+<figure><img src="../../assets/diagrams/lifecycle-en.svg" alt="00 — Establish the Question Before the Answer — Evidence → Hypothesis → Specification → Oracle → Implementation → Differential Validation → Conformance"></figure><details><summary>Mermaid · 原始流程定義</summary><pre class="mermaid"><code>flowchart LR
+    E[Evidence] --&gt; H[Hypothesis]
+    H --&gt; S[Specification]
+    S --&gt; O[Oracle]
+    O --&gt; I[Implementation]
+    I --&gt; D[Differential validation]
+    D --&gt; C[Conformance]
+    D -- Contradiction or missing evidence --&gt; E</code></pre></details>
+<p>Each step leaves an artifact for the next. Observations support claims; claims support a specification; the specification defines comparisons; comparison reports support bounded conformance. If those links disappear behind “all tests passed,” the next engineer cannot determine what the tests establish.</p>
+<p>Experiments may go backward, and isolated prototypes may help obtain observations. Experimental interpretations must not silently enter production. When evidence contradicts an assumption, revisit the affected specification instead of changing the answer inside code or tests.</p>
+<h2 id="four-everyday-questions">Four everyday questions</h2>
+<ol type="1">
+<li>Is this sentence an observation, an inference, or our own design?</li>
+<li>What contrary result would make us admit it is wrong?</li>
+<li>Can the test observe the point where the error would occur?</li>
+<li>Which versions, cases, and fields does today's result actually cover?</li>
+</ol>
+<p>If the fourth answer is missing, narrow the claim and state the limitation. Narrowing a claim does not replace completing the user's requested feature. Uncovered work must remain visible as incomplete.</p>
+<h2 id="start-with-a-narrow-complete-path">Start with a narrow, complete path</h2>
+<p>Build a vertical chain: raw input → decoded data → rule → interface → storage/output → comparison. Evidence for one link cannot stand in for a link that was never exercised. For tools without an interface or persistence, state that those links are inapplicable and explain why.</p>
+<p>You need not translate the whole executable before starting. Once evidence is sufficient to implement and verify the current slice, finish it. Keep only the necessary location information for unrelated initialization or hardware details. Whether remaining unknowns block delivery depends on the specification and the user's objective.</p>
+<h3 id="sources-and-claim-scope">Sources and claim scope</h3>
+<p><a href="../../inventory.html#固定來源索引">M1, M3, P2</a> document the coverage gap, original-program route, and specification gates. <code>CONFIRMED</code> refers to inspection of these records and rules. The three-way distinction is a <code>STRONG_INFERENCE</code> methodological synthesis, not a guarantee of project success.</p>
+</article></main></div><footer><a href="../../index.html">王俊又 wicanr2</a> · AI 輔助軟體考古手冊 · <a href="../../library.html">全部文件 · All pages · 全ページ</a><p>證據先行，保留未知。 Evidence first. Keep uncertainty visible.</p></footer></body></html>

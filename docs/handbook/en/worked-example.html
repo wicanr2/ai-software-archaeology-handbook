@@ -1,0 +1,124 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Appendix — A Complete Chain from Evidence to a Report｜AI 軟體考古</title><link rel="canonical" href="https://wicanr2.github.io/ai-software-archaeology-handbook/handbook/en/worked-example.html"><link rel="stylesheet" href="../../assets/reader.css"><link rel="icon" href="../../assets/favicon.svg"></head><body><a class="skip" href="#content">Skip to content</a><header><a href="../../index.html">王俊又 wicanr2</a><nav><a href="../../library.html">全部文件 · All pages · 全ページ</a></nav></header><div class="layout"><aside><details open><summary>Chapters</summary><nav><ul><li><a href="README.html">AI-Assisted Software Archaeology Handbook</a></li><li><a href="00-principles.html">00 — Establish the Question Before the Answer</a></li><li><a href="01-evidence.html">01 — Make Evidence Findable by Someone Else</a></li><li><a href="02-hypotheses.html">02 — Give a Hypothesis a Chance to Fail</a></li><li><a href="03-specification-gates.html">03 — Review Evidence Before Authorizing Implementation</a></li><li><a href="04-oracles.html">04 — An Oracle Has Limits Too</a></li><li><a href="05-differential-testing.html">05 — Compare the Same Thing and Preserve the First Divergence</a></li><li><a href="06-conformance.html">06 — Make Completion an Auditable Conclusion</a></li><li><a href="07-agent-workflows.html">07 — Hand Off Evidence, Not Impressions</a></li><li><a href="08-failure-patterns.html">08 — Use Failure Mechanisms to Choose the Next Observation</a></li><li class="current"><a href="worked-example.html">Appendix — A Complete Chain from Evidence to a Report</a></li></ul></nav></details><details><summary>研究與專案文件</summary><nav><ul><li><a href="../../project/AGENTS.html">AGENTS.md — Oracle-Driven Software Archaeology</a></li><li><a href="../../project/PLAN.html">PLAN.md — Oracle-Driven Software Archaeology</a></li><li><a href="../../project/README.html">AI 輔助軟體考古手冊</a></li><li><a href="../../project/WORKLOG.html">工作歷程</a></li><li><a href="../../failure-patterns.html">有來源的失敗模式</a></li><li><a href="../../handbook-review.html">手冊交付驗收</a></li><li><a href="../../inventory.html">案例盤點與證據索引</a></li><li><a href="../../methodology-draft.html">以證據驅動的軟體考古：方法草案</a></li><li><a href="../../pattern-matrix.html">跨專案模式矩陣</a></li><li><a href="../../pdf-release.html">PDF 排版與發行</a></li><li><a href="../../releases/v.1.0.0-20260905.html">三語手冊 PDF 與流程圖</a></li><li><a href="../../site-release.html">宣傳網站與公開交付</a></li></ul></nav></details></aside><main id="content"><div class="languages"><a href="../worked-example.html">繁體中文</a> · <a href="worked-example.html">English</a> · <a href="../ja/worked-example.html">日本語</a></div><details class="toc"><summary>On this page</summary><ul><li class="depth-2"><a href="#1-question-and-evidence">1. Question and evidence</a></li><li class="depth-2"><a href="#2-hypotheses-and-discrimination">2. Hypotheses and discrimination</a></li><li class="depth-2"><a href="#3-conditions-for-ready">3. Conditions for READY</a></li><li class="depth-2"><a href="#4-calculate-the-reference-sequence-first">4. Calculate the reference sequence first</a></li><li class="depth-2"><a href="#5-introduce-a-wrong-candidate">5. Introduce a wrong candidate</a></li><li class="depth-2"><a href="#6-correction-and-missing-observations">6. Correction and missing observations</a></li><li class="depth-2"><a href="#7-what-the-report-may-say">7. What the report may say</a></li><li class="depth-2"><a href="#8-self-check-with-answers">8. Self-check with answers</a></li><li class="depth-3"><a href="#sources-and-claim-scope">Sources and claim scope</a></li></ul></details><article><h1 id="appendix--a-complete-chain-from-evidence-to-a-report">Appendix — A Complete Chain from Evidence to a Report</h1>
+<p><a href="README.html">Contents</a> · <a href="08-failure-patterns.html">Failure patterns</a></p>
+<p>This accumulator is an invented teaching example, not a historical program. <code>SPEC-ACC-v1</code> is its authoritative contract. The values below are calculated from that contract, not fabricated execution results. There is no binary, real run ID, or tested implementation, so the final decision remains an exercise rather than an actual CONFORMED candidate.</p>
+<h2 id="1-question-and-evidence">1. Question and evidence</h2>
+<p>Suppose you must reimplement an accumulator accepting two-byte requests. Its teaching contract defines an integer value in 0..255. <code>01 n</code> performs saturating addition; <code>02 00</code> resets. Other <code>02 n</code> requests return <code>invalid_operand</code>; other opcodes return <code>unknown_operation</code>. A request whose length is not 2 returns <code>invalid_length</code> before opcode validation. Errors preserve state; success returns <code>ok</code>. Observe value and result code after every request.</p>
+<p><code>E-CONTRACT</code> is this explicit artificial contract, authoritative only for the exercise. Real archaeology also requires source versions and input/tool hashes. Desired behavior cannot simply be written down as an original-program rule.</p>
+<h2 id="2-hypotheses-and-discrimination">2. Hypotheses and discrimination</h2>
+<p><code>C-SAT</code> claims that addition above 255 returns 255. Before reading the contract, saturation, wraparound, and rejection are alternatives. After obtaining <code>E-CONTRACT</code>, <code>C-SAT</code> can be <code>CONFIRMED</code> within the narrow assertion “the teaching contract defines this behavior.” A single sample is not promoting a universal empirical rule.</p>
+<p>Starting at 10 and adding 1 can give 11 under all three candidates. Starting at 250 and adding 10 predicts 255, 4, or an error leaving 250. This exposes the wrong implementation.</p>
+<h2 id="3-conditions-for-ready">3. Conditions for READY</h2>
+<p>The contract defines format, operations, error precedence, and observation boundary. Display, persistence, timing, and concurrency are excluded because this exercise never requested them, not to avoid an existing requirement. Required cases cover ordinary addition, the limit, reset, malformed requests, and a valid request after errors.</p>
+<p>This is enough to illustrate a READY review. A real project still needs a recorded review and implementation authority. Comparison requires exact equality of value and result code: no tolerance, sorting, or omitted fields.</p>
+<h2 id="4-calculate-the-reference-sequence-first">4. Calculate the reference sequence first</h2>
+<p>Case A starts independently at 10. Case B starts independently at 250, with B01–B08 executed in order. Each row observes state after its request. Request bytes are hexadecimal; state values are decimal.</p>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr class="header">
+<th>Checkpoint</th>
+<th>Input bytes</th>
+<th style="text-align: right;">Value before</th>
+<th style="text-align: right;">Reference value</th>
+<th>Result code</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A01</td>
+<td><code>01 01</code></td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">11</td>
+<td><code>ok</code></td>
+</tr>
+<tr class="even">
+<td>B01</td>
+<td><code>01 0A</code></td>
+<td style="text-align: right;">250</td>
+<td style="text-align: right;">255</td>
+<td><code>ok</code></td>
+</tr>
+<tr class="odd">
+<td>B02</td>
+<td><code>01 00</code></td>
+<td style="text-align: right;">255</td>
+<td style="text-align: right;">255</td>
+<td><code>ok</code></td>
+</tr>
+<tr class="even">
+<td>B03</td>
+<td><code>02 00</code></td>
+<td style="text-align: right;">255</td>
+<td style="text-align: right;">0</td>
+<td><code>ok</code></td>
+</tr>
+<tr class="odd">
+<td>B04</td>
+<td><code>01 FF</code></td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">255</td>
+<td><code>ok</code></td>
+</tr>
+<tr class="even">
+<td>B05</td>
+<td><code>02 01</code></td>
+<td style="text-align: right;">255</td>
+<td style="text-align: right;">255</td>
+<td><code>invalid_operand</code></td>
+</tr>
+<tr class="odd">
+<td>B06</td>
+<td><code>03 00</code></td>
+<td style="text-align: right;">255</td>
+<td style="text-align: right;">255</td>
+<td><code>unknown_operation</code></td>
+</tr>
+<tr class="even">
+<td>B07</td>
+<td><code>01</code></td>
+<td style="text-align: right;">255</td>
+<td style="text-align: right;">255</td>
+<td><code>invalid_length</code></td>
+</tr>
+<tr class="odd">
+<td>B08</td>
+<td><code>02 00</code></td>
+<td style="text-align: right;">255</td>
+<td style="text-align: right;">0</td>
+<td><code>ok</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>B08 checks recovery after errors; B03 cannot substitute for it. Nine checkpoints with two required fields each make eighteen field comparisons. Missing fields must not count as agreement. These are declared samples, not exhaustive coverage of every possible input.</p>
+<h2 id="5-introduce-a-wrong-candidate">5. Introduce a wrong candidate</h2>
+<p><code>CAND-WRAP</code> uses <code>(value + n) mod 256</code>; assume its other behavior follows the contract. It is a paper candidate, not an executed artifact. A01 passes, but B01 has value 4 instead of 255. The first divergence is:</p>
+<pre class="text"><code>Specification: SPEC-ACC-v1
+Candidate: CAND-WRAP (teaching assumption)
+Checkpoint: B01
+Input: 01 0A
+Field: value
+Reference: 255
+Candidate: 4
+Result code: both ok
+Conclusion: value mismatch; a success code cannot replace content comparison.</code></pre>
+<p>At B03 both candidates reset to zero, hiding the earlier error if only that endpoint is checked. If execution stops at the first divergence, B02–B08 remain unexecuted and incomplete; they must not disappear from the report.</p>
+<h2 id="6-correction-and-missing-observations">6. Correction and missing observations</h2>
+<p>Correct the formula to <code>min(255, value + n)</code>, adding in an integer wide enough before applying the limit. Converting to eight bits first would still wrap. This reasoning is directly supported by the artificial contract.</p>
+<p>Now suppose B05 records value but omits the result code. Value 255 does not tell you whether the candidate rejected the invalid request or accepted a no-op. Report a missing observation, not a pass. Required comparison remains incomplete until the missing field is obtained in a new run.</p>
+<h2 id="7-what-the-report-may-say">7. What the report may say</h2>
+<p>A paper report may state:</p>
+<blockquote>
+<p>By calculation under SPEC-ACC-v1, CAND-WRAP disagrees at B01's value. The corrected formula removes this counterexample. Nine reference checkpoints and eighteen required fields are specified. No actual candidate, execution record, or captured artifacts exist; no CONFORMED decision has been made.</p>
+</blockquote>
+<p>A future execution must add candidate identity, reference/observer versions, input and artifact hashes, actual observation counts, differential results, stopping reasons, and review. Once all required conditions pass, the claim may be “this candidate conforms to SPEC-ACC-v1's declared cases,” still not historical software compatibility.</p>
+<h2 id="8-self-check-with-answers">8. Self-check with answers</h2>
+<ol type="1">
+<li>Does A01 exclude wraparound? No; both formulas agree there. Use B01.</li>
+<li>Does B05 pass if only value is correct? No; the result code is required.</li>
+<li>Does agreement at B03 cancel B01? No; each checkpoint is required.</li>
+<li>Do nine matching cases prove all states? No; they support the declared cases. A universal claim needs additional reasoning or coverage.</li>
+<li>Is this a successful execution report? No; it is calculable teaching material with no real run.</li>
+<li>Which unknown blocks this example? A missing required result code does. Unrequested display timing does not, and is not thereby confirmed.</li>
+</ol>
+<h3 id="sources-and-claim-scope">Sources and claim scope</h3>
+<p>There is no historical input. <code>E-CONTRACT</code> is an artificial contract, and the values follow from it. Separating observations from interpretation, preserving missing-data failures, and identifying first divergence reflect lessons from <a href="../../inventory.html#固定來源索引">S3, O2, P3</a>, without importing those projects' behavior into this accumulator.</p>
+</article></main></div><footer><a href="../../index.html">王俊又 wicanr2</a> · AI 輔助軟體考古手冊 · <a href="../../library.html">全部文件 · All pages · 全ページ</a><p>證據先行，保留未知。 Evidence first. Keep uncertainty visible.</p></footer></body></html>

@@ -1,0 +1,64 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>06　把完成聲明寫成可稽核的結論｜AI 軟體考古</title><link rel="canonical" href="https://wicanr2.github.io/ai-software-archaeology-handbook/handbook/06-conformance.html"><link rel="stylesheet" href="../assets/reader.css"><link rel="icon" href="../assets/favicon.svg"></head><body><a class="skip" href="#content">跳至內文</a><header><a href="../index.html">王俊又 wicanr2</a><nav><a href="../library.html">全部文件 · All pages · 全ページ</a></nav></header><div class="layout"><aside><details open><summary>章節導覽</summary><nav><ul><li><a href="README.html">AI 輔助軟體考古手冊</a></li><li><a href="00-principles.html">00　先證明題目，再證明答案</a></li><li><a href="01-evidence.html">01　讓證據能被另一個人重新找到</a></li><li><a href="02-hypotheses.html">02　讓假說有機會失敗</a></li><li><a href="03-specification-gates.html">03　規格是實作前的證據審查</a></li><li><a href="04-oracles.html">04　行為基準也有能力邊界</a></li><li><a href="05-differential-testing.html">05　比較同一件事，保留第一個分歧</a></li><li class="current"><a href="06-conformance.html">06　把完成聲明寫成可稽核的結論</a></li><li><a href="07-agent-workflows.html">07　讓代理帶著證據交接，而不是帶著印象</a></li><li><a href="08-failure-patterns.html">08　從錯誤形成方式選下一個觀測</a></li><li><a href="worked-example.html">附錄　從證據到符合性報告：一個完整演練</a></li></ul></nav></details><details><summary>研究與專案文件</summary><nav><ul><li><a href="../project/AGENTS.html">AGENTS.md — Oracle-Driven Software Archaeology</a></li><li><a href="../project/PLAN.html">PLAN.md — Oracle-Driven Software Archaeology</a></li><li><a href="../project/README.html">AI 輔助軟體考古手冊</a></li><li><a href="../project/WORKLOG.html">工作歷程</a></li><li><a href="../failure-patterns.html">有來源的失敗模式</a></li><li><a href="../handbook-review.html">手冊交付驗收</a></li><li><a href="../inventory.html">案例盤點與證據索引</a></li><li><a href="../methodology-draft.html">以證據驅動的軟體考古：方法草案</a></li><li><a href="../pattern-matrix.html">跨專案模式矩陣</a></li><li><a href="../pdf-release.html">PDF 排版與發行</a></li><li><a href="../releases/v.1.0.0-20260905.html">三語手冊 PDF 與流程圖</a></li><li><a href="../site-release.html">宣傳網站與公開交付</a></li></ul></nav></details></aside><main id="content"><div class="languages"><a href="06-conformance.html">繁體中文</a> · <a href="en/06-conformance.html">English</a> · <a href="ja/06-conformance.html">日本語</a></div><details class="toc"><summary>本頁目錄</summary><ul><li class="depth-2"><a href="#一份能回查的報告">一份能回查的報告</a></li><li class="depth-2"><a href="#由要求逐項反查證據">由要求逐項反查證據</a></li><li class="depth-2"><a href="#提早停止與範圍外未知">提早停止與範圍外未知</a></li><li class="depth-2"><a href="#新版本不能借用舊版本的結論">新版本不能借用舊版本的結論</a></li><li class="depth-3"><a href="#來源與主張範圍">來源與主張範圍</a></li></ul></details><article><h1 id="06-把完成聲明寫成可稽核的結論">06　把完成聲明寫成可稽核的結論</h1>
+<p><a href="05-differential-testing.html">上一章</a> · <a href="README.html">目錄</a> · <a href="07-agent-workflows.html">下一章</a></p>
+<p>符合性（conformance）是候選在指定版本的契約與驗收範圍內通過比較，不是對整套軟體的無條件保證。 CONFORMED 的主詞應是「這個候選版本對這份規格」，而不是沒有版本與範圍的「專案完成」。</p>
+<h2 id="一份能回查的報告">一份能回查的報告</h2>
+<pre class="text"><code>目標／候選身分：版本、提交、二進位雜湊
+規格：ID、版本、驗收範圍與排除範圍
+基準：種類、版本、輸入與設定
+執行：ID、起始狀態、輸入序列、觀測產物
+比較：規則版本、欄位、檢查點與覆蓋分母
+結果：精確相符、容許差異、不相符、缺失、略過各幾項
+停止原因：完成／未實作／逾時／觀測失敗／分歧
+限制：未測平台、未知欄位、規格近似與非阻塞原因
+裁決：是否達到宣告驗收條件；審查者及日期
+重驗條件：何種輸入、工具、規格或候選變更使本報告不再適用</code></pre>
+<p>這仍是人工報告模板，不代表 <code>osa report</code> 已存在。附錄示範沒有執行產物時如何誠實地只寫教學推導。</p>
+<h2 id="由要求逐項反查證據">由要求逐項反查證據</h2>
+<p>審查時先假設「完成尚未被證明」，從原始需求列出必要項，再逐項尋找證據。 不要只從現有測試倒推需求，否則沒寫測試的功能會自動消失。</p>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr class="header">
+<th>必要項</th>
+<th>合格證據</th>
+<th>不足的替代品</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>正常操作能完成</td>
+<td>正式產物、正常入口、完整輸入路線與輸出</td>
+<td>測試專用入口直達結果</td>
+</tr>
+<tr class="even">
+<td>參考行為相符</td>
+<td>同狀態觀測、比較規則及差分紀錄</td>
+<td>單元測試通過或截圖看起來像</td>
+</tr>
+<tr class="odd">
+<td>邊界與錯誤語意</td>
+<td>可區分錯誤候選的案例、錯誤後狀態</td>
+<td>只測正常輸入</td>
+</tr>
+<tr class="even">
+<td>支援的平台與資料版本</td>
+<td>各範圍必要抽驗、固定輸入身分</td>
+<td>另一平台包可編譯</td>
+</tr>
+<tr class="odd">
+<td>無必要觀測缺失</td>
+<td>實際收集數等於規格要求，且可定位</td>
+<td>只有整體成功退出碼</td>
+</tr>
+</tbody>
+</table></div>
+<p>無法比較的資料不是通過，也不一定是產品缺陷；它可能是證據缺口。 報告分清兩者，但只要缺的是必要證據，就不能宣布該範圍 CONFORMED。</p>
+<h2 id="提早停止與範圍外未知">提早停止與範圍外未知</h2>
+<p>Parhelion P1 記錄一致走過 306 條後停在未實作指令。這支持那段已比較軌跡， 不能改寫成完整 p-System 相容。Talos T1 的大量 CPU 語料也不能取代尚未完成的整機開機。</p>
+<p>若規格原先就只要求固定指令切片，未實作的其他指令可以列為範圍外； 若使用者要求完整開機，那些指令便仍是未完成工作。驗收後才改小目標不是收斂，是更換題目。</p>
+<p>「重製已完成」「原版精確行為仍未知」「可選潤飾」應分開列。未知是否阻塞， 依使用者目標判定，不能因研究很難就改叫潤飾，也不能因存在非阻塞未知而無限拖延交付。</p>
+<h2 id="新版本不能借用舊版本的結論">新版本不能借用舊版本的結論</h2>
+<p>修改解碼器、擷取器、容差、輸入版本或正式封包，都可能使報告失效。 只需重驗受影響的合理範圍，但必須能說明相依關係。保留舊報告，它仍證明舊版本發生過什麼； 新候選要有自己的證據。檔案時間較新不能取代建置來源或二進位身分。</p>
+<p>發布時把手冊完成、工具完成與真實案例通過分開說。本書的編輯檢查可以證明章節、例子與來源一致， 不能把來源歷史結果重新認證成已重跑的原版實驗。</p>
+<h3 id="來源與主張範圍">來源與主張範圍</h3>
+<p><a href="../inventory.html#固定來源索引">P1、P3、T1、W1</a>支持切片限制、停止原因與產物身分問題。 來源紀錄為 <code>CONFIRMED</code>；報告與反查流程是 <code>STRONG_INFERENCE</code> 的方法整理。 本書採有限、宣告範圍內的驗證，不聲稱從有限樣本得到全域數學證明。</p>
+</article></main></div><footer><a href="../index.html">王俊又 wicanr2</a> · AI 輔助軟體考古手冊 · <a href="../library.html">全部文件 · All pages · 全ページ</a><p>證據先行，保留未知。 Evidence first. Keep uncertainty visible.</p></footer></body></html>

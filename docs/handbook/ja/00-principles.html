@@ -1,0 +1,57 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>00　答えの前に、何を確かめるかを定める｜AI 軟體考古</title><link rel="canonical" href="https://wicanr2.github.io/ai-software-archaeology-handbook/handbook/ja/00-principles.html"><link rel="stylesheet" href="../../assets/reader.css"><link rel="icon" href="../../assets/favicon.svg"></head><body><a class="skip" href="#content">本文へ</a><header><a href="../../index.html">王俊又 wicanr2</a><nav><a href="../../library.html">全部文件 · All pages · 全ページ</a></nav></header><div class="layout"><aside><details open><summary>章一覧</summary><nav><ul><li><a href="README.html">AI 支援ソフトウェア考古学ハンドブック</a></li><li class="current"><a href="00-principles.html">00　答えの前に、何を確かめるかを定める</a></li><li><a href="01-evidence.html">01　別の人が再び見つけられる証拠を残す</a></li><li><a href="02-hypotheses.html">02　仮説が失敗できる検査を作る</a></li><li><a href="03-specification-gates.html">03　仕様は実装前の証拠審査</a></li><li><a href="04-oracles.html">04　判定基準にも限界がある</a></li><li><a href="05-differential-testing.html">05　同じものを比較し、最初の不一致を残す</a></li><li><a href="06-conformance.html">06　完了を監査できる結論にする</a></li><li><a href="07-agent-workflows.html">07　印象ではなく証拠を引き継ぐ</a></li><li><a href="08-failure-patterns.html">08　失敗の仕組みから次の観測を選ぶ</a></li><li><a href="worked-example.html">付録　証拠から報告までを一つの例でたどる</a></li></ul></nav></details><details><summary>研究與專案文件</summary><nav><ul><li><a href="../../project/AGENTS.html">AGENTS.md — Oracle-Driven Software Archaeology</a></li><li><a href="../../project/PLAN.html">PLAN.md — Oracle-Driven Software Archaeology</a></li><li><a href="../../project/README.html">AI 輔助軟體考古手冊</a></li><li><a href="../../project/WORKLOG.html">工作歷程</a></li><li><a href="../../failure-patterns.html">有來源的失敗模式</a></li><li><a href="../../handbook-review.html">手冊交付驗收</a></li><li><a href="../../inventory.html">案例盤點與證據索引</a></li><li><a href="../../methodology-draft.html">以證據驅動的軟體考古：方法草案</a></li><li><a href="../../pattern-matrix.html">跨專案模式矩陣</a></li><li><a href="../../pdf-release.html">PDF 排版與發行</a></li><li><a href="../../releases/v.1.0.0-20260905.html">三語手冊 PDF 與流程圖</a></li><li><a href="../../site-release.html">宣傳網站與公開交付</a></li></ul></nav></details></aside><main id="content"><div class="languages"><a href="../00-principles.html">繁體中文</a> · <a href="../en/00-principles.html">English</a> · <a href="00-principles.html">日本語</a></div><details class="toc"><summary>このページの内容</summary><ul><li class="depth-2"><a href="#三種類の成功">三種類の成功</a></li><li class="depth-2"><a href="#追跡できる一連の流れ">追跡できる一連の流れ</a></li><li class="depth-2"><a href="#日々の四つの問い">日々の四つの問い</a></li><li class="depth-2"><a href="#狭くても端までつながった経路から始める">狭くても端までつながった経路から始める</a></li><li class="depth-3"><a href="#出典と主張の範囲">出典と主張の範囲</a></li></ul></details><article><h1 id="00-答えの前に何を確かめるかを定める">00　答えの前に、何を確かめるかを定める</h1>
+<p><a href="README.html">目次</a> · <a href="01-evidence.html">次の章</a></p>
+<p>AI は、もっともらしい説明を実行可能なコードにできます。ソフトウェア考古学では、その説明が既存のシステムを本当に説明しているかを確かめなければなりません。根拠のない定数、画面から推測したフィールド名、自分の出力だけを検査するテストは、推測を信頼できそうな成果物に変えてしまいます。</p>
+<p>最初に対象の動作を定めます。どの版、どの入力、どの経路、どの観測結果でしょうか。「完全なリメイク」は目標ですが、そのまま検査できる問いではありません。「この版で新規開始のメニューから神殿まで進むと、座標と会話が一致するか」なら実験の境界があります。</p>
+<h2 id="三種類の成功">三種類の成功</h2>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr class="header">
+<th>声明</th>
+<th>必要な証拠</th>
+<th>同時には証明しないこと</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>内部で整合している</td>
+<td>解析、状態遷移、境界条件などの局所検査</td>
+<td>規則が原版の規則であること</td>
+</tr>
+<tr class="even">
+<td>指定した参照と一致する</td>
+<td>同じ版、入力、状態での差分結果</td>
+<td>未検査の事例、別のプラットフォーム、実機での一致</td>
+</tr>
+<tr class="odd">
+<td>利用者が経路を完了できる</td>
+<td>配布物の通常入口から操作した結果</td>
+<td>全内部フィールドが原版と同じこと</td>
+</tr>
+</tbody>
+</table></div>
+<p>MM2 では、オフスクリーン検査とパッケージの起動確認が通っても、最後の表示転送で文字が消え、利用者には空欄が見える問題がありました。足りなかったのは製品の出力境界の証拠です。同じ局所テストを繰り返しても、その境界は通りません。異なる種類の成功数を一つの完成率に足し合わせるべきでないことも、この M1 の事例から分かります。</p>
+<h2 id="追跡できる一連の流れ">追跡できる一連の流れ</h2>
+<figure><img src="../../assets/diagrams/lifecycle-ja.svg" alt="00　答えの前に、何を確かめるかを定める — Evidence → Hypothesis → Specification → Oracle → Implementation → Differential Validation → Conformance"></figure><details><summary>Mermaid · 原始流程定義</summary><pre class="mermaid"><code>flowchart LR
+    E[証拠] --&gt; H[仮説]
+    H --&gt; S[仕様]
+    S --&gt; O[判定基準]
+    O --&gt; I[実装]
+    I --&gt; D[差分検証]
+    D --&gt; C[適合性]
+    D -- 矛盾または証拠不足 --&gt; E</code></pre></details>
+<p>各段階は次に必要な成果物を残します。観測が主張を支え、主張が仕様を支え、仕様が比較対象を定め、比較報告が限定された適合性を支えます。途中が消えて「全テスト成功」だけになると、引き継ぐ人は何を証明したのか判断できません。</p>
+<p>実験では前の段階に戻ってよく、隔離した試作で観測を得ることもできます。ただし実験中の解釈を黙って正式経路に入れてはいけません。新しい証拠が前提を否定したら、コードやテストの中で答えを変えるのではなく、該当する仕様に戻ります。</p>
+<h2 id="日々の四つの問い">日々の四つの問い</h2>
+<ol type="1">
+<li>この文は観測、推論、それとも自分たちの設計か。</li>
+<li>どのような反対の結果なら、誤りを認めるか。</li>
+<li>テストは、その誤りが生じる場所を観測できるか。</li>
+<li>今日の結果は、どの版、事例、フィールドにだけ当てはまるか。</li>
+</ol>
+<p>四つ目に答えられなければ、声明を限定し、制約を記します。ただし声明を限定しても、依頼された機能を完了する責務はなくなりません。未検査の作業は未完了として残します。</p>
+<h2 id="狭くても端までつながった経路から始める">狭くても端までつながった経路から始める</h2>
+<p>生の入力 → 復号データ → 規則 → 画面 → 保存／出力 → 比較、という縦のつながりを作ります。通っていない箇所を、その手前の証拠で代用できません。画面や保存のないツールなら、対象外である理由を記します。</p>
+<p>実行ファイル全体の翻訳を終える必要はありません。現在の機能を実装し検証するのに十分な証拠があれば、その切片を収束させます。関係のない初期化やハードウェアの細部は必要な位置情報だけ残します。残る不明点が納品を妨げるかは、仕様と利用者の目標に基づいて判断します。</p>
+<h3 id="出典と主張の範囲">出典と主張の範囲</h3>
+<p><a href="../../inventory.html#固定來源索引">M1、M3、P2</a>は検査範囲の穴、原版の経路、仕様ゲートの記録です。<code>CONFIRMED</code> は記録と規則の確認を指します。三種類の成功という整理は <code>STRONG_INFERENCE</code> であり、全プロジェクトの成功保証ではありません。</p>
+</article></main></div><footer><a href="../../index.html">王俊又 wicanr2</a> · AI 輔助軟體考古手冊 · <a href="../../library.html">全部文件 · All pages · 全ページ</a><p>證據先行，保留未知。 Evidence first. Keep uncertainty visible.</p></footer></body></html>

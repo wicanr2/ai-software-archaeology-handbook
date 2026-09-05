@@ -1,0 +1,86 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>有來源的失敗模式｜AI 軟體考古</title><link rel="canonical" href="https://wicanr2.github.io/ai-software-archaeology-handbook/failure-patterns.html"><link rel="stylesheet" href="assets/reader.css"><link rel="icon" href="assets/favicon.svg"></head><body><a class="skip" href="#content">跳至內文</a><header><a href="index.html">王俊又 wicanr2</a><nav><a href="library.html">全部文件 · All pages · 全ページ</a></nav></header><div class="layout"><aside><details open><summary>章節導覽</summary><nav><ul><li><a href="handbook/README.html">AI 輔助軟體考古手冊</a></li><li><a href="handbook/00-principles.html">00　先證明題目，再證明答案</a></li><li><a href="handbook/01-evidence.html">01　讓證據能被另一個人重新找到</a></li><li><a href="handbook/02-hypotheses.html">02　讓假說有機會失敗</a></li><li><a href="handbook/03-specification-gates.html">03　規格是實作前的證據審查</a></li><li><a href="handbook/04-oracles.html">04　行為基準也有能力邊界</a></li><li><a href="handbook/05-differential-testing.html">05　比較同一件事，保留第一個分歧</a></li><li><a href="handbook/06-conformance.html">06　把完成聲明寫成可稽核的結論</a></li><li><a href="handbook/07-agent-workflows.html">07　讓代理帶著證據交接，而不是帶著印象</a></li><li><a href="handbook/08-failure-patterns.html">08　從錯誤形成方式選下一個觀測</a></li><li><a href="handbook/worked-example.html">附錄　從證據到符合性報告：一個完整演練</a></li></ul></nav></details><details><summary>研究與專案文件</summary><nav><ul><li><a href="project/AGENTS.html">AGENTS.md — Oracle-Driven Software Archaeology</a></li><li><a href="project/PLAN.html">PLAN.md — Oracle-Driven Software Archaeology</a></li><li><a href="project/README.html">AI 輔助軟體考古手冊</a></li><li><a href="project/WORKLOG.html">工作歷程</a></li><li><a href="failure-patterns.html">有來源的失敗模式</a></li><li><a href="handbook-review.html">手冊交付驗收</a></li><li><a href="inventory.html">案例盤點與證據索引</a></li><li><a href="methodology-draft.html">以證據驅動的軟體考古：方法草案</a></li><li><a href="pattern-matrix.html">跨專案模式矩陣</a></li><li><a href="pdf-release.html">PDF 排版與發行</a></li><li><a href="releases/v.1.0.0-20260905.html">三語手冊 PDF 與流程圖</a></li><li><a href="site-release.html">宣傳網站與公開交付</a></li></ul></nav></details></aside><main id="content"><div class="languages"></div><details class="toc"><summary>本頁目錄</summary><ul><li class="depth-2"><a href="#f01內部測試通過封包畫面卻沒有文字">F01：內部測試通過，封包畫面卻沒有文字</a></li><li class="depth-2"><a href="#f02補零讓錯誤解碼器湊出正確長度">F02：補零讓錯誤解碼器湊出正確長度</a></li><li class="depth-2"><a href="#f03工具顯示名稱使實際呼叫從搜尋中消失">F03：工具顯示名稱使實際呼叫從搜尋中消失</a></li><li class="depth-2"><a href="#f04兩個假說都能通過的測試無法裁決欄位語意">F04：兩個假說都能通過的測試，無法裁決欄位語意</a></li><li class="depth-2"><a href="#f05截圖轉換錯誤被誤認為原版換了字型">F05：截圖轉換錯誤，被誤認為原版換了字型</a></li><li class="depth-2"><a href="#f06記憶體已到指定畫格畫面卻仍是前一幀">F06：記憶體已到指定畫格，畫面卻仍是前一幀</a></li><li class="depth-2"><a href="#f07外部測試語料的已知缺陷不能變成實作真值">F07：外部測試語料的已知缺陷不能變成實作真值</a></li><li class="depth-2"><a href="#f08讀到靜態終點卻把整段時間線判成不存在">F08：讀到靜態終點，卻把整段時間線判成不存在</a></li><li class="depth-2"><a href="#本輪讀碼發現的驗收風險">本輪讀碼發現的驗收風險</a></li></ul></details><article><h1 id="有來源的失敗模式">有來源的失敗模式</h1>
+<p>來源 ID 均對應<a href="inventory.html#固定來源索引">固定提交與文件雜湊</a>。 F01–F08 的歷史敘述均為 <code>CONFIRMED</code> 的「來源紀錄存在」； 本輪未執行原版或歷史測試，原版行為的獨立重現狀態為 <code>UNKNOWN</code>。 每項可重用教訓為 <code>STRONG_INFERENCE</code>。不能把本文件當作新的遊戲規格。</p>
+<h2 id="f01內部測試通過封包畫面卻沒有文字">F01：內部測試通過，封包畫面卻沒有文字</h2>
+<ul>
+<li>來源：MM2 M1，§5「三平台的包」勘誤列。</li>
+<li>初始假設：離屏畫布正確，加上封包啟動不崩潰，足以證明玩家看見的畫面正確。</li>
+<li>證據：來源記錄封包保留框線與地圖，文字區域卻空白；實際使用者開包才發現。</li>
+<li>如何否定：追到 <code>Session.Draw()</code> 之後，最終顯示轉接再次 <code>Flush()</code>，清掉文字層；原測試直接讀畫布，未走該轉接。</li>
+<li>修正理解：局部畫布與最後顯示不是同一條測試路徑。來源記錄後續加入文字差異檢查及 Xvfb 截圖驗收。</li>
+<li>可重用教訓：驗收要穿過真正的產品出口；「檔案存在、持續執行」不能代替內容正確。</li>
+<li>限制：這個案例本身證明的是整合覆蓋缺口，不是完整原版相容性差分結果。</li>
+</ul>
+<h2 id="f02補零讓錯誤解碼器湊出正確長度">F02：補零讓錯誤解碼器湊出正確長度</h2>
+<ul>
+<li>來源：MM2 M2 §1；M1 對 <code>SPELLS.DAT</code> 的勘誤列。</li>
+<li>初始假設：疑似壓縮段的宣告長度與輸出長度吻合，就表示格式識別正確。</li>
+<li>證據：來源記錄把 192 bytes 的明文當壓縮段，得到 256 bytes 的假結果。</li>
+<li>如何否定：較嚴格的解碼器在合法結束前已耗盡輸入；舊路徑越界補零，把輸出湊到宣告長度。</li>
+<li>修正理解：段頭第二個 word 的格式條件與位元流終止條件必須分別成立；長度只能是其中一個約束。</li>
+<li>可重用教訓：為方便而填補缺失輸入，會摧毀反證訊號。錯誤格式與截斷輸入必須明確失敗。</li>
+<li>限制：M2 §4 仍含另一次已撤回的文字解釋；不能因 §1 有價值而整份視為現行事實。</li>
+</ul>
+<h2 id="f03工具顯示名稱使實際呼叫從搜尋中消失">F03：工具顯示名稱使實際呼叫從搜尋中消失</h2>
+<ul>
+<li>來源：春之石 S2 §1、§3、§4。</li>
+<li>初始假設：只保留助憶碼為 <code>int</code> 的指令，就能找齊指定中斷呼叫；零筆代表未使用。</li>
+<li>證據：來源記錄 IDA 將其中一種形式顯示成 <code>wait</code>，過濾器把它排除；原筆記同時出現原始位元組有命中與指令起點為零的矛盾。</li>
+<li>如何否定：改看原始位元組與指令起點；來源報告七支模組合計 909 處、24 種索引。</li>
+<li>修正理解：顯示名稱不是原始位元組，搜尋結果取決於工具辨識與過濾條件。</li>
+<li>可重用教訓：負向搜尋先驗正對照、掃描範圍與分母；不能用零命中直接證明不存在。</li>
+<li>限制：本輪不重新計數；這是掃描方法失敗的歷史證據，不是新反組譯匯出。</li>
+</ul>
+<h2 id="f04兩個假說都能通過的測試無法裁決欄位語意">F04：兩個假說都能通過的測試，無法裁決欄位語意</h2>
+<ul>
+<li>來源：春之石 S3 §1–4；S1 的勘誤索引。</li>
+<li>初始假設：某欄位隨怪物等級單調上升，因此是生命值，並標成已確認。</li>
+<li>證據：來源說明生命值與經驗值都可能隨等級增長，原測試不能分開它們。</li>
+<li>如何否定：追傷害扣除及死亡判斷的實際欄位，再回查怪物資料的輸入端，定位到另一欄。</li>
+<li>修正理解：生命值有直接消費端證據；原候選欄位的經驗值解釋，在該篇筆記仍缺結算端證據。</li>
+<li>可重用教訓：先寫出競爭解釋，再設計結果不同的測試。推翻錯的答案，不等於其餘答案全部成立。</li>
+<li>限制：保留 S3 自己的不確定性，不用後來的概述替它補出沒有展示的讀寫端。</li>
+</ul>
+<h2 id="f05截圖轉換錯誤被誤認為原版換了字型">F05：截圖轉換錯誤，被誤認為原版換了字型</h2>
+<ul>
+<li>來源：WinCV W1，「oracle 截圖」「R/G/B 直條紋」及其後撤回的勘誤列。</li>
+<li>初始假設：原版截圖與字模樣板零命中，是 Wine 替換字型，因此無法作字模基準。</li>
+<li>證據：來源記錄截圖轉換器把 24 bpp 當每像素四位元組，造成色彩通道輪轉；純 CPU 畫面沒有同樣問題。</li>
+<li>如何否定：修復擷取轉換後重新比對，搭配字型 trace，來源記錄應用程式使用自身字型且樣板可命中。</li>
+<li>修正理解：零命中受到量測工具污染；另一個系統字型服務的是選單列。</li>
+<li>可重用教訓：修好觀測工具後，要重開由錯誤輸出導出的結論；修程式而不回填知識仍會留錯。</li>
+<li>限制：字身高度與格點列距另有不同定義，不把這次修正外推成所有字型幾何都相同。</li>
+</ul>
+<h2 id="f06記憶體已到指定畫格畫面卻仍是前一幀">F06：記憶體已到指定畫格，畫面卻仍是前一幀</h2>
+<ul>
+<li>來源：OnePCE O1 §6.1、O3 的執行參數與註解。</li>
+<li>初始假設：模擬器已跑到指定畫格，畫面擷取自然也是那一幀。</li>
+<li>證據：來源記錄 Mesen2 全速模式依牆鐘間隔略過繪製，記憶體傾印正確但畫面可能是舊的，且每次不一定相同。</li>
+<li>如何否定：來源要求固定關閉跳幀，並以相同腳本連跑兩次、比較畫面位元組。</li>
+<li>修正理解：模擬進度與呈現進度是兩個觀測邊界；決定性要涵蓋擷取鏈。</li>
+<li>可重用教訓：差異先分成機器狀態、呈現、擷取三層，不直接把舊圖當候選渲染缺陷。</li>
+<li>限制：O1 僅覆蓋指定三幀及參考視窗內區域，不能推論全部遊戲畫面一致。</li>
+</ul>
+<h2 id="f07外部測試語料的已知缺陷不能變成實作真值">F07：外部測試語料的已知缺陷不能變成實作真值</h2>
+<ul>
+<li>來源：Atari Talos T4，範圍與證據、排除範圍與驗收。</li>
+<li>初始假設：外部 CPU 語料的各欄位均可直接作完整驗收基準。</li>
+<li>證據：來源明列上游 TAS 語料的特殊讀改寫時序限制，並保留語料、工具、輸入雜湊。</li>
+<li>如何否定：來源以 Hatari 觀察支持局部時序訂正，保留其他狀態與存取順序的逐筆核對。</li>
+<li>修正理解：一份基準可以只對部分欄位有裁決力；語料修正須記理由與來源。</li>
+<li>可重用教訓：外部來源也需要能力邊界；不能只為了通過測試修改預期值。</li>
+<li>限制：本輪只萃取驗證方法，不重證硬體時序，不外推成腳位波形或實機逐週期相容性。</li>
+</ul>
+<h2 id="f08讀到靜態終點卻把整段時間線判成不存在">F08：讀到靜態終點，卻把整段時間線判成不存在</h2>
+<ul>
+<li>來源：炎龍騎士團 2 F2 §2.3、§2.4 與 2026-08-27 勘誤。</li>
+<li>初始假設：主選單是預存圖合成，所以 logo 沒有縮放；已讀到的捲動就是完整開場。</li>
+<li>證據：來源的連續畫格記錄顯示，數字 logo 在到達靜態主選單前縮小定位，另有先前未涵蓋的敘事過場。</li>
+<li>如何否定：從靜態資產轉向連續擷取；後續又核對第一幀，撤回錯誤的發行商標誌時間原點。</li>
+<li>修正理解：素材構成、顯示序列與起始時間是不同主張；同一批畫格也不是完整開場的自動證明。</li>
+<li>可重用教訓：事件性主張需要時間覆蓋；記錄漏拍、擷取起點與音訊能力。</li>
+<li>限制：F2 明列當輪無音訊路徑，不能以這批畫面裁決配樂同步或補出原版精確時長。</li>
+</ul>
+<h2 id="本輪讀碼發現的驗收風險">本輪讀碼發現的驗收風險</h2>
+<p><code>CONFIRMED</code>：OnePCE O2 的 <code>readWords</code> 在檔案不存在時回空值；測試呼叫端 遇空值便略過該記憶體區段。此外必要環境變數缺失會略過整個測試。 O1 的驗收條件卻要求同批 VRAM／SAT／色盤核對。</p>
+<p><code>STRONG_INFERENCE</code>：只讀測試總結果，可能無法知道規格要求的觀測是否齊全。 這是靜態控制流發現的風險，不宣稱歷史那次驗收真的缺檔，也不修改來源專案。 本手冊後續應要求分開回報相符、差異、缺資料、未支援與略過。</p>
+</article></main></div><footer><a href="index.html">王俊又 wicanr2</a> · AI 輔助軟體考古手冊 · <a href="library.html">全部文件 · All pages · 全ページ</a><p>證據先行，保留未知。 Evidence first. Keep uncertainty visible.</p></footer></body></html>

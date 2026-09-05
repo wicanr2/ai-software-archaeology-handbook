@@ -1,0 +1,131 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AI-Assisted Software Archaeology Handbook｜AI 軟體考古</title><link rel="canonical" href="https://wicanr2.github.io/ai-software-archaeology-handbook/handbook/en/README.html"><link rel="stylesheet" href="../../assets/reader.css"><link rel="icon" href="../../assets/favicon.svg"></head><body><a class="skip" href="#content">Skip to content</a><header><a href="../../index.html">王俊又 wicanr2</a><nav><a href="../../library.html">全部文件 · All pages · 全ページ</a></nav></header><div class="layout"><aside><details open><summary>Chapters</summary><nav><ul><li class="current"><a href="README.html">AI-Assisted Software Archaeology Handbook</a></li><li><a href="00-principles.html">00 — Establish the Question Before the Answer</a></li><li><a href="01-evidence.html">01 — Make Evidence Findable by Someone Else</a></li><li><a href="02-hypotheses.html">02 — Give a Hypothesis a Chance to Fail</a></li><li><a href="03-specification-gates.html">03 — Review Evidence Before Authorizing Implementation</a></li><li><a href="04-oracles.html">04 — An Oracle Has Limits Too</a></li><li><a href="05-differential-testing.html">05 — Compare the Same Thing and Preserve the First Divergence</a></li><li><a href="06-conformance.html">06 — Make Completion an Auditable Conclusion</a></li><li><a href="07-agent-workflows.html">07 — Hand Off Evidence, Not Impressions</a></li><li><a href="08-failure-patterns.html">08 — Use Failure Mechanisms to Choose the Next Observation</a></li><li><a href="worked-example.html">Appendix — A Complete Chain from Evidence to a Report</a></li></ul></nav></details><details><summary>研究與專案文件</summary><nav><ul><li><a href="../../project/AGENTS.html">AGENTS.md — Oracle-Driven Software Archaeology</a></li><li><a href="../../project/PLAN.html">PLAN.md — Oracle-Driven Software Archaeology</a></li><li><a href="../../project/README.html">AI 輔助軟體考古手冊</a></li><li><a href="../../project/WORKLOG.html">工作歷程</a></li><li><a href="../../failure-patterns.html">有來源的失敗模式</a></li><li><a href="../../handbook-review.html">手冊交付驗收</a></li><li><a href="../../inventory.html">案例盤點與證據索引</a></li><li><a href="../../methodology-draft.html">以證據驅動的軟體考古：方法草案</a></li><li><a href="../../pattern-matrix.html">跨專案模式矩陣</a></li><li><a href="../../pdf-release.html">PDF 排版與發行</a></li><li><a href="../../releases/v.1.0.0-20260905.html">三語手冊 PDF 與流程圖</a></li><li><a href="../../site-release.html">宣傳網站與公開交付</a></li></ul></nav></details></aside><main id="content"><div class="languages"><a href="../README.html">繁體中文</a> · <a href="README.html">English</a> · <a href="../ja/README.html">日本語</a></div><details class="toc"><summary>On this page</summary><ul><li class="depth-2"><a href="#contents">Contents</a></li><li class="depth-2"><a href="#evidence-and-translation-policy">Evidence and translation policy</a></li><li class="depth-2"><a href="#terminology">Terminology</a></li></ul></details><article><h1 id="ai-assisted-software-archaeology-handbook">AI-Assisted Software Archaeology Handbook</h1>
+<p><a href="../README.html">繁體中文</a> · English · <a href="../ja/README.html">日本語</a></p>
+<p>This handbook is for engineers who can read code but may be new to reverse engineering, and for the AI agents working with them. You do not need to know IDA or an emulator first. Start by asking what supports a conclusion; then choose a tool that can obtain the necessary evidence.</p>
+<p>The goal is to help you write a falsifiable hypothesis, an evidence-backed specification, reproducible comparison conditions, and a conformance statement that does not overreach. This is not a guide to translating an entire executable line by line. Finite tests are not a mathematical proof of every behavior.</p>
+<h2 id="contents">Contents</h2>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr class="header">
+<th>Chapter</th>
+<th>Topic</th>
+<th>Practical outcome</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>00</td>
+<td><a href="00-principles.html">Principles</a></td>
+<td>Distinguish internal consistency, reference agreement, and usability</td>
+</tr>
+<tr class="even">
+<td>01</td>
+<td><a href="01-evidence.html">Evidence</a></td>
+<td>Preserve observations and check what the tools can actually see</td>
+</tr>
+<tr class="odd">
+<td>02</td>
+<td><a href="02-hypotheses.html">Hypotheses</a></td>
+<td>Design tests that distinguish competing explanations</td>
+</tr>
+<tr class="even">
+<td>03</td>
+<td><a href="03-specification-gates.html">Specification gates</a></td>
+<td>Decide when implementation is authorized</td>
+</tr>
+<tr class="odd">
+<td>04</td>
+<td><a href="04-oracles.html">Oracles</a></td>
+<td>Select a reference with an explicit scope of authority</td>
+</tr>
+<tr class="even">
+<td>05</td>
+<td><a href="05-differential-testing.html">Differential testing</a></td>
+<td>Locate divergence and handle missing data and tolerances</td>
+</tr>
+<tr class="odd">
+<td>06</td>
+<td><a href="06-conformance.html">Conformance</a></td>
+<td>Write an auditable, bounded completion claim</td>
+</tr>
+<tr class="even">
+<td>07</td>
+<td><a href="07-agent-workflows.html">Agent workflows</a></td>
+<td>Scope tasks, respect gates, and leave useful handoffs</td>
+</tr>
+<tr class="odd">
+<td>08</td>
+<td><a href="08-failure-patterns.html">Failure patterns</a></td>
+<td>Recognize how eight documented mistakes developed</td>
+</tr>
+<tr class="even">
+<td>Appendix</td>
+<td><a href="worked-example.html">A complete worked example</a></td>
+<td>Follow a whole chain, including a wrong candidate and a missing observation</td>
+</tr>
+</tbody>
+</table></div>
+<p>Read in order the first time. When investigating a mismatch, start with chapters 04–06, then revisit the assumptions in 01–03. The appendix includes self-check questions and answers; no historical software is needed.</p>
+<h2 id="evidence-and-translation-policy">Evidence and translation policy</h2>
+<p>This edition follows the Traditional Chinese manuscript. Chapter numbers, source IDs, confidence levels, and example values are shared across editions. Historical cases use IDs such as M1, S3, and O2 from the <a href="../../inventory.html#固定來源索引">fixed source registry</a>. The registry is in Traditional Chinese; its commit-pinned links, paths, and hashes are language-independent.</p>
+<p>Source documents and selected code were inspected. Historical run results remain reports by the original projects, not new executions performed for this book. Each chapter states that boundary. General engineering recommendations are usually <code>STRONG_INFERENCE</code>; mandatory repository rules are policies, not empirical laws. The synthetic example defines its own contract and makes no claim about a historical program.</p>
+<h2 id="terminology">Terminology</h2>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr class="header">
+<th>Term</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Evidence / raw observation</td>
+<td>A locatable record of what was observed, separate from interpretation</td>
+</tr>
+<tr class="even">
+<td>Claim / hypothesis</td>
+<td>A scoped assertion / an explanation still requiring a discriminating test</td>
+</tr>
+<tr class="odd">
+<td>Provenance</td>
+<td>The chain identifying sources, versions, locations, and capture methods</td>
+</tr>
+<tr class="even">
+<td>Oracle</td>
+<td>A reference qualified to decide a particular comparison</td>
+</tr>
+<tr class="odd">
+<td>Candidate implementation</td>
+<td>The implementation being evaluated</td>
+</tr>
+<tr class="even">
+<td>Differential validation</td>
+<td>Comparing reference and candidate under declared conditions</td>
+</tr>
+<tr class="odd">
+<td>Conformance</td>
+<td>Meeting a versioned contract within its declared acceptance scope</td>
+</tr>
+<tr class="even">
+<td>Observation boundary</td>
+<td>The event or point at which state is captured</td>
+</tr>
+<tr class="odd">
+<td><code>CONFIRMED</code></td>
+<td>Directly supported within the stated scope</td>
+</tr>
+<tr class="even">
+<td><code>STRONG_INFERENCE</code></td>
+<td>Strong support with a missing direct link</td>
+</tr>
+<tr class="odd">
+<td><code>HYPOTHESIS</code></td>
+<td>A plausible explanation awaiting testing</td>
+</tr>
+<tr class="even">
+<td><code>UNKNOWN</code></td>
+<td>Insufficient or unresolved evidence</td>
+</tr>
+</tbody>
+</table></div>
+<p><code>DRAFT</code>, <code>READY</code>, and <code>CONFORMED</code> are specification states, not replacements for confidence levels. Worksheets are for reading and planning; they are not released schemas or APIs. The planned <code>osa</code> CLI is not implemented by this handbook.</p>
+</article></main></div><footer><a href="../../index.html">王俊又 wicanr2</a> · AI 輔助軟體考古手冊 · <a href="../../library.html">全部文件 · All pages · 全ページ</a><p>證據先行，保留未知。 Evidence first. Keep uncertainty visible.</p></footer></body></html>

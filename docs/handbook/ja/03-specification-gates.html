@@ -1,0 +1,64 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>03　仕様は実装前の証拠審査｜AI 軟體考古</title><link rel="canonical" href="https://wicanr2.github.io/ai-software-archaeology-handbook/handbook/ja/03-specification-gates.html"><link rel="stylesheet" href="../../assets/reader.css"><link rel="icon" href="../../assets/favicon.svg"></head><body><a class="skip" href="#content">本文へ</a><header><a href="../../index.html">王俊又 wicanr2</a><nav><a href="../../library.html">全部文件 · All pages · 全ページ</a></nav></header><div class="layout"><aside><details open><summary>章一覧</summary><nav><ul><li><a href="README.html">AI 支援ソフトウェア考古学ハンドブック</a></li><li><a href="00-principles.html">00　答えの前に、何を確かめるかを定める</a></li><li><a href="01-evidence.html">01　別の人が再び見つけられる証拠を残す</a></li><li><a href="02-hypotheses.html">02　仮説が失敗できる検査を作る</a></li><li class="current"><a href="03-specification-gates.html">03　仕様は実装前の証拠審査</a></li><li><a href="04-oracles.html">04　判定基準にも限界がある</a></li><li><a href="05-differential-testing.html">05　同じものを比較し、最初の不一致を残す</a></li><li><a href="06-conformance.html">06　完了を監査できる結論にする</a></li><li><a href="07-agent-workflows.html">07　印象ではなく証拠を引き継ぐ</a></li><li><a href="08-failure-patterns.html">08　失敗の仕組みから次の観測を選ぶ</a></li><li><a href="worked-example.html">付録　証拠から報告までを一つの例でたどる</a></li></ul></nav></details><details><summary>研究與專案文件</summary><nav><ul><li><a href="../../project/AGENTS.html">AGENTS.md — Oracle-Driven Software Archaeology</a></li><li><a href="../../project/PLAN.html">PLAN.md — Oracle-Driven Software Archaeology</a></li><li><a href="../../project/README.html">AI 輔助軟體考古手冊</a></li><li><a href="../../project/WORKLOG.html">工作歷程</a></li><li><a href="../../failure-patterns.html">有來源的失敗模式</a></li><li><a href="../../handbook-review.html">手冊交付驗收</a></li><li><a href="../../inventory.html">案例盤點與證據索引</a></li><li><a href="../../methodology-draft.html">以證據驅動的軟體考古：方法草案</a></li><li><a href="../../pattern-matrix.html">跨專案模式矩陣</a></li><li><a href="../../pdf-release.html">PDF 排版與發行</a></li><li><a href="../../releases/v.1.0.0-20260905.html">三語手冊 PDF 與流程圖</a></li><li><a href="../../site-release.html">宣傳網站與公開交付</a></li></ul></nav></details></aside><main id="content"><div class="languages"><a href="../03-specification-gates.html">繁體中文</a> · <a href="../en/03-specification-gates.html">English</a> · <a href="03-specification-gates.html">日本語</a></div><details class="toc"><summary>このページの内容</summary><ul><li class="depth-2"><a href="#三つの状態">三つの状態</a></li><li class="depth-2"><a href="#ready-の審査項目">READY の審査項目</a></li><li class="depth-2"><a href="#小さな契約の形">小さな契約の形</a></li><li class="depth-2"><a href="#実装中に不足を見つけたら">実装中に不足を見つけたら</a></li><li class="depth-3"><a href="#出典と主張の範囲">出典と主張の範囲</a></li></ul></details><article><h1 id="03-仕様は実装前の証拠審査">03　仕様は実装前の証拠審査</h1>
+<p><a href="02-hypotheses.html">前の章</a> · <a href="README.html">目次</a> · <a href="04-oracles.html">次の章</a></p>
+<p>仕様は、考えを正式な文章にするだけのものではありません。実装者と審査者が、合法な入力、状態の変化、比較可能な出力、欠落の扱い、受入条件について同じ答えを持てる必要があります。答えがない箇所は明記し、実装者の推測に任せません。</p>
+<h2 id="三つの状態">三つの状態</h2>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr class="header">
+<th>状態</th>
+<th>何がそろっているか</th>
+<th>許される作業</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>DRAFT</code></td>
+<td>確認済みの断片を含むこともあるが、必要条件が不足した契約</td>
+<td>調査、隔離実験、捨てられる試作</td>
+</tr>
+<tr class="even">
+<td><code>READY</code></td>
+<td>範囲と動作に証拠があり、不明点、事例、受入条件を審査済み</td>
+<td>その範囲の正式実装</td>
+</tr>
+<tr class="odd">
+<td><code>CONFORMED</code></td>
+<td>特定の候補版が宣言した比較と必須検査を通過</td>
+<td>同じ範囲で適合結果を引用</td>
+</tr>
+</tbody>
+</table></div>
+<p>これは工程の状態であり、主張の確信度ではありません。READY で不明な機能を除外できるのは、依頼された切片を妨げない場合だけです。仕様を縮めて必須機能を完了扱いにしてはいけません。CONFORMED も除外項目を証明しません。</p>
+<h2 id="ready-の審査項目">READY の審査項目</h2>
+<p>実装可能な仕様には最低限、次が必要です。</p>
+<ol type="1">
+<li>サブシステム、対象版、仕様版、実際の利用者目標。</li>
+<li>個々の主張と出典。原版証拠、推論、意図的差異、新規設計を区別。</li>
+<li>入力、出力、初期状態、不変条件。</li>
+<li>エラー、未対応版、必須データ不足時の動作。</li>
+<li>観測フィールドと取得境界。</li>
+<li>判定基準、正常例と反例、比較規則。</li>
+<li>既知の不明点、阻害するかとその理由、明確な対象外範囲。</li>
+<li>受入条件、審査者と判断、変更後の再検証条件。</li>
+</ol>
+<p>反例がない仕様は、もっともらしい出力しか検査しない危険があります。誤った候補を落とせる例を少なくとも一つ用意し、テストがその違いを観測できるようにします。</p>
+<h2 id="小さな契約の形">小さな契約の形</h2>
+<p>以下は付録の人工的な教材契約であり、原版から復元した形式ではありません。</p>
+<pre class="text"><code>仕様：SPEC-ACC-v1
+状態：整数 value、一つだけ。範囲は 0..255。
+入力：要求ごとに正確に二 bytes。opcode、operand。
+01 n：value = min(255, value + n)、ok を返す。
+02 00：value = 0、ok を返す。
+02 n（n が非ゼロ）：invalid_operand、状態不変。
+その他の opcode：unknown_operation、状態不変。
+長さが 2 以外：invalid_length、状態不変。opcode より先に検査。
+観測：各要求の処理後の value と結果コード。
+対象外：永続化、画面、タイミング、並行処理、他の版。
+必須例：通常加算、上限、リセット、不正入力、エラー後の正常操作。</code></pre>
+<p>「自分たちが定義した契約」と「原版がそう動く」は違います。人工契約は合成テストの権威ある参照になれますが、歴史的互換性の証明にはなりません。実際の考古では、各規則を証拠につなぐか、不足を明示します。</p>
+<h2 id="実装中に不足を見つけたら">実装中に不足を見つけたら</h2>
+<p>原版は不正要求に対して状態を変えてからエラーを返すらしいのに、仕様は原子的な失敗を要求しているとします。証拠を確かめて、該当条項と事例に戻ります。旧版の合格報告を残し、そのラベルを新版へ流用しません。</p>
+<p>審査とはコード一行ごとに利用者へ質問することではありません。事実は技術者が調べます。動作、形式、構成、忠実度、公開方法を実質的に変える取捨選択は利用者が決めます。許可された差異だと仕様に記し、後で不具合や原版事実と混同しないようにします。</p>
+<h3 id="出典と主張の範囲">出典と主張の範囲</h3>
+<p><a href="../../inventory.html#固定來源索引">P2、T2、T3</a>はゲートと異なる状態の仕様の共存を記録しています。確認した版では Talos の制御契約は READY、実行証跡の保存形式は DRAFT であることが <code>CONFIRMED</code> です。審査表は <code>STRONG_INFERENCE</code>、三状態ゲートは既存の規則でもあります。</p>
+</article></main></div><footer><a href="../../index.html">王俊又 wicanr2</a> · AI 輔助軟體考古手冊 · <a href="../../library.html">全部文件 · All pages · 全ページ</a><p>證據先行，保留未知。 Evidence first. Keep uncertainty visible.</p></footer></body></html>

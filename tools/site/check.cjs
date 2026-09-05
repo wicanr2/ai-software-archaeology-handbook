@@ -29,6 +29,16 @@ const remote = process.env.SITE_URL;
   try {
     browser=await puppeteer.launch({headless:true,args:['--no-sandbox','--disable-dev-shm-usage'],userDataDir:'/tmp/osa-site-browser'});
     const reports=[];
+    const manifest=JSON.parse(fs.readFileSync('/work/docs/site-manifest.json')).pages;
+    for (const record of manifest) {
+      const page=await browser.newPage();await page.setViewport({width:390,height:900});
+      const response=await page.goto(base+record.page,{waitUntil:'load'});assert.equal(response.status(),200,record.page);
+      assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1),false,record.page);
+      assert.ok(await page.$eval('article',e=>e.textContent.length)>100,record.page);
+      if(record.page.endsWith('00-principles.html')||record.page.endsWith('worked-example.html')) await page.screenshot({path:path.join(output,record.page.replaceAll('/','-')+'.png'),fullPage:true});
+      await page.close();
+    }
+    console.log(`${manifest.length} 份文件內頁：手機寬度、完整文章容器與 HTTP 狀態通過。`);
     for(const width of [1440,768,390,320]) {
       const page=await browser.newPage();const errors=[];const requests=[];
       page.on('pageerror',e=>errors.push(e.message));

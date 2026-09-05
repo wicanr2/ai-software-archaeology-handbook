@@ -1,0 +1,56 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>04　判定基準にも限界がある｜AI 軟體考古</title><link rel="canonical" href="https://wicanr2.github.io/ai-software-archaeology-handbook/handbook/ja/04-oracles.html"><link rel="stylesheet" href="../../assets/reader.css"><link rel="icon" href="../../assets/favicon.svg"></head><body><a class="skip" href="#content">本文へ</a><header><a href="../../index.html">王俊又 wicanr2</a><nav><a href="../../library.html">全部文件 · All pages · 全ページ</a></nav></header><div class="layout"><aside><details open><summary>章一覧</summary><nav><ul><li><a href="README.html">AI 支援ソフトウェア考古学ハンドブック</a></li><li><a href="00-principles.html">00　答えの前に、何を確かめるかを定める</a></li><li><a href="01-evidence.html">01　別の人が再び見つけられる証拠を残す</a></li><li><a href="02-hypotheses.html">02　仮説が失敗できる検査を作る</a></li><li><a href="03-specification-gates.html">03　仕様は実装前の証拠審査</a></li><li class="current"><a href="04-oracles.html">04　判定基準にも限界がある</a></li><li><a href="05-differential-testing.html">05　同じものを比較し、最初の不一致を残す</a></li><li><a href="06-conformance.html">06　完了を監査できる結論にする</a></li><li><a href="07-agent-workflows.html">07　印象ではなく証拠を引き継ぐ</a></li><li><a href="08-failure-patterns.html">08　失敗の仕組みから次の観測を選ぶ</a></li><li><a href="worked-example.html">付録　証拠から報告までを一つの例でたどる</a></li></ul></nav></details><details><summary>研究與專案文件</summary><nav><ul><li><a href="../../project/AGENTS.html">AGENTS.md — Oracle-Driven Software Archaeology</a></li><li><a href="../../project/PLAN.html">PLAN.md — Oracle-Driven Software Archaeology</a></li><li><a href="../../project/README.html">AI 輔助軟體考古手冊</a></li><li><a href="../../project/WORKLOG.html">工作歷程</a></li><li><a href="../../failure-patterns.html">有來源的失敗模式</a></li><li><a href="../../handbook-review.html">手冊交付驗收</a></li><li><a href="../../inventory.html">案例盤點與證據索引</a></li><li><a href="../../methodology-draft.html">以證據驅動的軟體考古：方法草案</a></li><li><a href="../../pattern-matrix.html">跨專案模式矩陣</a></li><li><a href="../../pdf-release.html">PDF 排版與發行</a></li><li><a href="../../releases/v.1.0.0-20260905.html">三語手冊 PDF 與流程圖</a></li><li><a href="../../site-release.html">宣傳網站與公開交付</a></li></ul></nav></details></aside><main id="content"><div class="languages"><a href="../04-oracles.html">繁體中文</a> · <a href="../en/04-oracles.html">English</a> · <a href="04-oracles.html">日本語</a></div><details class="toc"><summary>このページの内容</summary><ul><li class="depth-2"><a href="#問いに合う参照を選ぶ">問いに合う参照を選ぶ</a></li><li class="depth-2"><a href="#追跡できる一回の実行">追跡できる一回の実行</a></li><li class="depth-2"><a href="#候補より先に再生を確かめる">候補より先に再生を確かめる</a></li><li class="depth-2"><a href="#基準同士が矛盾したら">基準同士が矛盾したら</a></li><li class="depth-3"><a href="#出典と主張の範囲">出典と主張の範囲</a></li></ul></details><article><h1 id="04-判定基準にも限界がある">04　判定基準にも限界がある</h1>
+<p><a href="03-specification-gates.html">前の章</a> · <a href="README.html">目次</a> · <a href="05-differential-testing.html">次の章</a></p>
+<p>判定基準（オラクル）は、特定の問いを裁定するための参照です。原版プログラム、外部エミュレータ、明示的な仕様、独立実装などが該当します。大切なのは、そのフィールドをなぜ裁定できるかです。「別の道具も同じ結果」だけでは、共通の誤った前提を持つ可能性を除けません。</p>
+<h2 id="問いに合う参照を選ぶ">問いに合う参照を選ぶ</h2>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr class="header">
+<th>問い</th>
+<th>適する参照</th>
+<th>残すべき制約</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>原版メニューのキー応答</td>
+<td>固定した原版を通常入口から再生</td>
+<td>環境、初期状態、入力受付時点</td>
+</tr>
+<tr class="even">
+<td>復号内容は同じか</td>
+<td>同じ入力に対する独立デコーダ</td>
+<td>対応版、文字コード、エラー、コードの共通由来</td>
+</tr>
+<tr class="odd">
+<td>命令の状態遷移は同じか</td>
+<td>初期状態が既知の原版／外部コア</td>
+<td>比較したレジスタ、メモリ、命令だけ</td>
+</tr>
+<tr class="even">
+<td>ハードウェア値の妥当な近似は何か</td>
+<td>公開ハードウェア契約</td>
+<td>仕様近似であり、実機のサイクル一致ではない</td>
+</tr>
+<tr class="odd">
+<td>合成例の正解は何か</td>
+<td>人工契約と独立した手計算</td>
+<td>教材内だけ。歴史的互換性を主張しない</td>
+</tr>
+</tbody>
+</table></div>
+<p>マニュアル、攻略、利用者の記憶も有用な問いを示しますが、説明、観察、実際のプログラム状態を分けます。「戦場の大きさ」が画面の視野と内部配列を指すことがあります。同じ言葉の層を確認してから矛盾を判断します。</p>
+<h2 id="追跡できる一回の実行">追跡できる一回の実行</h2>
+<p>原版と候補の識別、基準の版、道具の image ID、設定、初期セーブ／状態、入力、停止条件を固定します。実行予算を設け、失敗後に背景処理を残しません。比較前に生の観測を保存し、正規化結果で上書きしません。</p>
+<p>観測境界は「17 番目の要求の処理後」「次の命令入口」「指定フレームの描画完了後」のような識別可能な時点にします。キーを送って一秒待つだけでは、同じ状態を保証できません。時間駆動しか使えない原版なら、不確実性、反復回数、整列条件を記録し、決定性を捏造しません。</p>
+<p>Parhelion は dispatch 境界で状態を取り、既に命令取得が進んだ分を調整しています。コアの差分検査には適しますが、ゲームを通常のメニューから目標まで進めた証拠の代わりにはなりません（P3）。</p>
+<h2 id="候補より先に再生を確かめる">候補より先に再生を確かめる</h2>
+<p>同じ基準を同じ条件で二回動かし、基準同士を比較します。不一致なら、乱数、スケジューリング、設定、取得時機、非決定的フィールドを調べてから候補を判断します。二回の一致が支えるのはその条件であり、全条件の決定性ではありません。</p>
+<p>OnePCE の記録では、Mesen2 の全速動作は描画を飛ばし、メモリが指定フレームに達しても画像が古い場合があります。そのスクリプトはフレームスキップを無効にしています（O1、O3）。模擬処理の完了と観測の更新は別々の検査です。</p>
+<p>観測器には正の対照とエラー例を与えます。道具や必須成果物の不在は失敗にし、空ディレクトリを差分ゼロにしません。画像取得では既知の合成画像を使い、寸法、行幅、チャンネル、切り出しを確認します。</p>
+<h2 id="基準同士が矛盾したら">基準同士が矛盾したら</h2>
+<p>版と定義を合わせ、フィールドごとに証拠力を調べます。Talos の TAS 仕様は外部テストコーパスのタイミング上の限界を記し、別の参照で局所的訂正を支えつつ、他のフィールドの検査を維持しています（T4）。外部であることは無謬であることではありません。</p>
+<p>旧期待値、修正値、理由、証拠、影響事例、未解決範囲を残します。裁定できなければ <code>UNKNOWN</code> とし、該当する適合声明を止めます。候補を最も通しやすい参照を選んではいけません。</p>
+<p>PCM／DAC／PIT などのタイミングは、本プロジェクトの停止線に従い公開契約を優先し、<code>hardware-spec approximation</code> と記します。ハードウェア考古を再開するには別の明示的な許可が必要です。</p>
+<h3 id="出典と主張の範囲">出典と主張の範囲</h3>
+<p><a href="../../inventory.html#固定來源索引">O1、O3、T4、P3、W2</a>は取得、テストコーパスの訂正、状態境界、形式参照の例です。出典内容の確認は <code>CONFIRMED</code>、参照選定と再生手順は <code>STRONG_INFERENCE</code> です。エミュレータ結果を元の実機測定とは呼びません。</p>
+</article></main></div><footer><a href="../../index.html">王俊又 wicanr2</a> · AI 輔助軟體考古手冊 · <a href="../../library.html">全部文件 · All pages · 全ページ</a><p>證據先行，保留未知。 Evidence first. Keep uncertainty visible.</p></footer></body></html>

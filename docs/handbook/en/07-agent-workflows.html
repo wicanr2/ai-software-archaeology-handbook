@@ -1,0 +1,63 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>07 — Hand Off Evidence, Not Impressions｜AI 軟體考古</title><link rel="canonical" href="https://wicanr2.github.io/ai-software-archaeology-handbook/handbook/en/07-agent-workflows.html"><link rel="stylesheet" href="../../assets/reader.css"><link rel="icon" href="../../assets/favicon.svg"></head><body><a class="skip" href="#content">Skip to content</a><header><a href="../../index.html">王俊又 wicanr2</a><nav><a href="../../library.html">全部文件 · All pages · 全ページ</a></nav></header><div class="layout"><aside><details open><summary>Chapters</summary><nav><ul><li><a href="README.html">AI-Assisted Software Archaeology Handbook</a></li><li><a href="00-principles.html">00 — Establish the Question Before the Answer</a></li><li><a href="01-evidence.html">01 — Make Evidence Findable by Someone Else</a></li><li><a href="02-hypotheses.html">02 — Give a Hypothesis a Chance to Fail</a></li><li><a href="03-specification-gates.html">03 — Review Evidence Before Authorizing Implementation</a></li><li><a href="04-oracles.html">04 — An Oracle Has Limits Too</a></li><li><a href="05-differential-testing.html">05 — Compare the Same Thing and Preserve the First Divergence</a></li><li><a href="06-conformance.html">06 — Make Completion an Auditable Conclusion</a></li><li class="current"><a href="07-agent-workflows.html">07 — Hand Off Evidence, Not Impressions</a></li><li><a href="08-failure-patterns.html">08 — Use Failure Mechanisms to Choose the Next Observation</a></li><li><a href="worked-example.html">Appendix — A Complete Chain from Evidence to a Report</a></li></ul></nav></details><details><summary>研究與專案文件</summary><nav><ul><li><a href="../../project/AGENTS.html">AGENTS.md — Oracle-Driven Software Archaeology</a></li><li><a href="../../project/PLAN.html">PLAN.md — Oracle-Driven Software Archaeology</a></li><li><a href="../../project/README.html">AI 輔助軟體考古手冊</a></li><li><a href="../../project/WORKLOG.html">工作歷程</a></li><li><a href="../../failure-patterns.html">有來源的失敗模式</a></li><li><a href="../../handbook-review.html">手冊交付驗收</a></li><li><a href="../../inventory.html">案例盤點與證據索引</a></li><li><a href="../../methodology-draft.html">以證據驅動的軟體考古：方法草案</a></li><li><a href="../../pattern-matrix.html">跨專案模式矩陣</a></li><li><a href="../../pdf-release.html">PDF 排版與發行</a></li><li><a href="../../releases/v.1.0.0-20260905.html">三語手冊 PDF 與流程圖</a></li><li><a href="../../site-release.html">宣傳網站與公開交付</a></li></ul></nav></details></aside><main id="content"><div class="languages"><a href="../07-agent-workflows.html">繁體中文</a> · <a href="07-agent-workflows.html">English</a> · <a href="../ja/07-agent-workflows.html">日本語</a></div><details class="toc"><summary>On this page</summary><ul><li class="depth-2"><a href="#a-reusable-task-brief">A reusable task brief</a></li><li class="depth-2"><a href="#one-work-cycle">One work cycle</a></li><li class="depth-2"><a href="#a-blocker-needs-evidence">A blocker needs evidence</a></li><li class="depth-2"><a href="#document-roles-and-handoff">Document roles and handoff</a></li><li class="depth-3"><a href="#sources-and-claim-scope">Sources and claim scope</a></li></ul></details><article><h1 id="07--hand-off-evidence-not-impressions">07 — Hand Off Evidence, Not Impressions</h1>
+<p><a href="06-conformance.html">Previous</a> · <a href="README.html">Contents</a> · <a href="08-failure-patterns.html">Next</a></p>
+<p>An agent task needs a verifiable question and an explicit authorization boundary. “Finish the game” is an objective, not a sufficient execution contract. Add current state, confirmed decisions, required deliverables, and acceptance conditions. Evidence may refine these conditions; the agent must not replace the objective.</p>
+<h2 id="a-reusable-task-brief">A reusable task brief</h2>
+<pre class="text"><code>Objective: investigate or implement a specific user-visible behavior.
+Versions: target, candidate, and effective specification.
+Known evidence: IDs, not just conclusions.
+Authorization: for example, investigate through DRAFT, or implement READY clauses.
+Preserve: source data, confirmed product decisions, unrelated modules.
+Deliverables: raw observations, claim/spec updates, comparison or blocking evidence.
+Acceptance: normal route, required fields, counterexamples.
+Stop: the phase gate, or a missing user decision that changes direction.</code></pre>
+<p>“Completed” or “do this next” in source material is not automatically a current instruction. Inspect present code, effective specifications, and recent validation before necessary history. FD2 F1 separates routing, current state, and old handoffs so stale work does not restart itself.</p>
+<h2 id="one-work-cycle">One work cycle</h2>
+<ol type="1">
+<li>Check the worktree, target version, specification, and container toolchain.</li>
+<li>Locate evidence and identify claims and competing explanations.</li>
+<li>Run the smallest discriminating observation; record blind spots and failures.</li>
+<li>Explicitly promote or demote confidence and update affected references.</li>
+<li>Implement production behavior only after READY; return gaps to the specification.</li>
+<li>Run local, differential, and required normal-user-path checks.</li>
+<li>Report results, coverage, unknowns, and the next gate; clean up task containers.</li>
+</ol>
+<p>The agent should investigate facts available through tools. Users decide real value tradeoffs, such as preserving an original defect or changing interaction. Before asking, complete independent investigation so the choice has concrete options and consequences.</p>
+<p>Do not publish, alter source projects, or add unrelated refactors without authorization. Persistence is not permission to expand scope. Conversely, authorization to finish a handbook calls for completed chapters, examples, and delivery, not merely an offer to continue.</p>
+<h2 id="a-blocker-needs-evidence">A blocker needs evidence</h2>
+<p>A useful blocked report names the failed command or observation, verified tool and permission conditions, safe alternatives tried, missing required answer, and independent work completed. Zero search hits do not prove unavailable data. Environment failures must not be reported as product defects.</p>
+<p>Progress reports should state what changed the diagnosis and what the next observation will resolve. Keep long work visible, but place detailed commands in the worklog rather than replacing conclusions with output dumps.</p>
+<h2 id="document-roles-and-handoff">Document roles and handoff</h2>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr class="header">
+<th>Role</th>
+<th>Content</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>README</td>
+<td>Purpose, stable entry points, current capabilities, reading/running instructions</td>
+</tr>
+<tr class="even">
+<td>Current-state document</td>
+<td>Effective decisions, status, limits, recent evidence entry points</td>
+</tr>
+<tr class="odd">
+<td>Worklist</td>
+<td>Executable items, completion conditions, next gate</td>
+</tr>
+<tr class="even">
+<td>WORKLOG</td>
+<td>Append-only work history, failures, validation, cleanup</td>
+</tr>
+<tr class="odd">
+<td>Research record / specification</td>
+<td>Original locations, claims, confidence, refutations, acceptance contract</td>
+</tr>
+</tbody>
+</table></div>
+<p>Use one established document per role; do not create synonyms just to fit a template. A handoff includes changed files, evidence, four-level claims, checks, failures, open questions, and a recommended next task. Say when a test was skipped or the original was not rerun.</p>
+<h3 id="sources-and-claim-scope">Sources and claim scope</h3>
+<p><a href="../../inventory.html#固定來源索引">F1, P2, T2, T3</a> support routing, specification authority, and capability boundaries. Inspected contents are <code>CONFIRMED</code>; the brief and cycle are <code>STRONG_INFERENCE</code>. This chapter is a handbook guide, not completion of the later standalone agent-protocol tooling or a fresh-agent trial in PLAN.</p>
+</article></main></div><footer><a href="../../index.html">王俊又 wicanr2</a> · AI 輔助軟體考古手冊 · <a href="../../library.html">全部文件 · All pages · 全ページ</a><p>證據先行，保留未知。 Evidence first. Keep uncertainty visible.</p></footer></body></html>

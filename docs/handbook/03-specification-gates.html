@@ -1,0 +1,64 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>03　規格是實作前的證據審查｜AI 軟體考古</title><link rel="canonical" href="https://wicanr2.github.io/ai-software-archaeology-handbook/handbook/03-specification-gates.html"><link rel="stylesheet" href="../assets/reader.css"><link rel="icon" href="../assets/favicon.svg"></head><body><a class="skip" href="#content">跳至內文</a><header><a href="../index.html">王俊又 wicanr2</a><nav><a href="../library.html">全部文件 · All pages · 全ページ</a></nav></header><div class="layout"><aside><details open><summary>章節導覽</summary><nav><ul><li><a href="README.html">AI 輔助軟體考古手冊</a></li><li><a href="00-principles.html">00　先證明題目，再證明答案</a></li><li><a href="01-evidence.html">01　讓證據能被另一個人重新找到</a></li><li><a href="02-hypotheses.html">02　讓假說有機會失敗</a></li><li class="current"><a href="03-specification-gates.html">03　規格是實作前的證據審查</a></li><li><a href="04-oracles.html">04　行為基準也有能力邊界</a></li><li><a href="05-differential-testing.html">05　比較同一件事，保留第一個分歧</a></li><li><a href="06-conformance.html">06　把完成聲明寫成可稽核的結論</a></li><li><a href="07-agent-workflows.html">07　讓代理帶著證據交接，而不是帶著印象</a></li><li><a href="08-failure-patterns.html">08　從錯誤形成方式選下一個觀測</a></li><li><a href="worked-example.html">附錄　從證據到符合性報告：一個完整演練</a></li></ul></nav></details><details><summary>研究與專案文件</summary><nav><ul><li><a href="../project/AGENTS.html">AGENTS.md — Oracle-Driven Software Archaeology</a></li><li><a href="../project/PLAN.html">PLAN.md — Oracle-Driven Software Archaeology</a></li><li><a href="../project/README.html">AI 輔助軟體考古手冊</a></li><li><a href="../project/WORKLOG.html">工作歷程</a></li><li><a href="../failure-patterns.html">有來源的失敗模式</a></li><li><a href="../handbook-review.html">手冊交付驗收</a></li><li><a href="../inventory.html">案例盤點與證據索引</a></li><li><a href="../methodology-draft.html">以證據驅動的軟體考古：方法草案</a></li><li><a href="../pattern-matrix.html">跨專案模式矩陣</a></li><li><a href="../pdf-release.html">PDF 排版與發行</a></li><li><a href="../releases/v.1.0.0-20260905.html">三語手冊 PDF 與流程圖</a></li><li><a href="../site-release.html">宣傳網站與公開交付</a></li></ul></nav></details></aside><main id="content"><div class="languages"><a href="03-specification-gates.html">繁體中文</a> · <a href="en/03-specification-gates.html">English</a> · <a href="ja/03-specification-gates.html">日本語</a></div><details class="toc"><summary>本頁目錄</summary><ul><li class="depth-2"><a href="#三個狀態">三個狀態</a></li><li class="depth-2"><a href="#ready-審查表">READY 審查表</a></li><li class="depth-2"><a href="#一個小規格的形狀">一個小規格的形狀</a></li><li class="depth-2"><a href="#實作途中遇到缺口">實作途中遇到缺口</a></li><li class="depth-3"><a href="#來源與主張範圍">來源與主張範圍</a></li></ul></details><article><h1 id="03-規格是實作前的證據審查">03　規格是實作前的證據審查</h1>
+<p><a href="02-hypotheses.html">上一章</a> · <a href="README.html">目錄</a> · <a href="04-oracles.html">下一章</a></p>
+<p>規格不只是把想法寫得正式。它必須讓實作者與審查者對同一件事有共同答案： 什麼輸入合法、狀態如何改變、哪些輸出可比較、缺失怎麼處理，以及做到哪裡才算符合。 無法回答的部分要明列，不留給實作者補猜。</p>
+<h2 id="三個狀態">三個狀態</h2>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr class="header">
+<th>狀態</th>
+<th>已具備什麼</th>
+<th>可以做什麼</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>DRAFT</code></td>
+<td>調查中的契約，可能包含已證實片段，但仍缺必要條件</td>
+<td>蒐證、隔離實驗、可丟棄原型</td>
+</tr>
+<tr class="even">
+<td><code>READY</code></td>
+<td>範圍與行為有證據；未知、案例及驗收條件已審查</td>
+<td>在該範圍內寫正式實作</td>
+</tr>
+<tr class="odd">
+<td><code>CONFORMED</code></td>
+<td>指定候選版本通過規格宣告的比較與必要檢查</td>
+<td>在同一範圍內引用符合性結果</td>
+</tr>
+</tbody>
+</table></div>
+<p>這是工程狀態，不能代替主張的四級信心。READY 可以排除某個未知功能， 前提是它不阻塞使用者要求的切片；不能藉由縮小規格，把原本需要的功能算成完成。 CONFORMED 也不使排除項自動得到證明。</p>
+<h2 id="ready-審查表">READY 審查表</h2>
+<p>一份可實作的規格至少包含：</p>
+<ol type="1">
+<li>子系統、目標版本、規格版本與實際使用者目標。</li>
+<li>逐項主張及來源，區分原版證據、推論、刻意差異與新增設計。</li>
+<li>輸入、輸出、起始狀態與不變量。</li>
+<li>錯誤、未支援版本及缺少必要資料時的行為。</li>
+<li>可觀測欄位與取樣邊界。</li>
+<li>行為基準、正常及反例案例、比較規則。</li>
+<li>已知未知、阻塞與不阻塞理由、明確排除範圍。</li>
+<li>驗收條件、審查者與結論；改版時的重驗條件。</li>
+</ol>
+<p>沒有反例案例的規格特別容易只驗到「看起來合理」的輸出。至少放入一個會使錯誤候選失敗的案例， 並保證測試能觀察那個差異。</p>
+<h2 id="一個小規格的形狀">一個小規格的形狀</h2>
+<p>下列是附錄人工定義的教學契約，不是從原版逆向出的資料格式：</p>
+<pre class="text"><code>規格：SPEC-ACC-v1
+狀態範圍：單一 value，整數 0..255。
+輸入：每個請求恰好兩個 bytes：opcode、operand。
+01 n：value = min(255, value + n)，回覆 ok。
+02 00：value = 0，回覆 ok。
+02 n（n 非 0）：invalid_operand，狀態不變。
+其他 opcode：unknown_operation，狀態不變。
+長度非 2：invalid_length，狀態不變；先於 opcode 檢查。
+觀測：每個請求處理完後的 value 與結果碼。
+排除：持久儲存、畫面、時序、併行與其他版本。
+必要案例：一般加法、上限、重設、錯誤輸入及錯誤後繼續操作。</code></pre>
+<p>「這是我們定義的契約」與「原版就是如此」完全不同。前者可以成為合成測試的權威參考， 但不能拿來證明歷史相容性。真正考古時，要把每一條公式接到來源或明示未完成。</p>
+<h2 id="實作途中遇到缺口">實作途中遇到缺口</h2>
+<p>假設實作者發現原版對長度錯誤的請求可能先改狀態再報錯，而目前規格要求原子失敗。 先確認證據，再退回受影響的條款與案例；保留已通過的舊版本報告，不把舊標籤直接套在新版本。</p>
+<p>審查不是每一行程式都請使用者決定。可由證據查明的事由工程師查明； 真正改變玩法、格式、架構、原版忠實度或公開方式的取捨，才由使用者作決定。 規格中應明寫這種差異是授權設計，避免未來把它當作缺陷或原版事實。</p>
+<h3 id="來源與主張範圍">來源與主張範圍</h3>
+<p><a href="../inventory.html#固定來源索引">P2、T2、T3</a>提供明確閘門與不同規格並存的來源。 <code>CONFIRMED</code>：所核對版本中，Talos 控制契約為 READY，收據載體仍為 DRAFT。 本章審查表是 <code>STRONG_INFERENCE</code> 的整理，三狀態閘門亦是本專案既有規範。</p>
+</article></main></div><footer><a href="../index.html">王俊又 wicanr2</a> · AI 輔助軟體考古手冊 · <a href="../library.html">全部文件 · All pages · 全ページ</a><p>證據先行，保留未知。 Evidence first. Keep uncertainty visible.</p></footer></body></html>

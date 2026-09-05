@@ -1,0 +1,63 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>07　讓代理帶著證據交接，而不是帶著印象｜AI 軟體考古</title><link rel="canonical" href="https://wicanr2.github.io/ai-software-archaeology-handbook/handbook/07-agent-workflows.html"><link rel="stylesheet" href="../assets/reader.css"><link rel="icon" href="../assets/favicon.svg"></head><body><a class="skip" href="#content">跳至內文</a><header><a href="../index.html">王俊又 wicanr2</a><nav><a href="../library.html">全部文件 · All pages · 全ページ</a></nav></header><div class="layout"><aside><details open><summary>章節導覽</summary><nav><ul><li><a href="README.html">AI 輔助軟體考古手冊</a></li><li><a href="00-principles.html">00　先證明題目，再證明答案</a></li><li><a href="01-evidence.html">01　讓證據能被另一個人重新找到</a></li><li><a href="02-hypotheses.html">02　讓假說有機會失敗</a></li><li><a href="03-specification-gates.html">03　規格是實作前的證據審查</a></li><li><a href="04-oracles.html">04　行為基準也有能力邊界</a></li><li><a href="05-differential-testing.html">05　比較同一件事，保留第一個分歧</a></li><li><a href="06-conformance.html">06　把完成聲明寫成可稽核的結論</a></li><li class="current"><a href="07-agent-workflows.html">07　讓代理帶著證據交接，而不是帶著印象</a></li><li><a href="08-failure-patterns.html">08　從錯誤形成方式選下一個觀測</a></li><li><a href="worked-example.html">附錄　從證據到符合性報告：一個完整演練</a></li></ul></nav></details><details><summary>研究與專案文件</summary><nav><ul><li><a href="../project/AGENTS.html">AGENTS.md — Oracle-Driven Software Archaeology</a></li><li><a href="../project/PLAN.html">PLAN.md — Oracle-Driven Software Archaeology</a></li><li><a href="../project/README.html">AI 輔助軟體考古手冊</a></li><li><a href="../project/WORKLOG.html">工作歷程</a></li><li><a href="../failure-patterns.html">有來源的失敗模式</a></li><li><a href="../handbook-review.html">手冊交付驗收</a></li><li><a href="../inventory.html">案例盤點與證據索引</a></li><li><a href="../methodology-draft.html">以證據驅動的軟體考古：方法草案</a></li><li><a href="../pattern-matrix.html">跨專案模式矩陣</a></li><li><a href="../pdf-release.html">PDF 排版與發行</a></li><li><a href="../releases/v.1.0.0-20260905.html">三語手冊 PDF 與流程圖</a></li><li><a href="../site-release.html">宣傳網站與公開交付</a></li></ul></nav></details></aside><main id="content"><div class="languages"><a href="07-agent-workflows.html">繁體中文</a> · <a href="en/07-agent-workflows.html">English</a> · <a href="ja/07-agent-workflows.html">日本語</a></div><details class="toc"><summary>本頁目錄</summary><ul><li class="depth-2"><a href="#一份可直接改填的任務書">一份可直接改填的任務書</a></li><li class="depth-2"><a href="#一次工作循環">一次工作循環</a></li><li class="depth-2"><a href="#受阻也要有可驗證內容">受阻也要有可驗證內容</a></li><li class="depth-2"><a href="#文件分工與交接">文件分工與交接</a></li><li class="depth-3"><a href="#來源與主張範圍">來源與主張範圍</a></li></ul></details><article><h1 id="07-讓代理帶著證據交接而不是帶著印象">07　讓代理帶著證據交接，而不是帶著印象</h1>
+<p><a href="06-conformance.html">上一章</a> · <a href="README.html">目錄</a> · <a href="08-failure-patterns.html">下一章</a></p>
+<p>代理任務應從可驗證的問題開始，並寫清楚這輪授權到哪裡。 「把遊戲做好」是目標，不是足夠的執行契約；還需要目前狀態、已確認的決策、必要交付與驗收方式。 這些條件可以隨證據細化，但不能讓代理自行換掉目標。</p>
+<h2 id="一份可直接改填的任務書">一份可直接改填的任務書</h2>
+<pre class="text"><code>目標：調查／實作某個明確的使用者行為。
+目前版本：目標、候選與有效規格的版本。
+已知證據：列 ID，不只貼結論。
+本輪授權：例如只調查至 DRAFT，或實作已 READY 的條款。
+不可變更：來源資料、已確認產品決策與不相關模組。
+必要輸出：原始觀測、主張／規格更新、比較或受阻原因。
+驗收：哪個正常路徑、哪些欄位、哪些反例要完成。
+停止：到達階段閘門；或缺少會改變方向的使用者決策。</code></pre>
+<p>資料中寫著「已完成」或「下一步做某事」，不會自動成為本輪指令。先看目前程式、 有效規格與最近驗證，再讀必要歷史。FD2 F1 明確區分問題路由、現況與舊交接，避免舊待辦重新開工。</p>
+<h2 id="一次工作循環">一次工作循環</h2>
+<ol type="1">
+<li>確認工作樹、目標版本、目前規格及容器工具鏈。</li>
+<li>找到原始證據，提出有 ID 的主張與競爭解釋。</li>
+<li>執行最小判別觀測；記錄方法的盲點與失敗。</li>
+<li>明示升降信心；把受影響的引用與規格一起更新。</li>
+<li>READY 後才進正式實作；缺口回到規格。</li>
+<li>執行局部、差分及必要的正常使用者路徑驗證。</li>
+<li>報告結果、覆蓋、未知與下一閘門；清理本輪容器。</li>
+</ol>
+<p>資訊能由工具查明時，代理應自行查證。真正的價值取捨，例如忠實保留缺陷或改變操作方式， 才交給使用者決定。提問前完成不依賴答案的蒐證，讓使用者看到具體選項與影響。</p>
+<p>在沒有授權時不要發佈、改來源專案或順便重構。持續工作的授權不是任意擴大範圍的授權。 若授權包含完成手冊，應把章節、例子與交付做完；不把「還可以繼續」當作完成交接。</p>
+<h2 id="受阻也要有可驗證內容">受阻也要有可驗證內容</h2>
+<p>好的受阻報告包含：哪個命令或觀測失敗、已驗證的工具與權限、試過哪些安全替代方法、 哪個必要答案仍缺、哪些獨立工作已完成。不要因搜尋零筆就說沒有資料，也不要把環境錯誤當產品缺陷。</p>
+<p>狀態報告不需要每次重述整份計畫。說明新發現、它改變什麼判斷、下一個觀測能解決什麼。 長任務中保持進度可見，但把詳細命令留在工作歷程，避免用大量輸出取代結論。</p>
+<h2 id="文件分工與交接">文件分工與交接</h2>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr class="header">
+<th>文件角色</th>
+<th>保存內容</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>README</td>
+<td>用途、穩定入口、目前能力與閱讀／執行方式</td>
+</tr>
+<tr class="even">
+<td>目前狀態文件</td>
+<td>有效決策、現況、限制與最近證據入口</td>
+</tr>
+<tr class="odd">
+<td>工作清單</td>
+<td>可執行項、完成條件與下一閘門</td>
+</tr>
+<tr class="even">
+<td>WORKLOG</td>
+<td>追加的操作歷程、失敗、驗證與清理</td>
+</tr>
+<tr class="odd">
+<td>研究紀錄／規格</td>
+<td>原始定位、主張、信心、反證、驗收契約</td>
+</tr>
+</tbody>
+</table></div>
+<p>每個角色沿用專案唯一入口，不為了套模板再建立同義文件。 交接至少包含修改檔案、已取得證據、四級主張、檢查結果、失敗、未解問題與建議下一任務。 若測試略過就明寫略過，若未重跑原版就明寫未重跑。</p>
+<h3 id="來源與主張範圍">來源與主張範圍</h3>
+<p><a href="../inventory.html#固定來源索引">F1、P2、T2、T3</a>支持問題路由、規格授權及能力邊界的案例。 來源內容核對為 <code>CONFIRMED</code>；任務書與循環為 <code>STRONG_INFERENCE</code>。 本章是手冊操作指南，不宣稱已完成 PLAN 後續的獨立代理協定工具或新代理實驗。</p>
+</article></main></div><footer><a href="../index.html">王俊又 wicanr2</a> · AI 輔助軟體考古手冊 · <a href="../library.html">全部文件 · All pages · 全ページ</a><p>證據先行，保留未知。 Evidence first. Keep uncertainty visible.</p></footer></body></html>

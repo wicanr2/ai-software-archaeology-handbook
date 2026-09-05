@@ -1,0 +1,124 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>付録　証拠から報告までを一つの例でたどる｜AI 軟體考古</title><link rel="canonical" href="https://wicanr2.github.io/ai-software-archaeology-handbook/handbook/ja/worked-example.html"><link rel="stylesheet" href="../../assets/reader.css"><link rel="icon" href="../../assets/favicon.svg"></head><body><a class="skip" href="#content">本文へ</a><header><a href="../../index.html">王俊又 wicanr2</a><nav><a href="../../library.html">全部文件 · All pages · 全ページ</a></nav></header><div class="layout"><aside><details open><summary>章一覧</summary><nav><ul><li><a href="README.html">AI 支援ソフトウェア考古学ハンドブック</a></li><li><a href="00-principles.html">00　答えの前に、何を確かめるかを定める</a></li><li><a href="01-evidence.html">01　別の人が再び見つけられる証拠を残す</a></li><li><a href="02-hypotheses.html">02　仮説が失敗できる検査を作る</a></li><li><a href="03-specification-gates.html">03　仕様は実装前の証拠審査</a></li><li><a href="04-oracles.html">04　判定基準にも限界がある</a></li><li><a href="05-differential-testing.html">05　同じものを比較し、最初の不一致を残す</a></li><li><a href="06-conformance.html">06　完了を監査できる結論にする</a></li><li><a href="07-agent-workflows.html">07　印象ではなく証拠を引き継ぐ</a></li><li><a href="08-failure-patterns.html">08　失敗の仕組みから次の観測を選ぶ</a></li><li class="current"><a href="worked-example.html">付録　証拠から報告までを一つの例でたどる</a></li></ul></nav></details><details><summary>研究與專案文件</summary><nav><ul><li><a href="../../project/AGENTS.html">AGENTS.md — Oracle-Driven Software Archaeology</a></li><li><a href="../../project/PLAN.html">PLAN.md — Oracle-Driven Software Archaeology</a></li><li><a href="../../project/README.html">AI 輔助軟體考古手冊</a></li><li><a href="../../project/WORKLOG.html">工作歷程</a></li><li><a href="../../failure-patterns.html">有來源的失敗模式</a></li><li><a href="../../handbook-review.html">手冊交付驗收</a></li><li><a href="../../inventory.html">案例盤點與證據索引</a></li><li><a href="../../methodology-draft.html">以證據驅動的軟體考古：方法草案</a></li><li><a href="../../pattern-matrix.html">跨專案模式矩陣</a></li><li><a href="../../pdf-release.html">PDF 排版與發行</a></li><li><a href="../../releases/v.1.0.0-20260905.html">三語手冊 PDF 與流程圖</a></li><li><a href="../../site-release.html">宣傳網站與公開交付</a></li></ul></nav></details></aside><main id="content"><div class="languages"><a href="../worked-example.html">繁體中文</a> · <a href="../en/worked-example.html">English</a> · <a href="worked-example.html">日本語</a></div><details class="toc"><summary>このページの内容</summary><ul><li class="depth-2"><a href="#1-問いと証拠">1. 問いと証拠</a></li><li class="depth-2"><a href="#2-仮説と判別">2. 仮説と判別</a></li><li class="depth-2"><a href="#3-ready-に必要な条件">3. READY に必要な条件</a></li><li class="depth-2"><a href="#4-先に参照列を計算する">4. 先に参照列を計算する</a></li><li class="depth-2"><a href="#5-失敗する候補を入れる">5. 失敗する候補を入れる</a></li><li class="depth-2"><a href="#6-修正と欠測">6. 修正と欠測</a></li><li class="depth-2"><a href="#7-書いてよい報告">7. 書いてよい報告</a></li><li class="depth-2"><a href="#8-自己確認と答え">8. 自己確認と答え</a></li><li class="depth-3"><a href="#出典と主張の範囲">出典と主張の範囲</a></li></ul></details><article><h1 id="付録-証拠から報告までを一つの例でたどる">付録　証拠から報告までを一つの例でたどる</h1>
+<p><a href="README.html">目次</a> · <a href="08-failure-patterns.html">失敗パターン</a></p>
+<p>このアキュムレータは教材用に設計した合成例であり、歴史的プログラムではありません。<code>SPEC-ACC-v1</code> を権威ある契約とします。表の値は契約からの手計算であり、実行記録の捏造ではありません。バイナリ、実際の run ID、検査済み実装は存在しないので、最後も実候補の CONFORMED ではなく演習上の判断です。</p>
+<h2 id="1-問いと証拠">1. 問いと証拠</h2>
+<p>二バイトの要求を受け取るアキュムレータを再実装するとします。契約の状態は 0..255 の整数 value です。<code>01 n</code> は飽和加算、<code>02 00</code> はリセットです。それ以外の <code>02 n</code> は <code>invalid_operand</code>、他の opcode は <code>unknown_operation</code> を返します。長さが 2 でなければ opcode の検査前に <code>invalid_length</code> を返します。エラー時は状態不変、成功時は <code>ok</code> です。要求ごとに処理後の value と結果コードを観測します。</p>
+<p><code>E-CONTRACT</code> はこの人工契約であり、権威は本例の中だけです。実際の考古なら、出典の版や入力・道具のハッシュを追加します。望ましい動作を原版の規則として書いてはいけません。</p>
+<h2 id="2-仮説と判別">2. 仮説と判別</h2>
+<p><code>C-SAT</code> は「加算が 255 を超えたら 255 にする」です。契約を見る前なら、飽和、回り込み、拒否が候補です。<code>E-CONTRACT</code> を得た後は「教材契約がそう定義している」という範囲で <code>CONFIRMED</code> にできます。一標本から全域の経験則に昇格したのではありません。</p>
+<p>10 に 1 を足すと三候補とも 11 にでき、判別力がありません。250 に 10 を足せば、255、4、エラーで 250 のままと予測が分かれ、誤実装を見つけられます。</p>
+<h2 id="3-ready-に必要な条件">3. READY に必要な条件</h2>
+<p>形式、操作、エラー優先順、観測境界は契約で定義されています。画面、永続化、タイミング、並行処理は最初から本例の要求にないため対象外です。既存要求を避けるための除外ではありません。通常加算、上限、リセット、不正入力、エラー後の正常要求を必須例とします。</p>
+<p>これで READY 審査を説明できますが、実プロジェクトには審査記録と実装許可も必要です。比較は value と結果コードの厳密一致です。許容差、ソート、フィールド省略はありません。</p>
+<h2 id="4-先に参照列を計算する">4. 先に参照列を計算する</h2>
+<p>ケース A は独立に 10 から開始します。ケース B は独立に 250 から開始し、B01〜B08 を順に処理します。各行は要求処理後の観測です。入力 bytes は十六進数、状態値は十進数です。</p>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr class="header">
+<th>時点</th>
+<th>入力 bytes</th>
+<th style="text-align: right;">処理前 value</th>
+<th style="text-align: right;">参照 value</th>
+<th>結果コード</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A01</td>
+<td><code>01 01</code></td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">11</td>
+<td><code>ok</code></td>
+</tr>
+<tr class="even">
+<td>B01</td>
+<td><code>01 0A</code></td>
+<td style="text-align: right;">250</td>
+<td style="text-align: right;">255</td>
+<td><code>ok</code></td>
+</tr>
+<tr class="odd">
+<td>B02</td>
+<td><code>01 00</code></td>
+<td style="text-align: right;">255</td>
+<td style="text-align: right;">255</td>
+<td><code>ok</code></td>
+</tr>
+<tr class="even">
+<td>B03</td>
+<td><code>02 00</code></td>
+<td style="text-align: right;">255</td>
+<td style="text-align: right;">0</td>
+<td><code>ok</code></td>
+</tr>
+<tr class="odd">
+<td>B04</td>
+<td><code>01 FF</code></td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">255</td>
+<td><code>ok</code></td>
+</tr>
+<tr class="even">
+<td>B05</td>
+<td><code>02 01</code></td>
+<td style="text-align: right;">255</td>
+<td style="text-align: right;">255</td>
+<td><code>invalid_operand</code></td>
+</tr>
+<tr class="odd">
+<td>B06</td>
+<td><code>03 00</code></td>
+<td style="text-align: right;">255</td>
+<td style="text-align: right;">255</td>
+<td><code>unknown_operation</code></td>
+</tr>
+<tr class="even">
+<td>B07</td>
+<td><code>01</code></td>
+<td style="text-align: right;">255</td>
+<td style="text-align: right;">255</td>
+<td><code>invalid_length</code></td>
+</tr>
+<tr class="odd">
+<td>B08</td>
+<td><code>02 00</code></td>
+<td style="text-align: right;">255</td>
+<td style="text-align: right;">0</td>
+<td><code>ok</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>B08 はエラー後の回復を検査し、B03 では代用できません。九時点で二必須フィールドずつ、合計十八のフィールド比較です。欠測を一致に数えません。この集合は宣言した標本であって、全入力の網羅的証明ではありません。</p>
+<h2 id="5-失敗する候補を入れる">5. 失敗する候補を入れる</h2>
+<p><code>CAND-WRAP</code> は <code>(value + n) mod 256</code> を使い、それ以外は契約どおりと仮定します。紙上の候補であって、実行成果物ではありません。A01 は通りますが、B01 は参照 255 に対して 4 です。最初の差は次のとおりです。</p>
+<pre class="text"><code>仕様：SPEC-ACC-v1
+候補：CAND-WRAP（教材上の仮定）
+時点：B01
+入力：01 0A
+フィールド：value
+参照：255
+候補：4
+結果コード：両方 ok
+結論：value が不一致。成功コードは内容比較の代用にならない。</code></pre>
+<p>B03 では両方リセットされゼロになるので、そこだけを見れば以前の誤りが消えます。最初の差で実行を止めるなら、B02〜B08 は未実行かつ未完了と報告し、省略しません。</p>
+<h2 id="6-修正と欠測">6. 修正と欠測</h2>
+<p>式を <code>min(255, value + n)</code> に修正し、十分広い整数で加算してから上限を適用します。先に八ビットへ変換すれば、まだ回り込みます。この推論は人工契約から直接支えられます。</p>
+<p>次に、B05 の記録には value だけあり、結果コードがないとします。255 だけでは、不正要求を拒否したのか、成功扱いで何もしなかったのか分かりません。合格でなく欠測と報告します。新たに実行して必須フィールドを取得するまで比較は未完了です。</p>
+<h2 id="7-書いてよい報告">7. 書いてよい報告</h2>
+<p>紙上では次のように書けます。</p>
+<blockquote>
+<p>SPEC-ACC-v1 に基づく計算で、CAND-WRAP は B01 の value が参照と異なる。修正式はこの反例を解消する。九つの参照時点と十八の必須フィールドを定めた。実候補、実行記録、観測成果物はなく、CONFORMED の裁定はしていない。</p>
+</blockquote>
+<p>実際に実行するときは、候補識別、基準と観測器の版、入力と成果物のハッシュ、実取得数、差分、停止理由、審査を追加します。必須条件をすべて満たしてから「この候補は SPEC-ACC-v1 の宣言事例に適合」と言えます。それでも歴史的ソフトウェアとの互換性ではありません。</p>
+<h2 id="8-自己確認と答え">8. 自己確認と答え</h2>
+<ol type="1">
+<li>A01 で回り込みを除外できるか。できません。両式が同じなので B01 を使います。</li>
+<li>B05 は value だけ正しければ合格か。いいえ。結果コードも必須です。</li>
+<li>B03 の一致は B01 の差を取り消すか。いいえ。各時点が必要です。</li>
+<li>九例一致で全状態を証明できるか。できません。宣言した例を支えるだけで、全域の主張には別の推論や検査が必要です。</li>
+<li>本文は成功した実行報告か。いいえ。実際の run がない、計算可能な教材です。</li>
+<li>どの不明点が妨げになるか。必須結果コードの欠測です。要求されていない表示タイミングは妨げませんが、確認済みにもなりません。</li>
+</ol>
+<h3 id="出典と主張の範囲">出典と主張の範囲</h3>
+<p>歴史的入力はありません。<code>E-CONTRACT</code> は人工契約で、数値はその計算結果です。観測と解釈の分離、欠測の保持、最初の差の扱いは <a href="../../inventory.html#固定來源索引">S3、O2、P3</a>の教訓に対応しますが、それらの動作をこの例へ移したのではありません。</p>
+</article></main></div><footer><a href="../../index.html">王俊又 wicanr2</a> · AI 輔助軟體考古手冊 · <a href="../../library.html">全部文件 · All pages · 全ページ</a><p>證據先行，保留未知。 Evidence first. Keep uncertainty visible.</p></footer></body></html>

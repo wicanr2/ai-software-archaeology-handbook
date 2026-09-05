@@ -1,0 +1,57 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>02 — Give a Hypothesis a Chance to Fail｜AI 軟體考古</title><link rel="canonical" href="https://wicanr2.github.io/ai-software-archaeology-handbook/handbook/en/02-hypotheses.html"><link rel="stylesheet" href="../../assets/reader.css"><link rel="icon" href="../../assets/favicon.svg"></head><body><a class="skip" href="#content">Skip to content</a><header><a href="../../index.html">王俊又 wicanr2</a><nav><a href="../../library.html">全部文件 · All pages · 全ページ</a></nav></header><div class="layout"><aside><details open><summary>Chapters</summary><nav><ul><li><a href="README.html">AI-Assisted Software Archaeology Handbook</a></li><li><a href="00-principles.html">00 — Establish the Question Before the Answer</a></li><li><a href="01-evidence.html">01 — Make Evidence Findable by Someone Else</a></li><li class="current"><a href="02-hypotheses.html">02 — Give a Hypothesis a Chance to Fail</a></li><li><a href="03-specification-gates.html">03 — Review Evidence Before Authorizing Implementation</a></li><li><a href="04-oracles.html">04 — An Oracle Has Limits Too</a></li><li><a href="05-differential-testing.html">05 — Compare the Same Thing and Preserve the First Divergence</a></li><li><a href="06-conformance.html">06 — Make Completion an Auditable Conclusion</a></li><li><a href="07-agent-workflows.html">07 — Hand Off Evidence, Not Impressions</a></li><li><a href="08-failure-patterns.html">08 — Use Failure Mechanisms to Choose the Next Observation</a></li><li><a href="worked-example.html">Appendix — A Complete Chain from Evidence to a Report</a></li></ul></nav></details><details><summary>研究與專案文件</summary><nav><ul><li><a href="../../project/AGENTS.html">AGENTS.md — Oracle-Driven Software Archaeology</a></li><li><a href="../../project/PLAN.html">PLAN.md — Oracle-Driven Software Archaeology</a></li><li><a href="../../project/README.html">AI 輔助軟體考古手冊</a></li><li><a href="../../project/WORKLOG.html">工作歷程</a></li><li><a href="../../failure-patterns.html">有來源的失敗模式</a></li><li><a href="../../handbook-review.html">手冊交付驗收</a></li><li><a href="../../inventory.html">案例盤點與證據索引</a></li><li><a href="../../methodology-draft.html">以證據驅動的軟體考古：方法草案</a></li><li><a href="../../pattern-matrix.html">跨專案模式矩陣</a></li><li><a href="../../pdf-release.html">PDF 排版與發行</a></li><li><a href="../../releases/v.1.0.0-20260905.html">三語手冊 PDF 與流程圖</a></li><li><a href="../../site-release.html">宣傳網站與公開交付</a></li></ul></nav></details></aside><main id="content"><div class="languages"><a href="../02-hypotheses.html">繁體中文</a> · <a href="02-hypotheses.html">English</a> · <a href="../ja/02-hypotheses.html">日本語</a></div><details class="toc"><summary>On this page</summary><ul><li class="depth-2"><a href="#one-assertion-per-claim">One assertion per claim</a></li><li class="depth-2"><a href="#design-a-discriminating-experiment">Design a discriminating experiment</a></li><li class="depth-2"><a href="#promotion-withdrawal-and-dependencies">Promotion, withdrawal, and dependencies</a></li><li class="depth-2"><a href="#turn-uncertainty-into-an-actionable-question">Turn uncertainty into an actionable question</a></li><li class="depth-3"><a href="#sources-and-claim-scope">Sources and claim scope</a></li></ul></details><article><h1 id="02--give-a-hypothesis-a-chance-to-fail">02 — Give a Hypothesis a Chance to Fail</h1>
+<p><a href="01-evidence.html">Previous</a> · <a href="README.html">Contents</a> · <a href="03-specification-gates.html">Next</a></p>
+<p>A useful hypothesis identifies the next observation worth making. A readable name, running code, or lack of objections must not turn it into fact. If a test passes for two different explanations, it establishes only that neither has yet been excluded.</p>
+<p>Shard of Spring once identified a field as health because it increased with level. Experience could follow the same trend. What distinguished the explanations was the field read and written by damage and death handling, not more monotonic samples (S3).</p>
+<h2 id="one-assertion-per-claim">One assertion per claim</h2>
+<p>“This field is health, is an unsigned 16-bit value, and is unused after death” contains at least three claims. Direct evidence for one does not confirm the others. Give each an ID, scope, and supporting and contrary evidence.</p>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr class="header">
+<th>Confidence</th>
+<th>Appropriate use</th>
+<th>Inappropriate use</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>CONFIRMED</code></td>
+<td>Direct evidence under stated conditions, or direct support from the declared authoritative contract</td>
+<td>A universal rule inferred from finite samples</td>
+</tr>
+<tr class="even">
+<td><code>STRONG_INFERENCE</code></td>
+<td>Multiple relevant, discriminating observations with a direct link still missing</td>
+<td>Confident wording in place of a missing access site</td>
+</tr>
+<tr class="odd">
+<td><code>HYPOTHESIS</code></td>
+<td>A plausible candidate with a proposed test</td>
+<td>A hidden default in production</td>
+</tr>
+<tr class="even">
+<td><code>UNKNOWN</code></td>
+<td>Insufficient, unobservable, or contradictory evidence</td>
+<td>Zero or nonexistence substituted for uncertainty</td>
+</tr>
+</tbody>
+</table></div>
+<p>There is no automatic percentage conversion. Several notes copied from one old conclusion are not independent evidence. Even <code>CONFIRMED</code> can be reopened by a wrong input version, observer defect, or contradictory result.</p>
+<h2 id="design-a-discriminating-experiment">Design a discriminating experiment</h2>
+<p>In the appendix's synthetic accumulator, starting at 10 and adding 1 gives 11 under both saturation and 8-bit wraparound. Starting at 250 and adding 10 predicts 255 versus 4. That input can distinguish them. These are invented teaching values, not historical game observations.</p>
+<p>Write predictions before execution:</p>
+<pre class="text"><code>Claim: C-SAT, additions above the limit stop at 255.
+Scope: the v1 teaching accumulator&#39;s addition operation.
+Alternatives: saturation / wraparound / rejection without state change.
+Input: initial value 250, request 01 0A.
+Predictions: 255 / 4 / error with value still 250.
+Required observations: value and result code after the request; neither may be missing.</code></pre>
+<p>Precommitting predictions makes it harder to invent an explanation after seeing the result. If none predicts the observation, check the input and observer, then propose another hypothesis instead of forcing the result into the nearest candidate.</p>
+<h2 id="promotion-withdrawal-and-dependencies">Promotion, withdrawal, and dependencies</h2>
+<p>Record old and new confidence, date, reason, evidence IDs, and affected specifications and tests whenever confidence changes. Withdrawing “this is health” requires revisiting derived damage formulas, labels, and save interpretations. Correct current prose while preserving the old claim and the index to its refutation.</p>
+<p>A counterexample invalidates the scope it contradicts. One non-mirrored sample refutes “all samples are mirrored,” not “every other sample is mirrored.” MM2's later images overturned a local symmetry inference; sample counts are not guarantees (M1).</p>
+<h2 id="turn-uncertainty-into-an-actionable-question">Turn uncertainty into an actionable question</h2>
+<p>“Spells are not understood” is a weak handoff. “C-17's charge timing is unknown; the effect function has no deduction, its caller remains untraced; next follow the stored cost through later reads and writes” tells the next person what to do. It distinguishes an observer's blind spot from absent behavior.</p>
+<p>If an unknown changes the formal rule, the specification remains DRAFT. If it cannot affect the authorized slice, document the exclusion and why it is non-blocking.</p>
+<h3 id="sources-and-claim-scope">Sources and claim scope</h3>
+<p><a href="../../inventory.html#固定來源索引">S3, M1</a> document field misclassification, extrapolation, and missed caller behavior. The existence of those records is <code>CONFIRMED</code>; the experimental and dependency-tracking method is <code>STRONG_INFERENCE</code>. S3's experience interpretation is not promoted beyond the evidence available in that note.</p>
+</article></main></div><footer><a href="../../index.html">王俊又 wicanr2</a> · AI 輔助軟體考古手冊 · <a href="../../library.html">全部文件 · All pages · 全ページ</a><p>證據先行，保留未知。 Evidence first. Keep uncertainty visible.</p></footer></body></html>

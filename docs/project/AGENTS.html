@@ -1,0 +1,365 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AGENTS.md — Oracle-Driven Software Archaeology｜AI 軟體考古</title><link rel="canonical" href="https://wicanr2.github.io/ai-software-archaeology-handbook/project/AGENTS.html"><link rel="stylesheet" href="../assets/reader.css"><link rel="icon" href="../assets/favicon.svg"></head><body><a class="skip" href="#content">跳至內文</a><header><a href="../index.html">王俊又 wicanr2</a><nav><a href="../library.html">全部文件 · All pages · 全ページ</a></nav></header><div class="layout"><aside><details open><summary>章節導覽</summary><nav><ul><li><a href="../handbook/README.html">AI 輔助軟體考古手冊</a></li><li><a href="../handbook/00-principles.html">00　先證明題目，再證明答案</a></li><li><a href="../handbook/01-evidence.html">01　讓證據能被另一個人重新找到</a></li><li><a href="../handbook/02-hypotheses.html">02　讓假說有機會失敗</a></li><li><a href="../handbook/03-specification-gates.html">03　規格是實作前的證據審查</a></li><li><a href="../handbook/04-oracles.html">04　行為基準也有能力邊界</a></li><li><a href="../handbook/05-differential-testing.html">05　比較同一件事，保留第一個分歧</a></li><li><a href="../handbook/06-conformance.html">06　把完成聲明寫成可稽核的結論</a></li><li><a href="../handbook/07-agent-workflows.html">07　讓代理帶著證據交接，而不是帶著印象</a></li><li><a href="../handbook/08-failure-patterns.html">08　從錯誤形成方式選下一個觀測</a></li><li><a href="../handbook/worked-example.html">附錄　從證據到符合性報告：一個完整演練</a></li></ul></nav></details><details><summary>研究與專案文件</summary><nav><ul><li><a href="AGENTS.html">AGENTS.md — Oracle-Driven Software Archaeology</a></li><li><a href="PLAN.html">PLAN.md — Oracle-Driven Software Archaeology</a></li><li><a href="README.html">AI 輔助軟體考古手冊</a></li><li><a href="WORKLOG.html">工作歷程</a></li><li><a href="../failure-patterns.html">有來源的失敗模式</a></li><li><a href="../handbook-review.html">手冊交付驗收</a></li><li><a href="../inventory.html">案例盤點與證據索引</a></li><li><a href="../methodology-draft.html">以證據驅動的軟體考古：方法草案</a></li><li><a href="../pattern-matrix.html">跨專案模式矩陣</a></li><li><a href="../pdf-release.html">PDF 排版與發行</a></li><li><a href="../releases/v.1.0.0-20260905.html">三語手冊 PDF 與流程圖</a></li><li><a href="../site-release.html">宣傳網站與公開交付</a></li></ul></nav></details></aside><main id="content"><div class="languages"></div><details class="toc"><summary>本頁目錄</summary><ul><li class="depth-2"><a href="#撰寫語言與版本順序">撰寫語言與版本順序</a></li><li class="depth-2"><a href="#0-project-mission">0. Project Mission</a></li><li class="depth-2"><a href="#1-prime-directive">1. Prime Directive</a></li><li class="depth-2"><a href="#2-confidence-model">2. Confidence Model</a></li><li class="depth-3"><a href="#confirmed">CONFIRMED</a></li><li class="depth-3"><a href="#strong_inference">STRONG_INFERENCE</a></li><li class="depth-3"><a href="#hypothesis">HYPOTHESIS</a></li><li class="depth-3"><a href="#unknown">UNKNOWN</a></li><li class="depth-2"><a href="#3-specification-gate">3. Specification Gate</a></li><li class="depth-3"><a href="#draft">DRAFT</a></li><li class="depth-3"><a href="#ready">READY</a></li><li class="depth-3"><a href="#conformed">CONFORMED</a></li><li class="depth-2"><a href="#4-control-protocol">4. Control Protocol</a></li><li class="depth-2"><a href="#5-case-study-repositories">5. Case-Study Repositories</a></li><li class="depth-2"><a href="#6-provenance-requirements">6. Provenance Requirements</a></li><li class="depth-2"><a href="#7-evidence-vs-interpretation">7. Evidence vs Interpretation</a></li><li class="depth-2"><a href="#8-legal--redistribution-boundary">8. Legal / Redistribution Boundary</a></li><li class="depth-2"><a href="#9-engineering-rules">9. Engineering Rules</a></li><li class="depth-2"><a href="#10-working-cli-name">10. Working CLI Name</a></li><li class="depth-2"><a href="#11-testing-philosophy">11. Testing Philosophy</a></li><li class="depth-2"><a href="#12-documentation-rules">12. Documentation Rules</a></li><li class="depth-2"><a href="#13-commit-discipline">13. Commit Discipline</a></li><li class="depth-2"><a href="#14-first-authorized-work">14. First Authorized Work</a></li><li class="depth-2"><a href="#15-definition-of-done-for-v01">15. Definition of Done for v0.1</a></li></ul></details><article><h1 id="agentsmd--oracle-driven-software-archaeology">AGENTS.md — Oracle-Driven Software Archaeology</h1>
+<h2 id="撰寫語言與版本順序">撰寫語言與版本順序</h2>
+<p>依專案負責人指示，手冊、研究文件與工作紀錄先以繁體中文撰寫。 中文版完成並審查後，最後再擴充英文與日文版本；翻譯沿用同一組證據識別碼、 來源版本與信心等級，不另立技術結論。程式識別字、檔名及固定狀態名稱保留原文。 本節保留階段閘門。第 0 階段已交付；專案負責人後續明確要求「完成手冊」， 目前授權為第 1 階段正文、完整教學例子與三語版本。這不授權自動進入第 2 階段工具工作。</p>
+<p>後續另已授權 PDF 發行與宣傳網站。使用者確認以「王俊又 wicanr2、三語手冊＋七個案例」 為宣傳範圍，採深色版面，網站完成後公開本儲存庫並啟用 GitHub Pages；不擴充完整個人 作品集、不改變其他案例儲存庫設定，也不因此授權 <code>osa</code> 工具實作。決定見 <code>docs/site-release.md</code>。</p>
+<h2 id="0-project-mission">0. Project Mission</h2>
+<p>Build a reusable, evidence-first methodology and reference toolkit for <strong>AI-assisted software archaeology</strong>.</p>
+<p>The project is not another remake. Its purpose is to make reverse engineering and reimplementation:</p>
+<ul>
+<li>observable</li>
+<li>reproducible</li>
+<li>falsifiable</li>
+<li>provenance-preserving</li>
+<li>explicit about uncertainty</li>
+<li>suitable for human + AI collaboration</li>
+</ul>
+<p>The canonical lifecycle is:</p>
+<p><strong>Evidence → Hypothesis → Specification → Oracle → Implementation → Differential Validation → Conformance</strong></p>
+<p>The central engineering problem is not whether AI can generate plausible code. The problem is whether the project can <strong>prove that the generated implementation matches the original behavior</strong>.</p>
+<hr />
+<h2 id="1-prime-directive">1. Prime Directive</h2>
+<p><strong>Do not code ahead of evidence.</strong></p>
+<p>For every non-trivial technical claim, preserve enough provenance that another engineer or agent can independently verify it.</p>
+<p>Never convert a plausible interpretation into a fact merely because:</p>
+<ul>
+<li>the code compiles</li>
+<li>tests pass</li>
+<li>the output looks reasonable</li>
+<li>several samples agree</li>
+<li>an LLM says it is likely</li>
+<li>a decompiler gives a convincing name</li>
+<li>no contrary evidence has yet been observed</li>
+</ul>
+<p>Absence of evidence is not evidence of absence.</p>
+<hr />
+<h2 id="2-confidence-model">2. Confidence Model</h2>
+<p>Every technical claim MUST be classified as exactly one of:</p>
+<ul>
+<li><code>CONFIRMED</code></li>
+<li><code>STRONG_INFERENCE</code></li>
+<li><code>HYPOTHESIS</code></li>
+<li><code>UNKNOWN</code></li>
+</ul>
+<h3 id="confirmed">CONFIRMED</h3>
+<p>Directly supported by authoritative evidence or reproducible observation.</p>
+<p>Examples:</p>
+<ul>
+<li>exact bytes at a known address</li>
+<li>deterministic original-program behavior</li>
+<li>trace/log output</li>
+<li>emulator state</li>
+<li>documented checksum</li>
+<li>independently reproduced oracle result</li>
+</ul>
+<h3 id="strong_inference">STRONG_INFERENCE</h3>
+<p>Multiple independent observations strongly support the claim, but direct proof is incomplete.</p>
+<h3 id="hypothesis">HYPOTHESIS</h3>
+<p>A plausible explanation requiring testing.</p>
+<h3 id="unknown">UNKNOWN</h3>
+<p>Insufficient evidence.</p>
+<p>Rules:</p>
+<ol type="1">
+<li>Never silently promote confidence.</li>
+<li>Every promotion MUST record the reason.</li>
+<li>Contradictory evidence MUST reduce confidence or reopen the claim.</li>
+<li><code>UNKNOWN</code> MUST remain representable in schemas and reports.</li>
+<li>Never invent a default value just to make implementation or tests succeed.</li>
+</ol>
+<hr />
+<h2 id="3-specification-gate">3. Specification Gate</h2>
+<p>Every subsystem progresses through:</p>
+<p><code>DRAFT → READY → CONFORMED</code></p>
+<h3 id="draft">DRAFT</h3>
+<p>Evidence or understanding is incomplete.</p>
+<p>Allowed:</p>
+<ul>
+<li>investigation</li>
+<li>exploratory scripts</li>
+<li>data capture</li>
+<li>temporary experiments</li>
+</ul>
+<p>Not allowed:</p>
+<ul>
+<li>presenting the subsystem as understood</li>
+<li>broad production implementation based on assumptions</li>
+</ul>
+<h3 id="ready">READY</h3>
+<p>The implementation contract is sufficiently evidence-backed.</p>
+<p>A subsystem may become <code>READY</code> only when the following are explicit:</p>
+<ul>
+<li>relevant evidence</li>
+<li>unresolved unknowns</li>
+<li>input/output behavior</li>
+<li>invariants</li>
+<li>observable state</li>
+<li>oracle cases</li>
+<li>acceptance criteria</li>
+<li>known unsupported cases</li>
+</ul>
+<h3 id="conformed">CONFORMED</h3>
+<p>The candidate implementation has passed the declared oracle/differential checks.</p>
+<p><code>CONFORMED</code> MUST NOT mean merely:</p>
+<ul>
+<li>unit tests pass</li>
+<li>code compiles</li>
+<li>smoke test passes</li>
+<li>UI looks approximately right</li>
+</ul>
+<p>Conformance requires comparison against the original system, an authoritative oracle, or another declared reference.</p>
+<hr />
+<h2 id="4-control-protocol">4. Control Protocol</h2>
+<p>This repository uses a gated agent workflow.</p>
+<p>Authority order:</p>
+<ol type="1">
+<li><code>AGENTS.md</code></li>
+<li><code>PLAN.md</code></li>
+<li>current task issued by the project owner/reviewer</li>
+<li>existing implementation</li>
+</ol>
+<p>The agent MUST:</p>
+<ul>
+<li>work only inside the currently authorized phase/task</li>
+<li>not automatically continue into the next phase</li>
+<li>stop at every gate</li>
+<li>report missing evidence instead of guessing</li>
+<li>preserve disagreements and unresolved questions</li>
+<li>avoid broad refactors unrelated to the current task</li>
+</ul>
+<p>At the end of each task, report:</p>
+<ol type="1">
+<li>files created/modified</li>
+<li>evidence collected</li>
+<li><code>CONFIRMED</code> claims</li>
+<li><code>STRONG_INFERENCE</code> claims</li>
+<li><code>HYPOTHESIS</code> items</li>
+<li><code>UNKNOWN</code> items</li>
+<li>tests/checks executed</li>
+<li>failures encountered</li>
+<li>unresolved questions</li>
+<li>recommended next task</li>
+</ol>
+<p>Then STOP for review.</p>
+<hr />
+<h2 id="5-case-study-repositories">5. Case-Study Repositories</h2>
+<p>The following wicanr2 repositories are source material for discovering the methodology:</p>
+<ul>
+<li><code>mm2_cht</code></li>
+<li><code>shard_of_spring_cht</code></li>
+<li><code>fd2_re</code></li>
+<li><code>wincv-remake</code></li>
+<li><code>onepce-ai-pacifista</code></li>
+<li><code>atari-talos-ai-toolkit</code></li>
+<li><code>Parhelion-PME86</code></li>
+</ul>
+<p>Treat them as <strong>case studies</strong>, not code to merge indiscriminately.</p>
+<p>If a repository is unavailable:</p>
+<ul>
+<li>record it as unavailable</li>
+<li>do not invent findings</li>
+<li>if network access is allowed, clone it separately for read-only inspection</li>
+<li>do not modify the source case-study repository unless explicitly authorized</li>
+</ul>
+<hr />
+<h2 id="6-provenance-requirements">6. Provenance Requirements</h2>
+<p>Every significant extracted lesson SHOULD preserve:</p>
+<ul>
+<li>repository</li>
+<li>commit SHA</li>
+<li>file path</li>
+<li>heading / symbol / function / address / test name where applicable</li>
+<li>observation method</li>
+<li>raw evidence reference</li>
+<li>interpretation</li>
+<li>confidence level</li>
+</ul>
+<p>Prefer evidence such as:</p>
+<ul>
+<li>raw bytes</li>
+<li>addresses</li>
+<li>hashes</li>
+<li>screenshots</li>
+<li>framebuffers</li>
+<li>emulator state</li>
+<li>traces</li>
+<li>log output</li>
+<li>test vectors</li>
+<li>executable behavior</li>
+</ul>
+<p>Semantic names are navigation aids, not proof.</p>
+<hr />
+<h2 id="7-evidence-vs-interpretation">7. Evidence vs Interpretation</h2>
+<p>Keep raw observations separate from derived claims.</p>
+<p>Example:</p>
+<p><strong>Evidence</strong></p>
+<ul>
+<li>Original executable SHA256: <code>...</code></li>
+<li>At address <code>0x1234</code>, bytes are <code>...</code></li>
+<li>Input sequence X produces output Y</li>
+<li>Frame 120 has register/state values Z</li>
+</ul>
+<p><strong>Interpretation</strong></p>
+<ul>
+<li>This routine probably performs inventory sorting</li>
+</ul>
+<p>The second statement must not overwrite the first.</p>
+<hr />
+<h2 id="8-legal--redistribution-boundary">8. Legal / Redistribution Boundary</h2>
+<p>Do NOT commit:</p>
+<ul>
+<li>copyrighted ROM images</li>
+<li>commercial game binaries</li>
+<li>proprietary executables without redistribution rights</li>
+<li>copyrighted manuals</li>
+<li>artwork/assets extracted from proprietary software</li>
+<li>keys or credentials</li>
+</ul>
+<p>Allowed examples:</p>
+<ul>
+<li>hashes</li>
+<li>offsets</li>
+<li>schemas</li>
+<li>public metadata</li>
+<li>small lawful test vectors</li>
+<li>synthetic fixtures</li>
+<li>user-supplied runtime paths</li>
+<li>openly licensed examples</li>
+</ul>
+<p>The toolkit should work with user-provided originals without bundling them.</p>
+<hr />
+<h2 id="9-engineering-rules">9. Engineering Rules</h2>
+<p>Default implementation language for the reference toolkit: <strong>Go</strong>.</p>
+<p>Use another language only when there is a concrete technical reason.</p>
+<p>General rules:</p>
+<ul>
+<li>deterministic before convenient</li>
+<li>headless before GUI</li>
+<li>reproducible before clever</li>
+<li>fail closed on unsupported/ambiguous input</li>
+<li>stable JSON for machine-facing output</li>
+<li>preserve raw observations</li>
+<li>do not hide unknowns</li>
+<li>avoid unnecessary abstractions</li>
+<li>avoid premature plugin frameworks</li>
+<li>create one working vertical slice before generalizing</li>
+<li>small reviewable commits</li>
+<li>no unrelated refactors</li>
+</ul>
+<p>Where practical, state-changing commands should support a dry-run mode.</p>
+<hr />
+<h2 id="10-working-cli-name">10. Working CLI Name</h2>
+<p>Use <code>osa</code> as the working CLI name:</p>
+<p><strong>Oracle-driven Software Archaeology</strong></p>
+<p>The name is provisional.</p>
+<p>Potential commands:</p>
+<ul>
+<li><code>osa init</code></li>
+<li><code>osa evidence add</code></li>
+<li><code>osa evidence list</code></li>
+<li><code>osa evidence show</code></li>
+<li><code>osa claim add</code></li>
+<li><code>osa claim promote</code></li>
+<li><code>osa claim reject</code></li>
+<li><code>osa spec check</code></li>
+<li><code>osa oracle run</code></li>
+<li><code>osa compare</code></li>
+<li><code>osa report</code></li>
+</ul>
+<p>Do NOT implement all commands at once.</p>
+<p>The first implementation milestone is a minimal vertical slice:</p>
+<p><code>init → oracle run → compare → report</code></p>
+<hr />
+<h2 id="11-testing-philosophy">11. Testing Philosophy</h2>
+<p>Tests must state what they prove and what they do <strong>not</strong> prove.</p>
+<p>Separate at least these layers:</p>
+<ol type="1">
+<li>parser/unit correctness</li>
+<li>deterministic replay</li>
+<li>oracle/differential agreement</li>
+<li>conformance coverage</li>
+</ol>
+<p>Examples:</p>
+<ul>
+<li>unit test pass ≠ original parity</li>
+<li>deterministic output ≠ correct semantics</li>
+<li>matching one frame ≠ matching all behavior</li>
+<li>matching N samples ≠ proof of a general rule</li>
+</ul>
+<p>Where possible, deliberately include falsification tests.</p>
+<hr />
+<h2 id="12-documentation-rules">12. Documentation Rules</h2>
+<p>Documentation is a first-class project artifact.</p>
+<p>Important design decisions SHOULD explain:</p>
+<ul>
+<li>what is known</li>
+<li>what is inferred</li>
+<li>what is unknown</li>
+<li>why the current design was selected</li>
+<li>what evidence could falsify the decision</li>
+</ul>
+<p>Do not write retrospective certainty into documents.</p>
+<p>If history shows that a previous assumption was wrong, preserve the failure pattern as a lesson.</p>
+<hr />
+<h2 id="13-commit-discipline">13. Commit Discipline</h2>
+<p>Prefer this progression:</p>
+<ol type="1">
+<li>repository inventory</li>
+<li>evidence/failure pattern analysis</li>
+<li>methodology</li>
+<li>schemas</li>
+<li>synthetic fixtures</li>
+<li>minimal CLI</li>
+<li>one real oracle adapter</li>
+<li>differential comparison</li>
+<li>conformance report</li>
+<li>agent protocol</li>
+<li>case studies</li>
+<li>packaging</li>
+</ol>
+<p>Commit messages should be concise and scoped.</p>
+<p>Do not mix unrelated phases in one commit.</p>
+<hr />
+<h2 id="14-first-authorized-work">14. First Authorized Work</h2>
+<p>Unless the project owner explicitly says otherwise, the initial authorized phase is:</p>
+<p><strong>Phase 0 — Repository Inventory and Method Extraction</strong></p>
+<p>During Phase 0:</p>
+<p>DO:</p>
+<ul>
+<li>inspect repositories</li>
+<li>collect evidence</li>
+<li>document repeated patterns</li>
+<li>document failure modes</li>
+<li>draft the methodology</li>
+</ul>
+<p>DO NOT:</p>
+<ul>
+<li>implement the CLI</li>
+<li>create a plugin framework</li>
+<li>refactor case-study repositories</li>
+<li>create speculative generic abstractions</li>
+<li>claim cross-project patterns without evidence</li>
+</ul>
+<p>Expected Phase 0 outputs:</p>
+<ul>
+<li><code>docs/inventory.md</code></li>
+<li><code>docs/pattern-matrix.md</code></li>
+<li><code>docs/failure-patterns.md</code></li>
+<li><code>docs/methodology-draft.md</code></li>
+</ul>
+<p>Then STOP for review.</p>
+<hr />
+<h2 id="15-definition-of-done-for-v01">15. Definition of Done for v0.1</h2>
+<p>v0.1 is successful when:</p>
+<ul>
+<li>the methodology is documented</li>
+<li>confidence states are explicit</li>
+<li>specification gates are defined</li>
+<li>schemas can represent evidence → claim → spec → observation → comparison → conformance</li>
+<li>a deterministic oracle adapter exists</li>
+<li>one real case study can be represented without redistributing copyrighted software</li>
+<li><code>osa compare</code> generates machine-readable and human-readable mismatch results</li>
+<li>provenance is retained</li>
+<li>unresolved unknowns remain visible</li>
+<li>another agent can follow the protocol without hidden project knowledge</li>
+<li>at least three reusable lessons from wicanr2 projects are documented with source provenance</li>
+</ul>
+</article></main></div><footer><a href="../index.html">王俊又 wicanr2</a> · AI 輔助軟體考古手冊 · <a href="../library.html">全部文件 · All pages · 全ページ</a><p>證據先行，保留未知。 Evidence first. Keep uncertainty visible.</p></footer></body></html>

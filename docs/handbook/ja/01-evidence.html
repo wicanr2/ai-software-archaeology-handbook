@@ -1,0 +1,86 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>01　別の人が再び見つけられる証拠を残す｜AI 軟體考古</title><link rel="canonical" href="https://wicanr2.github.io/ai-software-archaeology-handbook/handbook/ja/01-evidence.html"><link rel="stylesheet" href="../../assets/reader.css"><link rel="icon" href="../../assets/favicon.svg"></head><body><a class="skip" href="#content">本文へ</a><header><a href="../../index.html">王俊又 wicanr2</a><nav><a href="../../library.html">全部文件 · All pages · 全ページ</a></nav></header><div class="layout"><aside><details open><summary>章一覧</summary><nav><ul><li><a href="README.html">AI 支援ソフトウェア考古学ハンドブック</a></li><li><a href="00-principles.html">00　答えの前に、何を確かめるかを定める</a></li><li class="current"><a href="01-evidence.html">01　別の人が再び見つけられる証拠を残す</a></li><li><a href="02-hypotheses.html">02　仮説が失敗できる検査を作る</a></li><li><a href="03-specification-gates.html">03　仕様は実装前の証拠審査</a></li><li><a href="04-oracles.html">04　判定基準にも限界がある</a></li><li><a href="05-differential-testing.html">05　同じものを比較し、最初の不一致を残す</a></li><li><a href="06-conformance.html">06　完了を監査できる結論にする</a></li><li><a href="07-agent-workflows.html">07　印象ではなく証拠を引き継ぐ</a></li><li><a href="08-failure-patterns.html">08　失敗の仕組みから次の観測を選ぶ</a></li><li><a href="worked-example.html">付録　証拠から報告までを一つの例でたどる</a></li></ul></nav></details><details><summary>研究與專案文件</summary><nav><ul><li><a href="../../project/AGENTS.html">AGENTS.md — Oracle-Driven Software Archaeology</a></li><li><a href="../../project/PLAN.html">PLAN.md — Oracle-Driven Software Archaeology</a></li><li><a href="../../project/README.html">AI 輔助軟體考古手冊</a></li><li><a href="../../project/WORKLOG.html">工作歷程</a></li><li><a href="../../failure-patterns.html">有來源的失敗模式</a></li><li><a href="../../handbook-review.html">手冊交付驗收</a></li><li><a href="../../inventory.html">案例盤點與證據索引</a></li><li><a href="../../methodology-draft.html">以證據驅動的軟體考古：方法草案</a></li><li><a href="../../pattern-matrix.html">跨專案模式矩陣</a></li><li><a href="../../pdf-release.html">PDF 排版與發行</a></li><li><a href="../../releases/v.1.0.0-20260905.html">三語手冊 PDF 與流程圖</a></li><li><a href="../../site-release.html">宣傳網站與公開交付</a></li></ul></nav></details></aside><main id="content"><div class="languages"><a href="../01-evidence.html">繁體中文</a> · <a href="../en/01-evidence.html">English</a> · <a href="01-evidence.html">日本語</a></div><details class="toc"><summary>このページの内容</summary><ul><li class="depth-2"><a href="#最小の証拠カード">最小の証拠カード</a></li><li class="depth-2"><a href="#元の位置を保ち意味を追加する">元の位置を保ち、意味を追加する</a></li><li class="depth-2"><a href="#ゼロ件を信じる前に検索が見えることを示す">ゼロ件を信じる前に、検索が見えることを示す</a></li><li class="depth-2"><a href="#観測器にも対照を与える">観測器にも対照を与える</a></li><li class="depth-3"><a href="#出典と主張の範囲">出典と主張の範囲</a></li></ul></details><article><h1 id="01-別の人が再び見つけられる証拠を残す">01　別の人が再び見つけられる証拠を残す</h1>
+<p><a href="00-principles.html">前の章</a> · <a href="README.html">目次</a> · <a href="02-hypotheses.html">次の章</a></p>
+<p>証拠の出発点は、意味を付けた名前ではなく、位置を特定できる観測です。「ダメージ後にあるメモリ位置の値が減った」と「このフィールドは生命値だ」は別の主張です。前者には入力、位置、取得方法が必要です。後者には他の説明を除く根拠も必要です。</p>
+<p>スクリーンショット一枚も完全な証拠ではありません。プログラムの版、初期状態、入力列、取得境界、拡大縮小や色変換の有無を記します。不足がある記録も手掛かりとして残せますが、厳密に再現可能な実験とは呼べません。</p>
+<h2 id="最小の証拠カード">最小の証拠カード</h2>
+<p>これは手書きの作業表であり、正式なスキーマではありません。未取得の値は <code>UNKNOWN</code> とし、架空のハッシュで埋めません。</p>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr class="header">
+<th>項目</th>
+<th>記録する内容</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>証拠 ID と問い</td>
+<td>安定した ID、何を裁定する観測か</td>
+</tr>
+<tr class="even">
+<td>入力の識別</td>
+<td>原ファイル名、SHA-256、版。文書はリポジトリと完全なコミット</td>
+</tr>
+<tr class="odd">
+<td>元の位置</td>
+<td>パス、ページ、シンボル。アドレスには道具とアドレス空間</td>
+</tr>
+<tr class="even">
+<td>環境と方法</td>
+<td>道具の版、image ID、設定、コマンド、入力列、実行予算</td>
+</tr>
+<tr class="odd">
+<td>開始と取得条件</td>
+<td>セーブや状態、乱数、イベント／フレーム境界、前後の状態</td>
+</tr>
+<tr class="even">
+<td>生の成果物</td>
+<td>パス、ハッシュ、サイズ。画像は寸法とピクセル形式</td>
+</tr>
+<tr class="odd">
+<td>生の観測</td>
+<td>意味名を付ける前の実際の値</td>
+</tr>
+<tr class="even">
+<td>主張と確信度</td>
+<td>解釈、支持と反対の証拠、確信度、不足箇所</td>
+</tr>
+</tbody>
+</table></div>
+<p>文書のハッシュは読んだノートを識別するもので、そのノートが扱う EXE のハッシュではありません。Git コミットで出典を固定できますが、作業ツリーは読んでいる間にも進みます。取得と確認では同じ固定版を使います。</p>
+<h2 id="元の位置を保ち意味を追加する">元の位置を保ち、意味を追加する</h2>
+<p>逆アセンブルでは元の関数名、オペランド、バイト列、アドレスを残します。自作の名前は確定事項に見えがちです。意味、確信度、出典はコメントや版管理された索引として追加し、出力時に自動で統合表示します。次の人が索引を開くことを覚えている必要がある仕組みでは、引き継ぎが不完全です。</p>
+<p>単に <code>health</code> とだけ示す代わりに、次のように記録します。</p>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr class="header">
+<th>元の位置</th>
+<th>追加した解釈</th>
+<th>確信度</th>
+<th>証拠</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>原ファイル、元のオペランド、明示したアドレス空間</td>
+<td>ある状態更新に関与する可能性</td>
+<td><code>HYPOTHESIS</code>、未確認</td>
+<td>取得結果とアクセス箇所。不足は別記</td>
+</tr>
+</tbody>
+</table></div>
+<p>IDA の線形アドレス、セグメント内オフセット、ファイルオフセットは交換可能ではありません。道具間の対応には各基準と対応理由が必要です。関数とデータフローの関係は解析データベースを主とし、平坦なアセンブリ文字列は検索の手掛かりとして使います。それだけで全間接アクセスを証明できません。</p>
+<h2 id="ゼロ件を信じる前に検索が見えることを示す">ゼロ件を信じる前に、検索が見えることを示す</h2>
+<p>春之石の検索は、<code>int</code> だけを受け入れたため、<code>wait</code> と表示される呼び出しを落としていました（S2）。負の検索結果を解釈する前に確認します。</p>
+<ol type="1">
+<li>正の対照：既知の存在箇所を見つけられるか。</li>
+<li>範囲：関連領域全体か、既にコードと分類された部分だけか。</li>
+<li>表現：シンボル、直接オペランド、基底に折り込まれたオフセット、間接アクセスを扱えるか。</li>
+<li>分母：走査数、スキップ数、解析不能数はいくつか。</li>
+</ol>
+<p>読み出しが多いのに書き込みが少なければ、アドレス取得と後続の間接書き込みを追います。直接参照一覧の欠落は書き込みの不在を証明しません。「この方法では見つからなかった」と報告し、<code>UNKNOWN</code> を保ちます。</p>
+<h2 id="観測器にも対照を与える">観測器にも対照を与える</h2>
+<p>既知の寸法と色の合成画像で画像変換を、既知イベントでトレースを検査します。道具が開始し、完了し、必要な成果物を出したかも確認します。WinCV では変換器の不具合が後のフォント解釈を汚染しました（W1）。道具の修理だけでなく、古い出力に依存する主張の再確認も必要です。</p>
+<p>本リポジトリの共用ホスト規則では、解析と取得を、資源制限、外側のタイムアウト、有限の寿命を持つ Docker で行います。入力は読み取り専用、書き込み先は事前に UID/GID を確認し、終了後に当該コンテナを除去します。必要な参照と独自の要約だけを残し、アクセスできることを理由に原版素材を取り込みません。</p>
+<h3 id="出典と主張の範囲">出典と主張の範囲</h3>
+<p><a href="../../inventory.html#固定來源索引">S2、W1、O3</a>は検索、取得の誤り、ハッシュ記録の例を支えます。内容確認は <code>CONFIRMED</code>、カードと検査方法は <code>STRONG_INFERENCE</code> です。非破壊の注記と Docker の要件は本プロジェクトの規則です。</p>
+</article></main></div><footer><a href="../../index.html">王俊又 wicanr2</a> · AI 輔助軟體考古手冊 · <a href="../../library.html">全部文件 · All pages · 全ページ</a><p>證據先行，保留未知。 Evidence first. Keep uncertainty visible.</p></footer></body></html>

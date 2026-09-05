@@ -1,0 +1,57 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>00　先證明題目，再證明答案｜AI 軟體考古</title><link rel="canonical" href="https://wicanr2.github.io/ai-software-archaeology-handbook/handbook/00-principles.html"><link rel="stylesheet" href="../assets/reader.css"><link rel="icon" href="../assets/favicon.svg"></head><body><a class="skip" href="#content">跳至內文</a><header><a href="../index.html">王俊又 wicanr2</a><nav><a href="../library.html">全部文件 · All pages · 全ページ</a></nav></header><div class="layout"><aside><details open><summary>章節導覽</summary><nav><ul><li><a href="README.html">AI 輔助軟體考古手冊</a></li><li class="current"><a href="00-principles.html">00　先證明題目，再證明答案</a></li><li><a href="01-evidence.html">01　讓證據能被另一個人重新找到</a></li><li><a href="02-hypotheses.html">02　讓假說有機會失敗</a></li><li><a href="03-specification-gates.html">03　規格是實作前的證據審查</a></li><li><a href="04-oracles.html">04　行為基準也有能力邊界</a></li><li><a href="05-differential-testing.html">05　比較同一件事，保留第一個分歧</a></li><li><a href="06-conformance.html">06　把完成聲明寫成可稽核的結論</a></li><li><a href="07-agent-workflows.html">07　讓代理帶著證據交接，而不是帶著印象</a></li><li><a href="08-failure-patterns.html">08　從錯誤形成方式選下一個觀測</a></li><li><a href="worked-example.html">附錄　從證據到符合性報告：一個完整演練</a></li></ul></nav></details><details><summary>研究與專案文件</summary><nav><ul><li><a href="../project/AGENTS.html">AGENTS.md — Oracle-Driven Software Archaeology</a></li><li><a href="../project/PLAN.html">PLAN.md — Oracle-Driven Software Archaeology</a></li><li><a href="../project/README.html">AI 輔助軟體考古手冊</a></li><li><a href="../project/WORKLOG.html">工作歷程</a></li><li><a href="../failure-patterns.html">有來源的失敗模式</a></li><li><a href="../handbook-review.html">手冊交付驗收</a></li><li><a href="../inventory.html">案例盤點與證據索引</a></li><li><a href="../methodology-draft.html">以證據驅動的軟體考古：方法草案</a></li><li><a href="../pattern-matrix.html">跨專案模式矩陣</a></li><li><a href="../pdf-release.html">PDF 排版與發行</a></li><li><a href="../releases/v.1.0.0-20260905.html">三語手冊 PDF 與流程圖</a></li><li><a href="../site-release.html">宣傳網站與公開交付</a></li></ul></nav></details></aside><main id="content"><div class="languages"><a href="00-principles.html">繁體中文</a> · <a href="en/00-principles.html">English</a> · <a href="ja/00-principles.html">日本語</a></div><details class="toc"><summary>本頁目錄</summary><ul><li class="depth-2"><a href="#三種不同的成功">三種不同的成功</a></li><li class="depth-2"><a href="#一條可回查的工作鏈">一條可回查的工作鏈</a></li><li class="depth-2"><a href="#四個每日可用的問題">四個每日可用的問題</a></li><li class="depth-2"><a href="#從一個窄問題開工">從一個窄問題開工</a></li><li class="depth-3"><a href="#來源與主張範圍">來源與主張範圍</a></li></ul></details><article><h1 id="00-先證明題目再證明答案">00　先證明題目，再證明答案</h1>
+<p><a href="README.html">目錄</a> · <a href="01-evidence.html">下一章</a></p>
+<p>AI 很容易把一個合理故事寫成可以執行的程式。軟體考古的困難在於，你不只要一個答案， 還要知道它是否解釋了原有系統。沒有來源的常數、根據畫面猜出的欄位、只驗自己輸出的測試， 都可能把猜測固定成看起來很可靠的工程產物。</p>
+<p>因此先定義你要重現的行為：哪個版本、哪些輸入、哪段流程、哪些可見結果。 「完整重製」不是可直接測試的題目；「這個版本從新局選單走到神殿時，座標與對話是否一致」才有實驗邊界。</p>
+<h2 id="三種不同的成功">三種不同的成功</h2>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr class="header">
+<th>聲明</th>
+<th>需要的證據</th>
+<th>不能順便證明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>程式內部自洽</td>
+<td>解析、狀態轉移、邊界條件等局部測試</td>
+<td>規則就是原版規則</td>
+</tr>
+<tr class="even">
+<td>與指定參考一致</td>
+<td>同版本、同輸入、同狀態下的差分結果</td>
+<td>未測案例、其他平台或真實硬體全部一致</td>
+</tr>
+<tr class="odd">
+<td>使用者能完成流程</td>
+<td>正式產物從正常入口操作至結果</td>
+<td>每個內部欄位都與原版相同</td>
+</tr>
+</tbody>
+</table></div>
+<p>MM2 曾有離屏畫面測試與封包啟動檢查都沒發現的空白文字問題：文字在最後送進顯示層時被清掉。 缺的是產品出口的證據，而不是再多跑幾次同一組局部測試。案例 M1 也提醒我們，不應把不同種類的通過數加成一個完成百分比。</p>
+<h2 id="一條可回查的工作鏈">一條可回查的工作鏈</h2>
+<figure><img src="../assets/diagrams/lifecycle-zh-Hant.svg" alt="00　先證明題目，再證明答案 — Evidence → Hypothesis → Specification → Oracle → Implementation → Differential Validation → Conformance"></figure><details><summary>Mermaid · 原始流程定義</summary><pre class="mermaid"><code>flowchart LR
+    E[證據] --&gt; H[假說]
+    H --&gt; S[規格]
+    S --&gt; O[行為基準]
+    O --&gt; I[實作]
+    I --&gt; D[差分驗證]
+    D --&gt; C[符合性]
+    D -- 矛盾或缺失 --&gt; E</code></pre></details>
+<p>每一步留下下一步需要的產物。原始觀測支持主張，主張支持規格，規格指出要比較什麼， 比較報告支持有範圍的符合性。若把中間連結省略，只剩「測試全綠」，接手者就無法知道測試在證明什麼。</p>
+<p>實驗可以回頭，也可以先做隔離的原型取得觀測；不能把實驗性解釋直接移入正式路徑。 當新證據推翻前提時，回到受影響的規格，不在程式或測試裡偷偷換答案。</p>
+<h2 id="四個每日可用的問題">四個每日可用的問題</h2>
+<ol type="1">
+<li>這一句話是觀察、推論，還是我們自己的設計？</li>
+<li>哪個相反結果會讓我們承認它錯了？</li>
+<li>測試能看見這個錯誤發生的位置嗎？</li>
+<li>今天的結果只對哪些版本、案例與欄位成立？</li>
+</ol>
+<p>若第四題答不出來，先縮小聲明，而不是省略限制。縮小聲明不能替代完成使用者原先要求的功能； 尚未覆蓋的工作要明列為未完成，不能從清單消失。</p>
+<h2 id="從一個窄問題開工">從一個窄問題開工</h2>
+<p>用一小段正常流程建立垂直鏈：原始輸入 → 解碼資料 → 規則 → 使用者介面 → 儲存／輸出 → 比較。 只要某一環沒經過，便不能用前一環的結果代替它。對沒有介面或存檔的工具，明確寫不適用及理由。</p>
+<p>不用把整支執行檔翻譯完才開始。證據已足以實作並驗證目前功能，就收斂這個切片； 不相關的初始化樣板與硬體細節只保留定位。剩餘未知是否影響交付，由規格範圍與使用者目標判斷。</p>
+<h3 id="來源與主張範圍">來源與主張範圍</h3>
+<p><a href="../inventory.html#固定來源索引">M1、M3、P2</a>提供測試覆蓋缺口、原版路線與規格閘門的來源紀錄。 <code>CONFIRMED</code> 只指這些紀錄及所述文件規則已核對；三種成功的分法是 <code>STRONG_INFERENCE</code> 的方法整理。 它們不構成所有考古專案的成功保證。</p>
+</article></main></div><footer><a href="../index.html">王俊又 wicanr2</a> · AI 輔助軟體考古手冊 · <a href="../library.html">全部文件 · All pages · 全ページ</a><p>證據先行，保留未知。 Evidence first. Keep uncertainty visible.</p></footer></body></html>

@@ -1,0 +1,229 @@
+{
+  "pages": [
+    {
+      "source": "AGENTS.md",
+      "page": "project/AGENTS.html",
+      "sha256": "c71ee42e8a0e4ca61e8853ea2b70ee58bc352e62617add87e2f95de160059670"
+    },
+    {
+      "source": "PLAN.md",
+      "page": "project/PLAN.html",
+      "sha256": "24392cf9c51101846c6914e46560077ec4c849c22e8bae3c5eaa405fe645c131"
+    },
+    {
+      "source": "README.md",
+      "page": "project/README.html",
+      "sha256": "dcbec10942e9fb470a07d15394778fddfc901ad200eedc37f0bfa2855c62d9d1"
+    },
+    {
+      "source": "WORKLOG.md",
+      "page": "project/WORKLOG.html",
+      "sha256": "b1c43803fd132b9b7dbd5de37471aaf0e0b2354a7f18372715011446e8e970d3"
+    },
+    {
+      "source": "docs/failure-patterns.md",
+      "page": "failure-patterns.html",
+      "sha256": "9a75f483adc64aba221e080271fd4ced25839a6893616f9c4cc1416f2e8489e2"
+    },
+    {
+      "source": "docs/handbook/00-principles.md",
+      "page": "handbook/00-principles.html",
+      "sha256": "b207e5362e33289c4fe8f1c9db5577bea21d935a92c331c75d3a0c6cd2ee47a0"
+    },
+    {
+      "source": "docs/handbook/01-evidence.md",
+      "page": "handbook/01-evidence.html",
+      "sha256": "2dfc72c0d0d6b277d493ada4b9e795b74aa96430a90c65295b5286a15f210942"
+    },
+    {
+      "source": "docs/handbook/02-hypotheses.md",
+      "page": "handbook/02-hypotheses.html",
+      "sha256": "428bb6e7f7612d4c4aa89e5afc4af1c4a69d03aa75c719627627bee8a5eae1d0"
+    },
+    {
+      "source": "docs/handbook/03-specification-gates.md",
+      "page": "handbook/03-specification-gates.html",
+      "sha256": "2d6f774a1640f1f8e25f23548f0d593acdb0bb6ae3e134f07b3e0d48e50bdb2c"
+    },
+    {
+      "source": "docs/handbook/04-oracles.md",
+      "page": "handbook/04-oracles.html",
+      "sha256": "ab43ca0ba804bbe6941824074344d48135791773000800d3f7f676b3318c39c7"
+    },
+    {
+      "source": "docs/handbook/05-differential-testing.md",
+      "page": "handbook/05-differential-testing.html",
+      "sha256": "a70e14ba641c460b2768b415a0e404bc6a1a4846801a9ea9fd5a1bf50235c6f9"
+    },
+    {
+      "source": "docs/handbook/06-conformance.md",
+      "page": "handbook/06-conformance.html",
+      "sha256": "9e77c6d8885422cf8213d202d82253783dd5a10a0ed891f8dea9a8807d1fe8ed"
+    },
+    {
+      "source": "docs/handbook/07-agent-workflows.md",
+      "page": "handbook/07-agent-workflows.html",
+      "sha256": "b94e767c9ac0ac21b82bd9187bd1582ac976190a17bde3c59ddf5fba269a0725"
+    },
+    {
+      "source": "docs/handbook/08-failure-patterns.md",
+      "page": "handbook/08-failure-patterns.html",
+      "sha256": "87da9e331d0ab3a05e03c0879411eebb7355d23ad9bb27288e59442d3a4785e8"
+    },
+    {
+      "source": "docs/handbook/README.md",
+      "page": "handbook/README.html",
+      "sha256": "08007ac296a5b4beaf7c7768cee3278a7eca8fd311994991be29ca7b1c8ea276"
+    },
+    {
+      "source": "docs/handbook/en/00-principles.md",
+      "page": "handbook/en/00-principles.html",
+      "sha256": "3bc86a1489a18c7c3fb3f5dcdc4e6228d28dc64db094e854f63f19ab2b11ac73"
+    },
+    {
+      "source": "docs/handbook/en/01-evidence.md",
+      "page": "handbook/en/01-evidence.html",
+      "sha256": "c9adc75fddcecd3d6a3088e394075b54a00f1c4984d530dc22c8fd153ea79a2c"
+    },
+    {
+      "source": "docs/handbook/en/02-hypotheses.md",
+      "page": "handbook/en/02-hypotheses.html",
+      "sha256": "3cd746ee91a74fb00d12ba383efefb4b693739d811b6cff757c9ae0f007b7c98"
+    },
+    {
+      "source": "docs/handbook/en/03-specification-gates.md",
+      "page": "handbook/en/03-specification-gates.html",
+      "sha256": "5f96c9154117d1c03a6187f32ebc45827c619afb3a6ff890aff212a9842832d6"
+    },
+    {
+      "source": "docs/handbook/en/04-oracles.md",
+      "page": "handbook/en/04-oracles.html",
+      "sha256": "5b29ef42db5982af2d0ac95a2085d983a0dc5e66e9e9e029b6483092f4999176"
+    },
+    {
+      "source": "docs/handbook/en/05-differential-testing.md",
+      "page": "handbook/en/05-differential-testing.html",
+      "sha256": "633fe0f38eca2fe261326c7635f769b95f37075cce9d85bf208fc29f2ab4e0b8"
+    },
+    {
+      "source": "docs/handbook/en/06-conformance.md",
+      "page": "handbook/en/06-conformance.html",
+      "sha256": "8514fd677cad8cc8a0bdfa391d40157ac5c10dca3ca25252fac3eda441789261"
+    },
+    {
+      "source": "docs/handbook/en/07-agent-workflows.md",
+      "page": "handbook/en/07-agent-workflows.html",
+      "sha256": "96dfe0c5497b9f4f6da952c977e7083a4ad93a9b384bba4b23a3cc586f6108b1"
+    },
+    {
+      "source": "docs/handbook/en/08-failure-patterns.md",
+      "page": "handbook/en/08-failure-patterns.html",
+      "sha256": "bb2ed9d68c9c8023646e79a36f72cf2b237f0398cc529408a787f145b4af4acb"
+    },
+    {
+      "source": "docs/handbook/en/README.md",
+      "page": "handbook/en/README.html",
+      "sha256": "9437c1f5062590342ea8451ab8025409681632d9484961f0788b633a2b271ae1"
+    },
+    {
+      "source": "docs/handbook/en/worked-example.md",
+      "page": "handbook/en/worked-example.html",
+      "sha256": "487a6a1a8dfe349dcfe09def2f653a2d25b2caf5983c706d2c15f688ec2918b7"
+    },
+    {
+      "source": "docs/handbook/ja/00-principles.md",
+      "page": "handbook/ja/00-principles.html",
+      "sha256": "c701f8d487f8bf13e61d28b621115c4c4f5c84dcc4144fff9b09287641007aeb"
+    },
+    {
+      "source": "docs/handbook/ja/01-evidence.md",
+      "page": "handbook/ja/01-evidence.html",
+      "sha256": "2ef673d5926b1c91f148b45a129ed411085d599157b39321e0750c50cef413ba"
+    },
+    {
+      "source": "docs/handbook/ja/02-hypotheses.md",
+      "page": "handbook/ja/02-hypotheses.html",
+      "sha256": "9d62142d5987724cea09b35148537c8a8cbfc517d3867453af0c31f8a11fb3bb"
+    },
+    {
+      "source": "docs/handbook/ja/03-specification-gates.md",
+      "page": "handbook/ja/03-specification-gates.html",
+      "sha256": "7d2678eb28845657c0203c37a00672613e5904ca4624d234e9785981d063bcf6"
+    },
+    {
+      "source": "docs/handbook/ja/04-oracles.md",
+      "page": "handbook/ja/04-oracles.html",
+      "sha256": "2dcbc7204c8a97db916aa8349fd0934989282aff0210a6314f3f3879a3ff12c3"
+    },
+    {
+      "source": "docs/handbook/ja/05-differential-testing.md",
+      "page": "handbook/ja/05-differential-testing.html",
+      "sha256": "0aecfec86b992aed0e7e122dc74d32008b774548db0885a5d651a0a2127d9192"
+    },
+    {
+      "source": "docs/handbook/ja/06-conformance.md",
+      "page": "handbook/ja/06-conformance.html",
+      "sha256": "ac71817c67385552c81d967566b5e6be1a1599e7a4d0756e2bffd3eba659609e"
+    },
+    {
+      "source": "docs/handbook/ja/07-agent-workflows.md",
+      "page": "handbook/ja/07-agent-workflows.html",
+      "sha256": "769f3345d7a8fef71652e35cf61bfb0dc087fba9c60c96a965b459b7fd404a48"
+    },
+    {
+      "source": "docs/handbook/ja/08-failure-patterns.md",
+      "page": "handbook/ja/08-failure-patterns.html",
+      "sha256": "fd495f2f57c622af7663ae8d43bc06fcf89273fb98abfc32f05e274e21ad08b1"
+    },
+    {
+      "source": "docs/handbook/ja/README.md",
+      "page": "handbook/ja/README.html",
+      "sha256": "d6af5a36a9836f707feccd3db597c6291bb30aff4c75cd408310eb80aad0a807"
+    },
+    {
+      "source": "docs/handbook/ja/worked-example.md",
+      "page": "handbook/ja/worked-example.html",
+      "sha256": "dedea1d4a850b878acb26ed86ab602df20e64ccdddf79ab44b5cd1832f9f984a"
+    },
+    {
+      "source": "docs/handbook/worked-example.md",
+      "page": "handbook/worked-example.html",
+      "sha256": "b441f184c2affff8cc0741da2ce5888ff444736923fd138b9f62955e20b6e42f"
+    },
+    {
+      "source": "docs/handbook-review.md",
+      "page": "handbook-review.html",
+      "sha256": "3100f903ff8a2d4f1b42b1607f90ae7ba1f032fd9fa9f41197dd7a5af8af4cd6"
+    },
+    {
+      "source": "docs/inventory.md",
+      "page": "inventory.html",
+      "sha256": "f1f8dcaece18ecfc57d482a0d06cebdd950adf875913bf0d8f15071e941d67b5"
+    },
+    {
+      "source": "docs/methodology-draft.md",
+      "page": "methodology-draft.html",
+      "sha256": "fef92115cf98fad567e92e7cd6682497a46ea83a710535cf17ac80acf602954b"
+    },
+    {
+      "source": "docs/pattern-matrix.md",
+      "page": "pattern-matrix.html",
+      "sha256": "9e9722117190801777c2e1c5f2789ffb9c2d9f093da25d155bd5a16640cac694"
+    },
+    {
+      "source": "docs/pdf-release.md",
+      "page": "pdf-release.html",
+      "sha256": "0d8ac5fa62c59e16c4531a69050ccc780a4a8465d7dba00c13a30b6137cf57d9"
+    },
+    {
+      "source": "docs/releases/v.1.0.0-20260905.md",
+      "page": "releases/v.1.0.0-20260905.html",
+      "sha256": "afe29873e57267444b2e39778c42fbaf92e1227dd3f436a21264d1b7609a0809"
+    },
+    {
+      "source": "docs/site-release.md",
+      "page": "site-release.html",
+      "sha256": "33faecc64332024af2f9c09c7a89bc3f495efab73aaf1d39deba5d1b6bac475f"
+    }
+  ]
+}

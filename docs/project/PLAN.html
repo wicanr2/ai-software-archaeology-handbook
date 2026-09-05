@@ -1,0 +1,444 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PLAN.md — Oracle-Driven Software Archaeology｜AI 軟體考古</title><link rel="canonical" href="https://wicanr2.github.io/ai-software-archaeology-handbook/project/PLAN.html"><link rel="stylesheet" href="../assets/reader.css"><link rel="icon" href="../assets/favicon.svg"></head><body><a class="skip" href="#content">跳至內文</a><header><a href="../index.html">王俊又 wicanr2</a><nav><a href="../library.html">全部文件 · All pages · 全ページ</a></nav></header><div class="layout"><aside><details open><summary>章節導覽</summary><nav><ul><li><a href="../handbook/README.html">AI 輔助軟體考古手冊</a></li><li><a href="../handbook/00-principles.html">00　先證明題目，再證明答案</a></li><li><a href="../handbook/01-evidence.html">01　讓證據能被另一個人重新找到</a></li><li><a href="../handbook/02-hypotheses.html">02　讓假說有機會失敗</a></li><li><a href="../handbook/03-specification-gates.html">03　規格是實作前的證據審查</a></li><li><a href="../handbook/04-oracles.html">04　行為基準也有能力邊界</a></li><li><a href="../handbook/05-differential-testing.html">05　比較同一件事，保留第一個分歧</a></li><li><a href="../handbook/06-conformance.html">06　把完成聲明寫成可稽核的結論</a></li><li><a href="../handbook/07-agent-workflows.html">07　讓代理帶著證據交接，而不是帶著印象</a></li><li><a href="../handbook/08-failure-patterns.html">08　從錯誤形成方式選下一個觀測</a></li><li><a href="../handbook/worked-example.html">附錄　從證據到符合性報告：一個完整演練</a></li></ul></nav></details><details><summary>研究與專案文件</summary><nav><ul><li><a href="AGENTS.html">AGENTS.md — Oracle-Driven Software Archaeology</a></li><li><a href="PLAN.html">PLAN.md — Oracle-Driven Software Archaeology</a></li><li><a href="README.html">AI 輔助軟體考古手冊</a></li><li><a href="WORKLOG.html">工作歷程</a></li><li><a href="../failure-patterns.html">有來源的失敗模式</a></li><li><a href="../handbook-review.html">手冊交付驗收</a></li><li><a href="../inventory.html">案例盤點與證據索引</a></li><li><a href="../methodology-draft.html">以證據驅動的軟體考古：方法草案</a></li><li><a href="../pattern-matrix.html">跨專案模式矩陣</a></li><li><a href="../pdf-release.html">PDF 排版與發行</a></li><li><a href="../releases/v.1.0.0-20260905.html">三語手冊 PDF 與流程圖</a></li><li><a href="../site-release.html">宣傳網站與公開交付</a></li></ul></nav></details></aside><main id="content"><div class="languages"></div><details class="toc"><summary>本頁目錄</summary><ul><li class="depth-2"><a href="#語言安排">語言安排</a></li><li class="depth-2"><a href="#目前授權與交付邊界">目前授權與交付邊界</a></li><li class="depth-2"><a href="#1-project-goal">1. Project Goal</a></li><li class="depth-2"><a href="#purpose">Purpose</a></li><li class="depth-2"><a href="#questions-for-each-repository">Questions for each repository</a></li><li class="depth-2"><a href="#deliverables">Deliverables</a></li><li class="depth-3"><a href="#docsinventorymd">docs/inventory.md</a></li><li class="depth-3"><a href="#docspattern-matrixmd">docs/pattern-matrix.md</a></li><li class="depth-3"><a href="#docsfailure-patternsmd">docs/failure-patterns.md</a></li><li class="depth-3"><a href="#docsmethodology-draftmd">docs/methodology-draft.md</a></li><li class="depth-2"><a href="#phase-0-gate">Phase 0 Gate</a></li><li class="depth-2"><a href="#purpose-1">Purpose</a></li><li class="depth-2"><a href="#phase-1-gate">Phase 1 Gate</a></li><li class="depth-2"><a href="#purpose-2">Purpose</a></li><li class="depth-2"><a href="#required-concepts">Required concepts</a></li><li class="depth-3"><a href="#evidence">Evidence</a></li><li class="depth-3"><a href="#claim">Claim</a></li><li class="depth-3"><a href="#specification">Specification</a></li><li class="depth-3"><a href="#observation">Observation</a></li><li class="depth-3"><a href="#comparison">Comparison</a></li><li class="depth-2"><a href="#fixtures">Fixtures</a></li><li class="depth-2"><a href="#phase-2-gate">Phase 2 Gate</a></li><li class="depth-2"><a href="#language">Language</a></li><li class="depth-2"><a href="#working-command">Working command</a></li><li class="depth-2"><a href="#first-vertical-slice">First vertical slice</a></li><li class="depth-3"><a href="#osa-init">osa init</a></li><li class="depth-3"><a href="#osa-oracle-run">osa oracle run</a></li><li class="depth-3"><a href="#osa-compare">osa compare</a></li><li class="depth-3"><a href="#osa-report">osa report</a></li><li class="depth-2"><a href="#non-goal">Non-goal</a></li><li class="depth-2"><a href="#phase-3-gate">Phase 3 Gate</a></li><li class="depth-2"><a href="#purpose-3">Purpose</a></li><li class="depth-2"><a href="#adapter-requirements">Adapter requirements</a></li><li class="depth-2"><a href="#phase-4-gate">Phase 4 Gate</a></li><li class="depth-2"><a href="#purpose-4">Purpose</a></li><li class="depth-2"><a href="#phase-5-gate">Phase 5 Gate</a></li><li class="depth-2"><a href="#mm2">MM2</a></li><li class="depth-2"><a href="#shard-of-spring-or-fd2">Shard of Spring or FD2</a></li><li class="depth-2"><a href="#onepce--atari-talos--parhelion">OnePCE / Atari Talos / Parhelion</a></li><li class="depth-2"><a href="#v01-non-goals">v0.1 Non-Goals</a></li></ul></details><article><h1 id="planmd--oracle-driven-software-archaeology">PLAN.md — Oracle-Driven Software Archaeology</h1>
+<h2 id="語言安排">語言安排</h2>
+<p>先完成並審查繁體中文版，再擴充英文與日文版。第 0 階段的四份研究文件 同樣使用繁體中文；第 1 階段以前不提前產出正式手冊章節。</p>
+<h2 id="目前授權與交付邊界">目前授權與交付邊界</h2>
+<p>專案負責人在第 0 階段交付後要求「完成手冊」。據此完成第 1 階段的九章正文， 並依先前語言指示先審讀繁體中文版、最後擴充英文與日文；完整教學例子及閱讀入口 隨手冊提供。驗收紀錄見 <a href="../handbook-review.html">docs/handbook-review.md</a>。 後續第 2–7 階段仍是整體工具計畫，不以本次手冊完成代替其交付或自動取得實作授權。</p>
+<h2 id="1-project-goal">1. Project Goal</h2>
+<p>Extract the recurring engineering method from the wicanr2 reverse-engineering/remake projects and turn it into:</p>
+<ol type="1">
+<li>a reusable <strong>methodology / handbook</strong></li>
+<li>a small <strong>reference toolkit</strong></li>
+<li>a machine-readable <strong>evidence and conformance model</strong></li>
+<li>an <strong>agent protocol</strong> for evidence-driven reverse engineering</li>
+</ol>
+<p>This project is not another game remake and not a general-purpose decompiler.</p>
+<p>The project thesis is:</p>
+<blockquote>
+<p>AI can generate plausible implementations quickly. The engineering challenge is building an observable, reproducible, evidence-based environment in which the agent can falsify its own assumptions and verify behavioral parity.</p>
+</blockquote>
+<p>Canonical loop:</p>
+<p><strong>Evidence → Hypothesis → Specification → Oracle → Implementation → Differential Validation → Conformance</strong></p>
+<hr />
+<h1 id="phase-0--repository-inventory-and-method-extraction">Phase 0 — Repository Inventory and Method Extraction</h1>
+<h2 id="purpose">Purpose</h2>
+<p>Study the existing projects before creating abstractions.</p>
+<p>Case-study repositories:</p>
+<ul>
+<li><code>mm2_cht</code></li>
+<li><code>shard_of_spring_cht</code></li>
+<li><code>fd2_re</code></li>
+<li><code>wincv-remake</code></li>
+<li><code>onepce-ai-pacifista</code></li>
+<li><code>atari-talos-ai-toolkit</code></li>
+<li><code>Parhelion-PME86</code></li>
+</ul>
+<h2 id="questions-for-each-repository">Questions for each repository</h2>
+<p>Capture:</p>
+<ul>
+<li>what system/software was investigated</li>
+<li>what counted as raw evidence</li>
+<li>how reverse-engineering notes were stored</li>
+<li>how assumptions/hypotheses were handled</li>
+<li>what acted as the oracle</li>
+<li>what observations were machine-readable</li>
+<li>how original/candidate behavior was compared</li>
+<li>how failures falsified earlier assumptions</li>
+<li>how uncertainty was represented</li>
+<li>what patterns appear reusable</li>
+<li>what patterns are project-specific</li>
+</ul>
+<h2 id="deliverables">Deliverables</h2>
+<p>Create:</p>
+<ul>
+<li><code>docs/inventory.md</code></li>
+<li><code>docs/pattern-matrix.md</code></li>
+<li><code>docs/failure-patterns.md</code></li>
+<li><code>docs/methodology-draft.md</code></li>
+</ul>
+<h3 id="docsinventorymd"><code>docs/inventory.md</code></h3>
+<p>Per repository:</p>
+<ul>
+<li>repository/commit</li>
+<li>objective</li>
+<li>evidence sources</li>
+<li>RE workflow</li>
+<li>oracle strategy</li>
+<li>validation strategy</li>
+<li>known failure lessons</li>
+<li>reusable practices</li>
+</ul>
+<h3 id="docspattern-matrixmd"><code>docs/pattern-matrix.md</code></h3>
+<p>Cross-project matrix.</p>
+<p>A practice should be called a recurring pattern only when:</p>
+<ul>
+<li>observed in multiple projects, or</li>
+<li>supported by strong evidence that it is intentionally generalized</li>
+</ul>
+<p>Suggested rows:</p>
+<ul>
+<li>evidence preservation</li>
+<li>provenance</li>
+<li>confidence levels</li>
+<li>raw vs semantic separation</li>
+<li>deterministic replay</li>
+<li>oracle usage</li>
+<li>screenshot/frame comparison</li>
+<li>state comparison</li>
+<li>spec gating</li>
+<li>test layering</li>
+<li>failure documentation</li>
+<li>agent instructions</li>
+</ul>
+<h3 id="docsfailure-patternsmd"><code>docs/failure-patterns.md</code></h3>
+<p>Document concrete examples where:</p>
+<ul>
+<li>tests passed but parity failed</li>
+<li>a plausible heuristic failed</li>
+<li>incomplete observation caused a wrong conclusion</li>
+<li>semantic naming created false confidence</li>
+<li>one platform/sample failed to generalize</li>
+<li>generated code looked correct but behavior differed</li>
+</ul>
+<p>Each failure pattern should include:</p>
+<ol type="1">
+<li>initial assumption</li>
+<li>evidence</li>
+<li>how the assumption was falsified</li>
+<li>corrected understanding</li>
+<li>reusable lesson</li>
+</ol>
+<h3 id="docsmethodology-draftmd"><code>docs/methodology-draft.md</code></h3>
+<p>Draft the lifecycle:</p>
+<p><strong>Evidence → Hypothesis → Specification → Oracle → Implementation → Differential Validation → Conformance</strong></p>
+<p>For each stage define:</p>
+<ul>
+<li>inputs</li>
+<li>outputs</li>
+<li>confidence requirements</li>
+<li>exit criteria</li>
+<li>failure modes</li>
+<li>machine-readable artifacts</li>
+</ul>
+<h2 id="phase-0-gate">Phase 0 Gate</h2>
+<p>PASS only if:</p>
+<ul>
+<li>at least 3 recurring patterns are source-backed</li>
+<li>at least 3 failure patterns are source-backed</li>
+<li>repository-specific practices are not falsely generalized</li>
+<li>provenance is present</li>
+<li>uncertainty is explicit</li>
+</ul>
+<p>No implementation is authorized before this gate.</p>
+<hr />
+<h1 id="phase-1--handbook">Phase 1 — Handbook</h1>
+<h2 id="purpose-1">Purpose</h2>
+<p>Turn the Phase 0 findings into a readable engineering methodology.</p>
+<p>Create:</p>
+<ul>
+<li><code>docs/handbook/00-principles.md</code></li>
+<li><code>docs/handbook/01-evidence.md</code></li>
+<li><code>docs/handbook/02-hypotheses.md</code></li>
+<li><code>docs/handbook/03-specification-gates.md</code></li>
+<li><code>docs/handbook/04-oracles.md</code></li>
+<li><code>docs/handbook/05-differential-testing.md</code></li>
+<li><code>docs/handbook/06-conformance.md</code></li>
+<li><code>docs/handbook/07-agent-workflows.md</code></li>
+<li><code>docs/handbook/08-failure-patterns.md</code></li>
+</ul>
+<p>The handbook must explain clearly why:</p>
+<blockquote>
+<p>“tests pass” is weaker than “behavior matches the original.”</p>
+</blockquote>
+<h2 id="phase-1-gate">Phase 1 Gate</h2>
+<p>A new engineer should be able to understand:</p>
+<ul>
+<li>what evidence means</li>
+<li>how claims gain confidence</li>
+<li>when implementation is allowed</li>
+<li>what qualifies as an oracle</li>
+<li>how parity is tested</li>
+<li>when a subsystem is <code>CONFORMED</code></li>
+</ul>
+<hr />
+<h1 id="phase-2--machine-readable-model">Phase 2 — Machine-Readable Model</h1>
+<h2 id="purpose-2">Purpose</h2>
+<p>Represent the methodology in versioned schemas.</p>
+<p>Create:</p>
+<p><code>schema/v1/</code></p>
+<p>with schemas for:</p>
+<ul>
+<li><code>evidence.json</code></li>
+<li><code>claim.json</code></li>
+<li><code>spec.json</code></li>
+<li><code>oracle-run.json</code></li>
+<li><code>observation.json</code></li>
+<li><code>comparison.json</code></li>
+<li><code>conformance-report.json</code></li>
+</ul>
+<h2 id="required-concepts">Required concepts</h2>
+<h3 id="evidence">Evidence</h3>
+<p>Must support:</p>
+<ul>
+<li>ID</li>
+<li>source</li>
+<li>target</li>
+<li>hash</li>
+<li>location/address/path</li>
+<li>capture method</li>
+<li>raw artifact reference</li>
+<li>timestamp when relevant</li>
+<li>provenance</li>
+</ul>
+<h3 id="claim">Claim</h3>
+<p>Must support:</p>
+<ul>
+<li>statement</li>
+<li>confidence</li>
+<li>supporting evidence IDs</li>
+<li>contradicting evidence IDs</li>
+<li>promotion history</li>
+<li>unresolved questions</li>
+</ul>
+<h3 id="specification">Specification</h3>
+<p>Must support:</p>
+<ul>
+<li>subsystem</li>
+<li>state: <code>DRAFT | READY | CONFORMED</code></li>
+<li>inputs</li>
+<li>outputs</li>
+<li>invariants</li>
+<li>known unknowns</li>
+<li>oracle cases</li>
+<li>acceptance criteria</li>
+</ul>
+<h3 id="observation">Observation</h3>
+<p>Must be deterministic and machine-readable where possible.</p>
+<h3 id="comparison">Comparison</h3>
+<p>Must represent:</p>
+<ul>
+<li>exact matches</li>
+<li>mismatches</li>
+<li>tolerated differences</li>
+<li>missing observations</li>
+<li>unknown/uncomparable fields</li>
+</ul>
+<h2 id="fixtures">Fixtures</h2>
+<p>Use synthetic fixtures only.</p>
+<p>Do not bundle proprietary binaries or assets.</p>
+<h2 id="phase-2-gate">Phase 2 Gate</h2>
+<p>A fixture must represent a complete chain:</p>
+<p><strong>evidence → claim → spec → oracle run → observation → comparison → report</strong></p>
+<hr />
+<h1 id="phase-3--minimal-reference-cli">Phase 3 — Minimal Reference CLI</h1>
+<h2 id="language">Language</h2>
+<p>Go.</p>
+<h2 id="working-command">Working command</h2>
+<p><code>osa</code></p>
+<h2 id="first-vertical-slice">First vertical slice</h2>
+<p>Implement only:</p>
+<h3 id="osa-init"><code>osa init</code></h3>
+<p>Create an OSA workspace.</p>
+<h3 id="osa-oracle-run"><code>osa oracle run</code></h3>
+<p>Execute a declared adapter and capture observations.</p>
+<h3 id="osa-compare"><code>osa compare</code></h3>
+<p>Compare reference and candidate observation sets.</p>
+<h3 id="osa-report"><code>osa report</code></h3>
+<p>Produce:</p>
+<ul>
+<li>human-readable summary</li>
+<li>machine-readable report</li>
+</ul>
+<h2 id="non-goal">Non-goal</h2>
+<p>Do NOT build a generic plugin ecosystem yet.</p>
+<p>One adapter must work end-to-end before introducing generalized plugin abstractions.</p>
+<h2 id="phase-3-gate">Phase 3 Gate</h2>
+<p>A deterministic synthetic example must run in CI:</p>
+<p><code>init → oracle run → compare → report</code></p>
+<hr />
+<h1 id="phase-4--one-real-oracle-adapter">Phase 4 — One Real Oracle Adapter</h1>
+<h2 id="purpose-3">Purpose</h2>
+<p>Demonstrate the method on a real historical software target.</p>
+<p>Choose exactly one case study.</p>
+<p>Selection criteria:</p>
+<ul>
+<li>legally safe repository design</li>
+<li>user can supply original binary at runtime</li>
+<li>target can be identified by hash</li>
+<li>deterministic/headless observation is practical</li>
+<li>a small stable state vector is available</li>
+</ul>
+<p>Possible candidates may come from:</p>
+<ul>
+<li>OnePCE</li>
+<li>Atari Talos</li>
+<li>Parhelion</li>
+<li>another approved wicanr2 case study</li>
+</ul>
+<p>Do not choose until evidence from Phase 0/1 supports the decision.</p>
+<h2 id="adapter-requirements">Adapter requirements</h2>
+<p>The adapter must:</p>
+<ul>
+<li>accept user-provided target path</li>
+<li>hash and identify the target</li>
+<li>reject unknown versions unless explicitly allowed</li>
+<li>run deterministically where practical</li>
+<li>replay a fixed input sequence</li>
+<li>capture machine-readable observation state</li>
+<li>emit <code>observation.json</code></li>
+<li>preserve logs/provenance</li>
+<li>produce repeated identical results for identical conditions</li>
+</ul>
+<h2 id="phase-4-gate">Phase 4 Gate</h2>
+<p>Reference vs candidate must produce a meaningful mismatch report.</p>
+<hr />
+<h1 id="phase-5--agent-protocol">Phase 5 — Agent Protocol</h1>
+<h2 id="purpose-4">Purpose</h2>
+<p>Make the methodology executable by AI agents.</p>
+<p>Create:</p>
+<ul>
+<li><code>docs/agent-protocol.md</code></li>
+<li><code>examples/prompts/</code></li>
+</ul>
+<p>Protocol steps:</p>
+<ol type="1">
+<li>inspect available evidence</li>
+<li>create or update a hypothesis</li>
+<li>identify missing observations</li>
+<li>collect evidence</li>
+<li>promote/demote confidence explicitly</li>
+<li>prepare a specification</li>
+<li>pass the <code>READY</code> gate</li>
+<li>implement</li>
+<li>execute oracle/differential checks</li>
+<li>record mismatches</li>
+<li>revise</li>
+<li>mark <code>CONFORMED</code> only if declared criteria pass</li>
+</ol>
+<p>The agent must be taught to say:</p>
+<p><code>UNKNOWN</code></p>
+<p>instead of fabricating certainty.</p>
+<h2 id="phase-5-gate">Phase 5 Gate</h2>
+<p>A fresh Codex/Claude session must be able to follow the protocol without hidden project knowledge.</p>
+<hr />
+<h1 id="phase-6--case-studies">Phase 6 — Case Studies</h1>
+<p>Create at least three concise case studies.</p>
+<p>Preferred themes:</p>
+<h2 id="mm2">MM2</h2>
+<p><strong>Internal tests pass ≠ real parity</strong></p>
+<p>Show:</p>
+<ul>
+<li>original assumption</li>
+<li>passing internal validation</li>
+<li>real-world/original mismatch</li>
+<li>revised verification rule</li>
+</ul>
+<h2 id="shard-of-spring-or-fd2">Shard of Spring or FD2</h2>
+<p><strong>Disciplined uncertainty</strong></p>
+<p>Show:</p>
+<ul>
+<li>evidence preservation</li>
+<li>subsystem reconstruction</li>
+<li>known unknowns</li>
+<li>confidence separation</li>
+</ul>
+<h2 id="onepce--atari-talos--parhelion">OnePCE / Atari Talos / Parhelion</h2>
+<p><strong>Make the original observable to agents</strong></p>
+<p>Show:</p>
+<ul>
+<li>deterministic execution</li>
+<li>structured observation</li>
+<li>replay</li>
+<li>state capture</li>
+<li>oracle use</li>
+</ul>
+<p>Each case study should contain:</p>
+<ol type="1">
+<li>problem</li>
+<li>initial assumption</li>
+<li>evidence</li>
+<li>falsification/validation method</li>
+<li>corrected model</li>
+<li>generalized lesson</li>
+</ol>
+<hr />
+<h1 id="phase-7--packaging">Phase 7 — Packaging</h1>
+<p>Add:</p>
+<ul>
+<li>project README</li>
+<li>architecture diagram</li>
+<li>5-minute demo</li>
+<li>example workspace</li>
+<li>CI</li>
+<li>schema validation</li>
+<li>Go tests</li>
+<li><code>CONTRIBUTING.md</code></li>
+<li>non-goals</li>
+<li>legal/redistribution guidance</li>
+</ul>
+<h2 id="v01-non-goals">v0.1 Non-Goals</h2>
+<p>Not included:</p>
+<ul>
+<li>full emulator framework</li>
+<li>automatic decompiler</li>
+<li>automatic semantic naming</li>
+<li>universal binary analysis</li>
+<li>speculative AI truth score</li>
+<li>autonomous “accept my own output” loop</li>
+<li>redistribution of proprietary software</li>
+</ul>
+<hr />
+<h1 id="v01-success-criteria">v0.1 Success Criteria</h1>
+<p>The project is successful when:</p>
+<ol type="1">
+<li>a reader understands the methodology</li>
+<li>an AI agent can follow the methodology</li>
+<li>confidence and unknowns are machine-readable</li>
+<li>evidence provenance is retained</li>
+<li>one deterministic oracle adapter works</li>
+<li>one candidate can be compared with the oracle</li>
+<li>mismatches are visible and reproducible</li>
+<li><code>CONFORMED</code> has an objective declared meaning</li>
+<li>the project does not require trust in the AI’s interpretation</li>
+<li>the repository demonstrates the method without redistributing proprietary software</li>
+</ol>
+<hr />
+<h1 id="initial-codex-instruction">Initial Codex Instruction</h1>
+<p>When starting the project for the first time, give Codex this instruction:</p>
+<pre class="text"><code>Read AGENTS.md and PLAN.md completely before doing anything.
+
+Execute Phase 0 only.
+
+Do not implement the CLI.
+Do not create a plugin framework.
+Do not modify source case-study repositories.
+Do not generalize a pattern without source evidence.
+Do not invent findings from unavailable repositories.
+
+Create only:
+
+docs/inventory.md
+docs/pattern-matrix.md
+docs/failure-patterns.md
+docs/methodology-draft.md
+
+Preserve repository/file/commit provenance where available.
+
+Classify technical conclusions as:
+
+CONFIRMED
+STRONG_INFERENCE
+HYPOTHESIS
+UNKNOWN
+
+When Phase 0 is complete, stop and report:
+
+1. files created
+2. strongest recurring patterns
+3. strongest failure patterns
+4. disagreements between repositories
+5. missing evidence
+6. unresolved questions
+7. recommended changes to PLAN.md
+
+Do not begin Phase 1 without review.</code></pre>
+</article></main></div><footer><a href="../index.html">王俊又 wicanr2</a> · AI 輔助軟體考古手冊 · <a href="../library.html">全部文件 · All pages · 全ページ</a><p>證據先行，保留未知。 Evidence first. Keep uncertainty visible.</p></footer></body></html>

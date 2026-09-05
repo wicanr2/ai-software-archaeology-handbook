@@ -1,0 +1,134 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>手冊交付驗收｜AI 軟體考古</title><link rel="canonical" href="https://wicanr2.github.io/ai-software-archaeology-handbook/handbook-review.html"><link rel="stylesheet" href="assets/reader.css"><link rel="icon" href="assets/favicon.svg"></head><body><a class="skip" href="#content">跳至內文</a><header><a href="index.html">王俊又 wicanr2</a><nav><a href="library.html">全部文件 · All pages · 全ページ</a></nav></header><div class="layout"><aside><details open><summary>章節導覽</summary><nav><ul><li><a href="handbook/README.html">AI 輔助軟體考古手冊</a></li><li><a href="handbook/00-principles.html">00　先證明題目，再證明答案</a></li><li><a href="handbook/01-evidence.html">01　讓證據能被另一個人重新找到</a></li><li><a href="handbook/02-hypotheses.html">02　讓假說有機會失敗</a></li><li><a href="handbook/03-specification-gates.html">03　規格是實作前的證據審查</a></li><li><a href="handbook/04-oracles.html">04　行為基準也有能力邊界</a></li><li><a href="handbook/05-differential-testing.html">05　比較同一件事，保留第一個分歧</a></li><li><a href="handbook/06-conformance.html">06　把完成聲明寫成可稽核的結論</a></li><li><a href="handbook/07-agent-workflows.html">07　讓代理帶著證據交接，而不是帶著印象</a></li><li><a href="handbook/08-failure-patterns.html">08　從錯誤形成方式選下一個觀測</a></li><li><a href="handbook/worked-example.html">附錄　從證據到符合性報告：一個完整演練</a></li></ul></nav></details><details><summary>研究與專案文件</summary><nav><ul><li><a href="project/AGENTS.html">AGENTS.md — Oracle-Driven Software Archaeology</a></li><li><a href="project/PLAN.html">PLAN.md — Oracle-Driven Software Archaeology</a></li><li><a href="project/README.html">AI 輔助軟體考古手冊</a></li><li><a href="project/WORKLOG.html">工作歷程</a></li><li><a href="failure-patterns.html">有來源的失敗模式</a></li><li><a href="handbook-review.html">手冊交付驗收</a></li><li><a href="inventory.html">案例盤點與證據索引</a></li><li><a href="methodology-draft.html">以證據驅動的軟體考古：方法草案</a></li><li><a href="pattern-matrix.html">跨專案模式矩陣</a></li><li><a href="pdf-release.html">PDF 排版與發行</a></li><li><a href="releases/v.1.0.0-20260905.html">三語手冊 PDF 與流程圖</a></li><li><a href="site-release.html">宣傳網站與公開交付</a></li></ul></nav></details></aside><main id="content"><div class="languages"></div><details class="toc"><summary>本頁目錄</summary><ul><li class="depth-2"><a href="#範圍與授權">範圍與授權</a></li><li class="depth-2"><a href="#從要求反查交付">從要求反查交付</a></li><li class="depth-2"><a href="#編輯審查的關鍵裁決">編輯審查的關鍵裁決</a></li><li class="depth-2"><a href="#可重跑的文件檢查">可重跑的文件檢查</a></li><li class="depth-2"><a href="#本輪驗收結果">本輪驗收結果</a></li><li class="depth-2"><a href="#後續-pdf-發行驗收">後續 PDF 發行驗收</a></li></ul></details><article><h1 id="手冊交付驗收">手冊交付驗收</h1>
+<h2 id="範圍與授權">範圍與授權</h2>
+<p>本輪目標為專案負責人的「完成手冊」，涵蓋 PLAN 第 1 階段九章與先前指定的繁體中文、 英文、日文版本。第 0 階段已先交付七個案例、七個有來源模式及八個失敗案例。 本輪重新審讀這些材料並依後續授權完成手冊，沒有冒稱使用者已逐條核驗原始證據。</p>
+<p>中文原稿先完成並審讀，演練數值確認後才撰寫翻譯。英文與日文是完整對應版本， 不只是摘要。交付為可直接閱讀的 Markdown；未要求或宣稱完成網站、PDF、CLI、 正式 schema 或真實 oracle 介接器。PLAN 第 2–7 階段不以本文件宣布完成。</p>
+<h2 id="從要求反查交付">從要求反查交付</h2>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr class="header">
+<th>要求</th>
+<th>證據入口</th>
+<th>審查內容</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>九個指定章節</td>
+<td><a href="handbook/00-principles.html">00</a>、<a href="handbook/01-evidence.html">01</a>、<a href="handbook/02-hypotheses.html">02</a>、<a href="handbook/03-specification-gates.html">03</a>、<a href="handbook/04-oracles.html">04</a>、<a href="handbook/05-differential-testing.html">05</a>、<a href="handbook/06-conformance.html">06</a>、<a href="handbook/07-agent-workflows.html">07</a>、<a href="handbook/08-failure-patterns.html">08</a></td>
+<td>對應 PLAN 指定檔名，非佔位頁</td>
+</tr>
+<tr class="even">
+<td>先中文，再英日</td>
+<td><a href="handbook/README.html">中文</a>、<a href="handbook/en/README.html">英文</a>、<a href="handbook/ja/README.html">日文</a></td>
+<td>相同章號、來源 ID、確信度與完整演練</td>
+</tr>
+<tr class="odd">
+<td>理解證據</td>
+<td>第 01 章</td>
+<td>原始觀測／解釋、證據卡、位址空間、負向搜尋與觀測器正對照</td>
+</tr>
+<tr class="even">
+<td>理解主張如何升級</td>
+<td>第 02 章</td>
+<td>四級信心、競爭假說、判別輸入、升降理由與相依撤回</td>
+</tr>
+<tr class="odd">
+<td>理解何時可實作</td>
+<td>第 03 章</td>
+<td>DRAFT／READY／CONFORMED、八項審查條件、阻塞未知與使用者取捨</td>
+</tr>
+<tr class="even">
+<td>理解基準的資格</td>
+<td>第 04 章</td>
+<td>按問題選參考、固定環境、重播、觀測邊界、參考自身缺陷</td>
+</tr>
+<tr class="odd">
+<td>理解如何驗證相符</td>
+<td>第 05 章</td>
+<td>六種比較結果、缺失、分母、容差、第一分歧與比較器反例</td>
+</tr>
+<tr class="even">
+<td>理解何時 CONFORMED</td>
+<td>第 06 章</td>
+<td>逐需求反查、停止原因、版本關聯、未覆蓋與交付限制</td>
+</tr>
+<tr class="odd">
+<td>測試過不等於原版一致</td>
+<td>第 00、05、06、08 章</td>
+<td>區分局部正確、參考一致與產品出口，沒有用單元測試替代原版驗收</td>
+</tr>
+<tr class="even">
+<td>能跟著完成一條推導鏈</td>
+<td><a href="handbook/worked-example.html">完整演練</a></td>
+<td>人工契約 → 主張 → 規格 → 參考列 → 錯候選 → 修正 → 有限報告；六題附答案</td>
+</tr>
+<tr class="odd">
+<td>歷史來源可回查</td>
+<td><a href="inventory.html#固定來源索引">固定來源索引</a></td>
+<td>七個完整提交與二十筆文件 SHA-256；正文不冒稱新原版實驗</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="編輯審查的關鍵裁決">編輯審查的關鍵裁決</h2>
+<ul>
+<li><code>CONFIRMED</code>：在手冊中，來源紀錄存在與原版行為被本輪重現是兩個不同主張；各章均保留此區別。</li>
+<li><code>CONFIRMED</code>：三種語言的人工範例均有 A01、B01–B08 九個檢查點、每點 value 與結果碼，共十八項欄位比較。</li>
+<li><code>STRONG_INFERENCE</code>：章節的工作表、反例與自我檢核足以支持初學者跟著操作；本輪沒有招募外部讀者，因此不宣稱已完成真人可用性研究。</li>
+<li><code>HYPOTHESIS</code>：這套方法能在更多作者及軟體類型中降低錯誤；仍需後續獨立案例驗證。</li>
+<li><code>UNKNOWN</code>：七個來源專案全部歷史附件的目前可重生性，以及未重跑的原版行為；不阻塞有明確來源限制的手冊交付。</li>
+</ul>
+<p>特別檢查了合成案例不虛構 run、OnePCE 缺檔風險不被寫成已發生事故、Parhelion 的 306 條不被寫成全系統相容， 以及 Talos 的局部勘誤不被擴張成硬體考古授權。翻譯保留同樣限制。</p>
+<h2 id="可重跑的文件檢查">可重跑的文件檢查</h2>
+<p>執行 <a href="https://github.com/wicanr2/ai-software-archaeology-handbook/blob/main/tools/check_handbook.py">tools/check_handbook.py</a> 檢查三語檔名、來源 ID、信心詞、 本機連結與錨點、表格、圍欄、明顯佔位字樣，以及完整演練的數值和三語一致性。 腳本只讀文件，不實作 <code>osa</code>，也不把結構檢查冒稱原版相容性或完整翻譯品質證明。</p>
+<p>從專案根目錄執行：</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">timeout</span> 30s docker run <span class="at">--rm</span> <span class="at">--network</span> none <span class="at">--memory</span> 256m <span class="at">--cpus</span> 1 <span class="at">--pids-limit</span> 64 <span class="dt">\</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-u</span> <span class="st">&quot;</span><span class="va">$(</span><span class="fu">id</span> <span class="at">-u</span><span class="va">)</span><span class="st">:</span><span class="va">$(</span><span class="fu">id</span> <span class="at">-g</span><span class="va">)</span><span class="st">&quot;</span> <span class="at">-v</span> <span class="st">&quot;</span><span class="va">$PWD</span><span class="st">:/work:ro&quot;</span> <span class="at">-w</span> /work <span class="dt">\</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  python:3.12-slim python tools/check_handbook.py</span></code></pre></div>
+<p>本輪 Python image ID：<code>sha256:229a2c5bfa27522db7815ea81f9bed70af17ccb9de9fc7ad142b1877b5830d36</code>。 Markdown 另以 Pandoc 3.10 的 GFM 解析與 HTML 轉換檢查；image ID： <code>sha256:8d7467e8ee40b0365a344c3d41067d6d2349da52e9961e4229f331094806fb14</code>。 這不等於真人閱讀或跨瀏覽器視覺驗收。執行結果與交付提交記在 <a href="project/WORKLOG.html">WORKLOG.md</a>。</p>
+<h2 id="本輪驗收結果">本輪驗收結果</h2>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr class="header">
+<th>檢查</th>
+<th>實際結果</th>
+<th>證明的範圍</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>文件檢查腳本</td>
+<td>33／33 頁、192 個本機連結與錨點，零錯誤</td>
+<td>指定結構與目的檔存在，三語來源／狀態詞一致</td>
+</tr>
+<tr class="even">
+<td>合成例子</td>
+<td>每語九個檢查點、十八個必需欄位；數值、結果碼與序列連續性相同</td>
+<td>教學契約的算式與表格一致；不是候選程式執行</td>
+</tr>
+<tr class="odd">
+<td>檢查腳本反例</td>
+<td>錯誤飽和值、缺結果碼、非法輸入誤報成功，三者均遭拒絕</td>
+<td>檢查器確實能識別這三種文件缺陷</td>
+</tr>
+<tr class="even">
+<td>GFM 解析及 HTML 轉換</td>
+<td>Pandoc 3.10，33／33 頁通過，警告即失敗</td>
+<td>Markdown 可解析／轉換；未聲稱瀏覽器或真人閱讀驗收</td>
+</tr>
+<tr class="odd">
+<td>固定出典</td>
+<td>20／20 筆 SHA-256 與最初指定的 Git 物件一致</td>
+<td>引用版本未漂移；不驗證所有歷史動態結果</td>
+</tr>
+<tr class="even">
+<td>檔案與隔離</td>
+<td>新檔 UID/GID 正確；本輪標籤下無殘留容器</td>
+<td>沒有留下本輪的背景工作或 root-owned 成果</td>
+</tr>
+</tbody>
+</table></div>
+<p>上述證據支持本次三語手冊的文件交付完成。第 1 階段列出的六個理解目標均有正文、 操作方法與演練可對應；讀者是否實際學會仍須由閱讀與練習判斷，不把結構檢查改稱學習成效證明。</p>
+<h2 id="後續-pdf-發行驗收">後續 PDF 發行驗收</h2>
+<p>依新增的 PDF、流程圖美化與 Release 授權建立<a href="pdf-release.html">文件發行工具鏈</a>。 三語正文及既有技術結論不變；新增三組三語流程圖、固定來源附錄及閱讀版面。 PDF 驗收涵蓋嵌入字型、75 個書籤、十二個目錄目的頁及印刷頁碼、可抽取文字及頁面邊界； 三語合計 1,251 個段落／表格／標題／程式區塊逐項核對。逐頁縮圖及圖表頁另作目視抽查。 精確頁數、輸出 SHA-256 與檢查結果隨每版 <code>validation-&lt;版本&gt;.json</code> 提供，不以本段替代附件證據。</p>
+<p>首次檢查只計算直接目的地而漏掉具名目的地，後續另修正把目錄引導點讀入頁碼的問題； 兩者均屬驗收腳本誤判，修正後使用相同容器與命令重跑。沒有將它們記成正文或參考軟體缺陷。 本輪沒有新增原版行為實驗，也未執行跨所有閱讀器、真人試讀或實體印刷驗收。</p>
+</article></main></div><footer><a href="index.html">王俊又 wicanr2</a> · AI 輔助軟體考古手冊 · <a href="library.html">全部文件 · All pages · 全ページ</a><p>證據先行，保留未知。 Evidence first. Keep uncertainty visible.</p></footer></body></html>

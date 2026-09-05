@@ -70,3 +70,18 @@ timeout 120s docker run --rm --label project=osa-pages \
 既有 `v.1.0.0-20260905` 的 tag 與附件保持不變。PDF 發行說明與 manifest 中的私人狀態
 記錄的是首次產生／發布時的事實；儲存庫之後公開，不回寫附件或移動 tag。
 目前可見性、Pages 部署與驗收回讀另追加到 [WORKLOG.md](../WORKLOG.md)。
+
+## 全站文件閱讀
+
+使用者進一步要求所有頁面都留在網站內閱讀。`tools/site/build.py` 使用既有
+`osa-handbook-pdf:20260905` 中的 Pandoc，將根目錄與 `docs/` 的全部 45 份 Markdown
+完整轉成 HTML，不只製作摘要。三語章節共 33 頁，另含研究、來源、發行與專案文件。
+網站提供章節導覽、本頁目錄、對應語言切換與 `library.html` 全部文件入口。
+本儲存庫 Markdown 連結改為站內 HTML；外部案例與附件仍保留原始來源。
+
+重建時掛載專案為 `/work:ro`、`docs/` 為 `/site`，在上述容器內執行
+`python /work/tools/site/build.py`；沿用相同 UID/GID、資源限制與無網路設定。
+向量流程圖沿用 `tools/pdf/diagrams.py` 的三語輸出，保留原始 Mermaid 定義供查核。
+`tools/site/check_pages.py` 核對來源雜湊、全部文件覆蓋、檔案連結、重複 ID 與跨頁錨點；
+瀏覽器驗收另逐頁檢查手機寬度。發布前先更新文件、重建、檢查，再一併提交產生的 HTML。
+這是出版工具，不代表第 2 階段 `osa` 參考工具已實作。

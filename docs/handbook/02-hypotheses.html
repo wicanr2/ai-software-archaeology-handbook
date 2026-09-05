@@ -1,0 +1,56 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>02　讓假說有機會失敗｜AI 軟體考古</title><link rel="canonical" href="https://wicanr2.github.io/ai-software-archaeology-handbook/handbook/02-hypotheses.html"><link rel="stylesheet" href="../assets/reader.css"><link rel="icon" href="../assets/favicon.svg"></head><body><a class="skip" href="#content">跳至內文</a><header><a href="../index.html">王俊又 wicanr2</a><nav><a href="../library.html">全部文件 · All pages · 全ページ</a></nav></header><div class="layout"><aside><details open><summary>章節導覽</summary><nav><ul><li><a href="README.html">AI 輔助軟體考古手冊</a></li><li><a href="00-principles.html">00　先證明題目，再證明答案</a></li><li><a href="01-evidence.html">01　讓證據能被另一個人重新找到</a></li><li class="current"><a href="02-hypotheses.html">02　讓假說有機會失敗</a></li><li><a href="03-specification-gates.html">03　規格是實作前的證據審查</a></li><li><a href="04-oracles.html">04　行為基準也有能力邊界</a></li><li><a href="05-differential-testing.html">05　比較同一件事，保留第一個分歧</a></li><li><a href="06-conformance.html">06　把完成聲明寫成可稽核的結論</a></li><li><a href="07-agent-workflows.html">07　讓代理帶著證據交接，而不是帶著印象</a></li><li><a href="08-failure-patterns.html">08　從錯誤形成方式選下一個觀測</a></li><li><a href="worked-example.html">附錄　從證據到符合性報告：一個完整演練</a></li></ul></nav></details><details><summary>研究與專案文件</summary><nav><ul><li><a href="../project/AGENTS.html">AGENTS.md — Oracle-Driven Software Archaeology</a></li><li><a href="../project/PLAN.html">PLAN.md — Oracle-Driven Software Archaeology</a></li><li><a href="../project/README.html">AI 輔助軟體考古手冊</a></li><li><a href="../project/WORKLOG.html">工作歷程</a></li><li><a href="../failure-patterns.html">有來源的失敗模式</a></li><li><a href="../handbook-review.html">手冊交付驗收</a></li><li><a href="../inventory.html">案例盤點與證據索引</a></li><li><a href="../methodology-draft.html">以證據驅動的軟體考古：方法草案</a></li><li><a href="../pattern-matrix.html">跨專案模式矩陣</a></li><li><a href="../pdf-release.html">PDF 排版與發行</a></li><li><a href="../releases/v.1.0.0-20260905.html">三語手冊 PDF 與流程圖</a></li><li><a href="../site-release.html">宣傳網站與公開交付</a></li></ul></nav></details></aside><main id="content"><div class="languages"><a href="02-hypotheses.html">繁體中文</a> · <a href="en/02-hypotheses.html">English</a> · <a href="ja/02-hypotheses.html">日本語</a></div><details class="toc"><summary>本頁目錄</summary><ul><li class="depth-2"><a href="#主張一次只說一件事">主張一次只說一件事</a></li><li class="depth-2"><a href="#設計判別實驗">設計判別實驗</a></li><li class="depth-2"><a href="#升級撤回與相依關係">升級、撤回與相依關係</a></li><li class="depth-2"><a href="#沒有答案時留下可執行問題">沒有答案時，留下可執行問題</a></li><li class="depth-3"><a href="#來源與主張範圍">來源與主張範圍</a></li></ul></details><article><h1 id="02-讓假說有機會失敗">02　讓假說有機會失敗</h1>
+<p><a href="01-evidence.html">上一章</a> · <a href="README.html">目錄</a> · <a href="03-specification-gates.html">下一章</a></p>
+<p>假說的價值是指出下一個值得做的觀測。它不應因為名字好懂、程式能跑，或大家暫時沒有反對， 就變成事實。若測試對兩個不同解釋都會通過，它只證明兩個解釋目前都未被排除。</p>
+<p>春之石曾把隨等級增加的欄位認為是生命值；同一趨勢其實也符合經驗值。 真正分開兩個解釋的是傷害扣除與死亡判斷讀寫哪個欄位，而不是再找更多單調樣本（S3）。</p>
+<h2 id="主張一次只說一件事">主張一次只說一件事</h2>
+<p>「這個欄位是生命值而且存成無號十六位元，死後不再使用」至少是三個主張。 其中一項有直接證據，不會讓另外兩項自動成立。每個主張都應有 ID、範圍、支持與反對證據。</p>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr class="header">
+<th>信心</th>
+<th>可以這樣使用</th>
+<th>不能這樣使用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>CONFIRMED</code></td>
+<td>在明列條件下有直接證據；或直接由指定權威契約支持</td>
+<td>以有限樣本宣布全域定律</td>
+</tr>
+<tr class="even">
+<td><code>STRONG_INFERENCE</code></td>
+<td>多條相關且有區別力的證據支持，仍缺直接環節</td>
+<td>用強烈語氣補上缺失讀寫端</td>
+</tr>
+<tr class="odd">
+<td><code>HYPOTHESIS</code></td>
+<td>合理候選，已提出待做的檢驗</td>
+<td>當成正式實作的隱藏預設值</td>
+</tr>
+<tr class="even">
+<td><code>UNKNOWN</code></td>
+<td>沒有足夠資料、方法無法觀察，或證據互相衝突</td>
+<td>把不知道寫成數值零或不存在</td>
+</tr>
+</tbody>
+</table></div>
+<p>信心沒有自動的百分比換算。多份筆記若都抄自同一個舊結論，也不是多條獨立證據。 <code>CONFIRMED</code> 仍可因輸入版本錯誤、觀測器缺陷或相反證據而重新開啟。</p>
+<h2 id="設計判別實驗">設計判別實驗</h2>
+<p>以附錄的合成累加器為例，初值 10 加 1 得到 11，同時符合「飽和」與「八位元溢位回繞」。 選初值 250 加 10，兩個候選分別預測 255 與 4，才有判別力。 這是人工設計的教學實驗，不是歷史遊戲的數據。</p>
+<p>在執行前寫下：</p>
+<pre class="text"><code>主張：C-SAT，超過上限時停在 255。
+範圍：教學累加器 v1 的加法指令。
+競爭假說：飽和／回繞／拒絕且不改狀態。
+判別輸入：初值 250，指令 01 0A。
+預測：255／4／錯誤且仍為 250。
+需要觀測：操作後數值及錯誤結果，兩者都不可缺。</code></pre>
+<p>先寫預測能避免看到結果後才換一套說法。若三個候選都沒有預測到結果，不要強塞進最像的那個， 先檢查輸入與觀測方法，再提出新假說。</p>
+<h2 id="升級撤回與相依關係">升級、撤回與相依關係</h2>
+<p>每次改變信心都記錄舊等級、新等級、日期、原因、證據 ID，以及受影響的規格和測試。 如果「欄位是生命值」被撤回，依它推導的傷害公式、介面標籤與存檔解釋都要重查。 修正現況正文，保留舊主張及反證索引，不抹掉錯誤形成的過程。</p>
+<p>反證會先否定它實際矛盾的範圍。「某個樣本不是鏡射」足以否定「全部鏡射」， 卻不能證明所有其他樣本都不鏡射。MM2 的局部鏡射推論被後續畫面否定，正是不能把樣本數當保證的例子（M1）。</p>
+<h2 id="沒有答案時留下可執行問題">沒有答案時，留下可執行問題</h2>
+<p>差的交接是「法術還沒解」。好的交接是「C-17 的扣費時點未知；已確認效果函式內未扣， 尚未追查呼叫端；下一步沿代價暫存位置追查後續讀寫」。這能區分「工具失明」與「行為不存在」。 若未知會改變正式規則，規格仍為 DRAFT；若完全不影響已授權切片，列明排除範圍即可。</p>
+<h3 id="來源與主張範圍">來源與主張範圍</h3>
+<p><a href="../inventory.html#固定來源索引">S3、M1</a>提供欄位誤判、局部外推與呼叫端漏查的歷史紀錄。 紀錄存在為 <code>CONFIRMED</code>；判別實驗及相依追查方法為 <code>STRONG_INFERENCE</code>。 本書不把 S3 當時仍缺結算端的經驗值解釋升格為已證實。</p>
+</article></main></div><footer><a href="../index.html">王俊又 wicanr2</a> · AI 輔助軟體考古手冊 · <a href="../library.html">全部文件 · All pages · 全ページ</a><p>證據先行，保留未知。 Evidence first. Keep uncertainty visible.</p></footer></body></html>

@@ -1,0 +1,63 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>05　同じものを比較し、最初の不一致を残す｜AI 軟體考古</title><link rel="canonical" href="https://wicanr2.github.io/ai-software-archaeology-handbook/handbook/ja/05-differential-testing.html"><link rel="stylesheet" href="../../assets/reader.css"><link rel="icon" href="../../assets/favicon.svg"></head><body><a class="skip" href="#content">本文へ</a><header><a href="../../index.html">王俊又 wicanr2</a><nav><a href="../../library.html">全部文件 · All pages · 全ページ</a></nav></header><div class="layout"><aside><details open><summary>章一覧</summary><nav><ul><li><a href="README.html">AI 支援ソフトウェア考古学ハンドブック</a></li><li><a href="00-principles.html">00　答えの前に、何を確かめるかを定める</a></li><li><a href="01-evidence.html">01　別の人が再び見つけられる証拠を残す</a></li><li><a href="02-hypotheses.html">02　仮説が失敗できる検査を作る</a></li><li><a href="03-specification-gates.html">03　仕様は実装前の証拠審査</a></li><li><a href="04-oracles.html">04　判定基準にも限界がある</a></li><li class="current"><a href="05-differential-testing.html">05　同じものを比較し、最初の不一致を残す</a></li><li><a href="06-conformance.html">06　完了を監査できる結論にする</a></li><li><a href="07-agent-workflows.html">07　印象ではなく証拠を引き継ぐ</a></li><li><a href="08-failure-patterns.html">08　失敗の仕組みから次の観測を選ぶ</a></li><li><a href="worked-example.html">付録　証拠から報告までを一つの例でたどる</a></li></ul></nav></details><details><summary>研究與專案文件</summary><nav><ul><li><a href="../../project/AGENTS.html">AGENTS.md — Oracle-Driven Software Archaeology</a></li><li><a href="../../project/PLAN.html">PLAN.md — Oracle-Driven Software Archaeology</a></li><li><a href="../../project/README.html">AI 輔助軟體考古手冊</a></li><li><a href="../../project/WORKLOG.html">工作歷程</a></li><li><a href="../../failure-patterns.html">有來源的失敗模式</a></li><li><a href="../../handbook-review.html">手冊交付驗收</a></li><li><a href="../../inventory.html">案例盤點與證據索引</a></li><li><a href="../../methodology-draft.html">以證據驅動的軟體考古：方法草案</a></li><li><a href="../../pattern-matrix.html">跨專案模式矩陣</a></li><li><a href="../../pdf-release.html">PDF 排版與發行</a></li><li><a href="../../releases/v.1.0.0-20260905.html">三語手冊 PDF 與流程圖</a></li><li><a href="../../site-release.html">宣傳網站與公開交付</a></li></ul></nav></details></aside><main id="content"><div class="languages"><a href="../05-differential-testing.html">繁體中文</a> · <a href="../en/05-differential-testing.html">English</a> · <a href="05-differential-testing.html">日本語</a></div><details class="toc"><summary>このページの内容</summary><ul><li class="depth-2"><a href="#比較前に整列する">比較前に整列する</a></li><li class="depth-2"><a href="#少なくとも六種類の結果を分ける">少なくとも六種類の結果を分ける</a></li><li class="depth-2"><a href="#最初の不一致は原因に近い">最初の不一致は原因に近い</a></li><li class="depth-2"><a href="#許容差と変換は先に定義する">許容差と変換は先に定義する</a></li><li class="depth-2"><a href="#比較器と最後の出力経路を検査する">比較器と最後の出力経路を検査する</a></li><li class="depth-3"><a href="#出典と主張の範囲">出典と主張の範囲</a></li></ul></details><article><h1 id="05-同じものを比較し最初の不一致を残す">05　同じものを比較し、最初の不一致を残す</h1>
+<p><a href="04-oracles.html">前の章</a> · <a href="README.html">目次</a> · <a href="06-conformance.html">次の章</a></p>
+<p>差分テストは同じ条件で参照と候補の観測を比較します。比較器にも契約が必要です。整列方法、許可する変換、欠測の扱い、停止規則を決めます。欠測を黙って無視すると、正しい候補と未検査の候補が同じ成功信号を返してしまいます。</p>
+<h2 id="比較前に整列する">比較前に整列する</h2>
+<p>対象版、初期状態、要求列、チェックポイント ID、取得時点、フィールドの意味を確認します。Parhelion は同じ p-code 命令の実行後に IPC、SP、TOS を比較します。一方だけ実行前なら、それは観測のずれであって規則の不具合ではありません（P3）。</p>
+<p>出力のソートやピクセル移動をする前に、順序と位置が意味を持つか確認します。リスト順が行動順を決めるなら、ソートは検査対象の差を消してしまいます。</p>
+<h2 id="少なくとも六種類の結果を分ける">少なくとも六種類の結果を分ける</h2>
+<p>以下は報告の概念であり、公開済みの列挙型やスキーマではありません。</p>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr class="header">
+<th>結果</th>
+<th>意味</th>
+<th>必須受入への影響</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>厳密一致</td>
+<td>必要な観測がそろい、契約どおり同じ</td>
+<td>宣言した比較分母に含める</td>
+</tr>
+<tr class="even">
+<td>許容差内</td>
+<td>完全な観測が事前審査済みの許容差や写像を満たす</td>
+<td>別記し、生値の完全一致とは呼ばない</td>
+</tr>
+<tr class="odd">
+<td>不一致</td>
+<td>比較可能な値が規則に反する</td>
+<td>該当範囲の合格を止める</td>
+</tr>
+<tr class="even">
+<td>欠測</td>
+<td>必須ファイル、フィールド、時点がない</td>
+<td>合格を止める。ゼロや一致ではない</td>
+</tr>
+<tr class="odd">
+<td>比較不能／不明</td>
+<td>版、意味、境界が合わない</td>
+<td>調査または事前の除外。後から基準を下げない</td>
+</tr>
+<tr class="even">
+<td>スキップ／未対応</td>
+<td>未実行、または機能がない</td>
+<td>合格と分離。必須項は未完了のまま</td>
+</tr>
+</tbody>
+</table></div>
+<p>OnePCE O2 は必要な環境変数がなければテストをスキップし、一部メモリファイルがなければその領域を飛ばします。これはコード上で確認できる危険であり、過去の受入実行が実際に欠測だったという主張ではありません。実際の検査範囲を報告する必要性を示しています。</p>
+<h2 id="最初の不一致は原因に近い">最初の不一致は原因に近い</h2>
+<p>状態を持つ系では、最初にずれた時点を保存します。仕様と実行 ID、ステップ、入力、フィールド、参照値、候補値、生の成果物へのパスです。診断のため後続を取っても、累積した誤りを多数の独立した欠陥と数えません。</p>
+<p>付録の誤った候補は <code>01 0A</code> の後、250 を 4 にします。参照は 255 で、ここですでに反例です。後で <code>02 00</code> により両方ゼロになるため、最終状態だけなら誤りを見逃します。</p>
+<p>パーサでは複数の独立したフィールド差分を集める方がよい場合もあります。時間列では順序を保存します。すべてを同一の「最初の差分」アルゴリズムにせず、対象動作に合わせます。</p>
+<h2 id="許容差と変換は先に定義する">許容差と変換は先に定義する</h2>
+<p>OnePCE O1 は表示窓と色の対応を使い、参照の外にある最終行を除外します。そのため、一フレームあたり比較 76,480 ピクセル、未比較 320 ピクセル、写像規則を残す必要があります。差分ゼロを全ネイティブ RGB の完全一致と言い換えられません。</p>
+<p>位置探索は、どこなら最も似るかという診断に使えます。受入は仕様で予測した位置です。最良位置が二ピクセルずれるなら、期待位置を動かすのでなく幾何や取得契約に戻ります。許容規則を変更したら版を付け、旧結果を残して影響範囲を再検査します。</p>
+<h2 id="比較器と最後の出力経路を検査する">比較器と最後の出力経路を検査する</h2>
+<p>同じデータ、意図的に変えたデータ、欠けたフィールド、ずれたチェックポイントを与えます。誤った候補と不完全な観測を拒否できるか確認します。こうした故障注入は、常に成功する比較器を見つけます。検査対象自身から期待値をすべて生成しないでください。</p>
+<p>製品では、画面、ファイル、セーブ、正式パッケージまで通す必要があります。MM2 の文字問題は、オフスクリーン比較が通っても未通過の表示転送は検査できないことを示します（M1）。通常経路、代替経路、対応プラットフォームを別々に抽出検査します。</p>
+<h3 id="出典と主張の範囲">出典と主張の範囲</h3>
+<p><a href="../../inventory.html#固定來源索引">O1、O2、P3、M1</a>は分母、スキップ分岐、最初の差、出力境界の例です。静的確認は <code>CONFIRMED</code>、六分類と比較器反例の方針は <code>STRONG_INFERENCE</code> です。本章のために出典プロジェクトのテストを実行したとは主張しません。</p>
+</article></main></div><footer><a href="../../index.html">王俊又 wicanr2</a> · AI 輔助軟體考古手冊 · <a href="../../library.html">全部文件 · All pages · 全ページ</a><p>證據先行，保留未知。 Evidence first. Keep uncertainty visible.</p></footer></body></html>

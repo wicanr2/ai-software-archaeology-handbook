@@ -1,0 +1,63 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>05　比較同一件事，保留第一個分歧｜AI 軟體考古</title><link rel="canonical" href="https://wicanr2.github.io/ai-software-archaeology-handbook/handbook/05-differential-testing.html"><link rel="stylesheet" href="../assets/reader.css"><link rel="icon" href="../assets/favicon.svg"></head><body><a class="skip" href="#content">跳至內文</a><header><a href="../index.html">王俊又 wicanr2</a><nav><a href="../library.html">全部文件 · All pages · 全ページ</a></nav></header><div class="layout"><aside><details open><summary>章節導覽</summary><nav><ul><li><a href="README.html">AI 輔助軟體考古手冊</a></li><li><a href="00-principles.html">00　先證明題目，再證明答案</a></li><li><a href="01-evidence.html">01　讓證據能被另一個人重新找到</a></li><li><a href="02-hypotheses.html">02　讓假說有機會失敗</a></li><li><a href="03-specification-gates.html">03　規格是實作前的證據審查</a></li><li><a href="04-oracles.html">04　行為基準也有能力邊界</a></li><li class="current"><a href="05-differential-testing.html">05　比較同一件事，保留第一個分歧</a></li><li><a href="06-conformance.html">06　把完成聲明寫成可稽核的結論</a></li><li><a href="07-agent-workflows.html">07　讓代理帶著證據交接，而不是帶著印象</a></li><li><a href="08-failure-patterns.html">08　從錯誤形成方式選下一個觀測</a></li><li><a href="worked-example.html">附錄　從證據到符合性報告：一個完整演練</a></li></ul></nav></details><details><summary>研究與專案文件</summary><nav><ul><li><a href="../project/AGENTS.html">AGENTS.md — Oracle-Driven Software Archaeology</a></li><li><a href="../project/PLAN.html">PLAN.md — Oracle-Driven Software Archaeology</a></li><li><a href="../project/README.html">AI 輔助軟體考古手冊</a></li><li><a href="../project/WORKLOG.html">工作歷程</a></li><li><a href="../failure-patterns.html">有來源的失敗模式</a></li><li><a href="../handbook-review.html">手冊交付驗收</a></li><li><a href="../inventory.html">案例盤點與證據索引</a></li><li><a href="../methodology-draft.html">以證據驅動的軟體考古：方法草案</a></li><li><a href="../pattern-matrix.html">跨專案模式矩陣</a></li><li><a href="../pdf-release.html">PDF 排版與發行</a></li><li><a href="../releases/v.1.0.0-20260905.html">三語手冊 PDF 與流程圖</a></li><li><a href="../site-release.html">宣傳網站與公開交付</a></li></ul></nav></details></aside><main id="content"><div class="languages"><a href="05-differential-testing.html">繁體中文</a> · <a href="en/05-differential-testing.html">English</a> · <a href="ja/05-differential-testing.html">日本語</a></div><details class="toc"><summary>本頁目錄</summary><ul><li class="depth-2"><a href="#比較前先對齊">比較前先對齊</a></li><li class="depth-2"><a href="#結果至少分成六類">結果至少分成六類</a></li><li class="depth-2"><a href="#第一個分歧比最後一堆錯誤更有用">第一個分歧比最後一堆錯誤更有用</a></li><li class="depth-2"><a href="#容差與轉換要在執行前定義">容差與轉換要在執行前定義</a></li><li class="depth-2"><a href="#驗證比較器與最後出口">驗證比較器與最後出口</a></li><li class="depth-3"><a href="#來源與主張範圍">來源與主張範圍</a></li></ul></details><article><h1 id="05-比較同一件事保留第一個分歧">05　比較同一件事，保留第一個分歧</h1>
+<p><a href="04-oracles.html">上一章</a> · <a href="README.html">目錄</a> · <a href="06-conformance.html">下一章</a></p>
+<p>差分測試將相同條件下的參考觀測與候選觀測逐項比較。比較器本身也有契約： 欄位如何對齊、哪些轉換合法、缺資料算什麼，以及何時停止。若它會悄悄忽略缺失， 正確的候選與完全沒被測到的候選可能得到同樣的成功訊號。</p>
+<h2 id="比較前先對齊">比較前先對齊</h2>
+<p>檢查兩邊的目標版本、起始狀態、請求序列、檢查點 ID、取樣時點及欄位定義。 Parhelion 比的是同一條 p-code 執行後的 IPC、SP、TOS；把一邊的執行前狀態拿來比， 產生的是觀測錯位，不是候選規則錯誤（P3）。</p>
+<p>比較輸出排序或像素座標前，也先確認順序或位置是否具有語意。不能為了讓列表相同就排序， 若原版順序會決定行動次序，排序便把功能差異消掉了。</p>
+<h2 id="結果至少分成六類">結果至少分成六類</h2>
+<p>下列是報告用詞，不是本專案已發布的列舉型別或 schema。</p>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr class="header">
+<th>結果</th>
+<th>意義</th>
+<th>對必要驗收的影響</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>精確相符</td>
+<td>所需觀測齊全，依契約完全一致</td>
+<td>可計入相符分母</td>
+</tr>
+<tr class="even">
+<td>容許差異</td>
+<td>齊全且符合預先審查的容差／映射</td>
+<td>另列，不冒稱原始值完全一致</td>
+</tr>
+<tr class="odd">
+<td>不相符</td>
+<td>有可比較值，違反規則</td>
+<td>阻止相關範圍通過</td>
+</tr>
+<tr class="even">
+<td>缺失觀測</td>
+<td>必要檔案、欄位或檢查點不存在</td>
+<td>阻止通過，不能當零或相符</td>
+</tr>
+<tr class="odd">
+<td>不可比較／未知</td>
+<td>版本、語意或邊界不相容</td>
+<td>調查或預先明列排除；不得臨時降門檻</td>
+</tr>
+<tr class="even">
+<td>略過／未支援</td>
+<td>測試沒執行或功能未提供</td>
+<td>與通過分開，必要項仍未完成</td>
+</tr>
+</tbody>
+</table></div>
+<p>OnePCE O2 的測試在必要環境變數不足時略過，讀不到某些記憶體檔案也會跳過該區。 這是靜態程式碼可見的風險，不是本書宣稱歷史驗收確實缺檔；它足以說明為何要報告實際覆蓋。</p>
+<h2 id="第一個分歧比最後一堆錯誤更有用">第一個分歧比最後一堆錯誤更有用</h2>
+<p>對狀態系統，優先保存第一個偏離的檢查點：規格與執行 ID、步數、輸入、欄位、 原版值、候選值及原始觀測路徑。後續可以繼續蒐集診斷，但不要把累積錯誤當成很多獨立缺陷。</p>
+<p>附錄的錯誤候選在 <code>01 0A</code> 之後把 250 變成 4，參考是 255；這一刻已有足夠反例。 如果後面的 <code>02 00</code> 都重設成 0，只比較最後狀態會錯過中間的錯誤。</p>
+<p>對解析器可逐欄比較並收集多個獨立差異；對時間序列則應保留事件順序。 策略依待驗行為選定，不要求所有問題都以同一種「第一筆」算法處理。</p>
+<h2 id="容差與轉換要在執行前定義">容差與轉換要在執行前定義</h2>
+<p>OnePCE O1 使用顯示視窗及色彩對應規則，不比較參考畫面之外的最後一列。 因此報告必須保留每幀 76,480 個比較像素、320 個未覆蓋像素，以及映射規則； 「差異為零」不能改寫成全部原生 RGB 完全相同。</p>
+<p>位移搜尋可以告訴你最像的位置在哪裡，但正式驗收仍用規格預測的位置。 若最像的位置偏了兩像素，應回到幾何或取樣契約，不移動預期值掩蓋問題。 容差改版時重跑全部受影響案例，並留下舊規則下的結果。</p>
+<h2 id="驗證比較器與最後出口">驗證比較器與最後出口</h2>
+<p>給比較器一組相同資料、一組故意改錯的資料、一份缺欄位資料及一個錯位檢查點。 確認它能拒絕錯誤候選與不完整觀測；這類故意注入缺陷的檢查能揭露「永遠成功」的比較器。 不要只讓比較器讀自己產生的期望值。</p>
+<p>產品還要走到最後輸出：顯示、檔案、存檔或正式封包。MM2 M1 的文字層反例說明， 離屏比對即使有價值，也不能覆蓋未經過的顯示轉接。一般流程與替代路徑分開抽驗，平台亦同。</p>
+<h3 id="來源與主張範圍">來源與主張範圍</h3>
+<p><a href="../inventory.html#固定來源索引">O1、O2、P3、M1</a>支持比較分母、略過分支、第一分歧與出口缺口的敘述。 這些來源核對為 <code>CONFIRMED</code>；六類報告及比較器反例策略為 <code>STRONG_INFERENCE</code>。 本章沒有宣稱實際執行任何來源專案的測試。</p>
+</article></main></div><footer><a href="../index.html">王俊又 wicanr2</a> · AI 輔助軟體考古手冊 · <a href="../library.html">全部文件 · All pages · 全ページ</a><p>證據先行，保留未知。 Evidence first. Keep uncertainty visible.</p></footer></body></html>

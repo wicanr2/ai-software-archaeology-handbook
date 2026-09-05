@@ -40,7 +40,7 @@
       <p class="equation" aria-label="250 加 10">250 <i>+</i> 10</p>
       <div class="comparison"><div><span>契約：上限 255</span><strong>255</strong><small>參考結果</small></div><div><span>錯誤候選：溢位回繞</span><strong class="wrong">4</strong><small>在 B01 找到第一個分歧</small></div></div>
       <p class="evidence-note"><b>差異需要被看見。</b><br>只比較最後的重設狀態，會錯過中間的錯誤。</p>
-      <a href="https://github.com/wicanr2/ai-software-archaeology-handbook/blob/main/docs/handbook/worked-example.md">跟著完整案例，走一次驗證鏈 →</a>
+      <a href="handbook/worked-example.html">跟著完整案例，走一次驗證鏈 →</a>
     </figure>
   </section>
 
@@ -52,8 +52,8 @@
   <section class="section method" id="method" aria-labelledby="method-title">
     <div class="section-heading"><p class="eyebrow">01 / 方法與貢獻</p><h2 id="method-title">寫出程式，<br>只是驗證的開始。</h2><p>AI 加快實作，也讓「合理的猜測」更容易變成程式。本手冊把注意力放回一個工程問題：我們憑什麼說，這份實作符合目標行為？</p></div>
     <div class="contributions">
-      <article><span class="number">01</span><div><h3>把經驗變成可回查的證據</h3><p>從七個案例整理來源、版本與勘誤。保留原始觀測，也保留錯誤結論為何被推翻，讓知識不只存在於對話與記憶。</p><a href="https://github.com/wicanr2/ai-software-archaeology-handbook/blob/main/docs/inventory.md">查看二十筆固定來源 →</a></div></article>
-      <article><span class="number">02</span><div><h3>把人與 AI 的協作接上驗證鏈</h3><p>用證據支持規格，以明確基準比較候選實作；遇到缺口就重開調查。完成聲明必須有版本、範圍與可追溯的比較結果。</p><a href="https://github.com/wicanr2/ai-software-archaeology-handbook/blob/main/docs/handbook/07-agent-workflows.md">閱讀代理工作流程 →</a></div></article>
+      <article><span class="number">01</span><div><h3>把經驗變成可回查的證據</h3><p>從七個案例整理來源、版本與勘誤。保留原始觀測，也保留錯誤結論為何被推翻，讓知識不只存在於對話與記憶。</p><a href="inventory.html">查看二十筆固定來源 →</a></div></article>
+      <article><span class="number">02</span><div><h3>把人與 AI 的協作接上驗證鏈</h3><p>用證據支持規格，以明確基準比較候選實作；遇到缺口就重開調查。完成聲明必須有版本、範圍與可追溯的比較結果。</p><a href="handbook/07-agent-workflows.html">閱讀代理工作流程 →</a></div></article>
       <article><span class="number">03</span><div><h3>把方法交給下一位工程師</h3><p>先完成繁體中文原稿，再擴充英文與日文；附上可手算的完整演練與 PDF，讓不同語言的讀者都能沿用相同判準。</p><a href="#handbook">選擇你的閱讀版本 →</a></div></article>
     </div>
   </section>
@@ -66,7 +66,7 @@
   </section>
 
   <section class="section cases" id="cases" aria-labelledby="cases-title">
-    <div class="section-heading"><p class="eyebrow">02 / 七個案例</p><h2 id="cases-title">從真實專案，<br>提煉可重用的方法。</h2><p>以下是手冊採用的案例來源與方法切面，不是七份「所有功能皆已完成」的宣稱。各案例仍保留自己的工具、範圍與證據限制。</p><a class="secondary" href="https://github.com/wicanr2/ai-software-archaeology-handbook/blob/main/docs/pattern-matrix.md">閱讀跨專案模式矩陣 ↗</a></div>
+    <div class="section-heading"><p class="eyebrow">02 / 七個案例</p><h2 id="cases-title">從真實專案，<br>提煉可重用的方法。</h2><p>以下是手冊採用的案例來源與方法切面，不是七份「所有功能皆已完成」的宣稱。各案例仍保留自己的工具、範圍與證據限制。</p><a class="secondary" href="pattern-matrix.html">閱讀跨專案模式矩陣 ↗</a></div>
     <div class="case-list">
       <article><span class="number">M</span><div><h3><a href="https://github.com/wicanr2/mm2_cht">MM2 · 魔法門 II <span aria-hidden="true">↗</span></a></h3><p>驗證最後一段使用者路徑；內部測試不能取代真正的顯示出口。</p><small>重製與繁體中文化 / M1–M3</small></div></article>
       <article><span class="number">S</span><div><h3><a href="https://github.com/wicanr2/shard_of_spring_cht">Shard of Spring · 春之石 <span aria-hidden="true">↗</span></a></h3><p>讓測試能區分競爭假說；欄位名稱與數值形狀，都不是語意的證明。</p><small>規則重建與逆向筆記 / S1–S3</small></div></article>
@@ -79,20 +79,20 @@
   </section>
 
   <section class="handbook-section" id="handbook" aria-labelledby="book-title">
-    <div class="book-heading"><div><p class="eyebrow">03 / 把方法帶走</p><h2 id="book-title">一本手冊，<br>三種閱讀入口。</h2></div><p>九章正文、一個完整教學案例、固定來源附錄。<br>線上閱讀 Markdown，或下載有目錄、書籤與流程圖的 A4 PDF。</p></div>
+    <div class="book-heading"><div><p class="eyebrow">03 / 把方法帶走</p><h2 id="book-title">一本手冊，<br>三種閱讀入口。</h2></div><p>九章正文、一個完整教學案例、固定來源附錄。<br>全書都可在本站閱讀，或下載有目錄、書籤與流程圖的 A4 PDF。</p></div>
     <div class="editions">
-      <article lang="zh-Hant"><p class="edition-code">ZH / 原稿</p><h3>繁體中文</h3><p>27 頁 PDF · 完整手冊</p><a href="https://github.com/wicanr2/ai-software-archaeology-handbook/blob/main/docs/handbook/README.md">線上閱讀 →</a><a class="download" href="https://github.com/wicanr2/ai-software-archaeology-handbook/releases/download/v.1.0.0-20260905/osa-handbook-zh-Hant-v.1.0.0-20260905.pdf">下載繁體中文 PDF ↓</a></article>
-      <article lang="en"><p class="edition-code">EN / TRANSLATION</p><h3>English</h3><p>28-page PDF · Complete handbook</p><a href="https://github.com/wicanr2/ai-software-archaeology-handbook/blob/main/docs/handbook/en/README.md">Read online →</a><a class="download" href="https://github.com/wicanr2/ai-software-archaeology-handbook/releases/download/v.1.0.0-20260905/osa-handbook-en-v.1.0.0-20260905.pdf">Download English PDF ↓</a></article>
-      <article lang="ja"><p class="edition-code">JA / 翻訳</p><h3>日本語</h3><p>27 ページ PDF · 完全版</p><a href="https://github.com/wicanr2/ai-software-archaeology-handbook/blob/main/docs/handbook/ja/README.md">オンラインで読む →</a><a class="download" href="https://github.com/wicanr2/ai-software-archaeology-handbook/releases/download/v.1.0.0-20260905/osa-handbook-ja-v.1.0.0-20260905.pdf">日本語 PDF をダウンロード ↓</a></article>
+      <article lang="zh-Hant"><p class="edition-code">ZH / 原稿</p><h3>繁體中文</h3><p>27 頁 PDF · 完整手冊</p><a href="handbook/README.html">線上閱讀 →</a><a class="download" href="https://github.com/wicanr2/ai-software-archaeology-handbook/releases/download/v.1.0.0-20260905/osa-handbook-zh-Hant-v.1.0.0-20260905.pdf">下載繁體中文 PDF ↓</a></article>
+      <article lang="en"><p class="edition-code">EN / TRANSLATION</p><h3>English</h3><p>28-page PDF · Complete handbook</p><a href="handbook/en/README.html">Read online →</a><a class="download" href="https://github.com/wicanr2/ai-software-archaeology-handbook/releases/download/v.1.0.0-20260905/osa-handbook-en-v.1.0.0-20260905.pdf">Download English PDF ↓</a></article>
+      <article lang="ja"><p class="edition-code">JA / 翻訳</p><h3>日本語</h3><p>27 ページ PDF · 完全版</p><a href="handbook/ja/README.html">オンラインで読む →</a><a class="download" href="https://github.com/wicanr2/ai-software-archaeology-handbook/releases/download/v.1.0.0-20260905/osa-handbook-ja-v.1.0.0-20260905.pdf">日本語 PDF をダウンロード ↓</a></article>
     </div>
     <div class="release-line"><p><code>v.1.0.0-20260905</code> · 三語共用案例、來源與信心等級。</p><a href="https://github.com/wicanr2/ai-software-archaeology-handbook/releases/tag/v.1.0.0-20260905">完整發行：流程圖、推廣圖與 SHA-256 ↗</a></div>
   </section>
 
   <section class="section author" aria-labelledby="author-title">
     <div class="section-heading"><p class="eyebrow">關於這份貢獻</p><h2 id="author-title">王俊又<br><span>wicanr2</span></h2><a class="secondary" href="https://github.com/wicanr2">追蹤 GitHub 上的工作 ↗</a></div>
-    <div><p class="statement">進入 AI 時代，我希望留下的，不只是更多程式，還有讓下一份實作更可信的方法。</p><p>本專案由王俊又（wicanr2）發起，透過人與 AI 協作完成案例整理、手冊、翻譯與文件交付。這裡呈現的是本手冊與七個案例所支撐的貢獻，不代替完整的個人經歷或所有專案成果。</p><details><summary>我們能證明什麼，以及還不能證明什麼？</summary><p>案例中的歷史執行結果，是來源專案的紀錄；本手冊工作沒有重新執行全部原版軟體。合成累加器案例是人工定義的教材，不是歷史程式的行為發現。</p><p>文件結構、三語例子、PDF 文字與版面已檢查；不表示所有原版行為已達成一致。規劃中的 <code>osa</code> 命令列工具尚未實作。</p><a href="https://github.com/wicanr2/ai-software-archaeology-handbook/blob/main/docs/handbook-review.md">閱讀完整驗收邊界 →</a></details></div>
+    <div><p class="statement">進入 AI 時代，我希望留下的，不只是更多程式，還有讓下一份實作更可信的方法。</p><p>本專案由王俊又（wicanr2）發起，透過人與 AI 協作完成案例整理、手冊、翻譯與文件交付。這裡呈現的是本手冊與七個案例所支撐的貢獻，不代替完整的個人經歷或所有專案成果。</p><details><summary>我們能證明什麼，以及還不能證明什麼？</summary><p>案例中的歷史執行結果，是來源專案的紀錄；本手冊工作沒有重新執行全部原版軟體。合成累加器案例是人工定義的教材，不是歷史程式的行為發現。</p><p>文件結構、三語例子、PDF 文字與版面已檢查；不表示所有原版行為已達成一致。規劃中的 <code>osa</code> 命令列工具尚未實作。</p><a href="handbook-review.html">閱讀完整驗收邊界 →</a></details></div>
   </section>
   <section class="closing"><p class="eyebrow">讓可驗證的方法，繼續被使用。</p><h2>下一次與 AI 協作，<br>從一個能反駁的問題開始。</h2><div class="actions"><a class="primary" href="#handbook">開始閱讀 <span aria-hidden="true">↗</span></a><button id="share" type="button" hidden>複製網站連結</button><span id="share-status" role="status" aria-live="polite"></span></div></section>
 </main>
-<footer><p>© 2026 王俊又（wicanr2） · AI 輔助軟體考古手冊</p><div><a href="https://github.com/wicanr2/ai-software-archaeology-handbook">儲存庫</a><a href="https://github.com/wicanr2/ai-software-archaeology-handbook/blob/main/docs/site-release.md">網站來源與製作說明</a><a href="#top">回到頁首 ↑</a></div><p class="legal">公開閱讀不等於替第三方素材取得散布權。本網站不包含原版遊戲檔案，亦不宣稱與 Kimi 或 Moonshot AI 有官方關係。</p></footer>
+<footer><p>© 2026 王俊又（wicanr2） · AI 輔助軟體考古手冊</p><div><a href="https://github.com/wicanr2/ai-software-archaeology-handbook">儲存庫</a><a href="site-release.html">網站來源與製作說明</a><a href="#top">回到頁首 ↑</a></div><p class="legal">公開閱讀不等於替第三方素材取得散布權。本網站不包含原版遊戲檔案，亦不宣稱與 Kimi 或 Moonshot AI 有官方關係。</p><p><a href="library.html">全部文件：手冊、研究與專案說明</a></p></footer>
 </body></html>

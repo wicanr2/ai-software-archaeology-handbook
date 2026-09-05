@@ -1,0 +1,63 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>07　印象ではなく証拠を引き継ぐ｜AI 軟體考古</title><link rel="canonical" href="https://wicanr2.github.io/ai-software-archaeology-handbook/handbook/ja/07-agent-workflows.html"><link rel="stylesheet" href="../../assets/reader.css"><link rel="icon" href="../../assets/favicon.svg"></head><body><a class="skip" href="#content">本文へ</a><header><a href="../../index.html">王俊又 wicanr2</a><nav><a href="../../library.html">全部文件 · All pages · 全ページ</a></nav></header><div class="layout"><aside><details open><summary>章一覧</summary><nav><ul><li><a href="README.html">AI 支援ソフトウェア考古学ハンドブック</a></li><li><a href="00-principles.html">00　答えの前に、何を確かめるかを定める</a></li><li><a href="01-evidence.html">01　別の人が再び見つけられる証拠を残す</a></li><li><a href="02-hypotheses.html">02　仮説が失敗できる検査を作る</a></li><li><a href="03-specification-gates.html">03　仕様は実装前の証拠審査</a></li><li><a href="04-oracles.html">04　判定基準にも限界がある</a></li><li><a href="05-differential-testing.html">05　同じものを比較し、最初の不一致を残す</a></li><li><a href="06-conformance.html">06　完了を監査できる結論にする</a></li><li class="current"><a href="07-agent-workflows.html">07　印象ではなく証拠を引き継ぐ</a></li><li><a href="08-failure-patterns.html">08　失敗の仕組みから次の観測を選ぶ</a></li><li><a href="worked-example.html">付録　証拠から報告までを一つの例でたどる</a></li></ul></nav></details><details><summary>研究與專案文件</summary><nav><ul><li><a href="../../project/AGENTS.html">AGENTS.md — Oracle-Driven Software Archaeology</a></li><li><a href="../../project/PLAN.html">PLAN.md — Oracle-Driven Software Archaeology</a></li><li><a href="../../project/README.html">AI 輔助軟體考古手冊</a></li><li><a href="../../project/WORKLOG.html">工作歷程</a></li><li><a href="../../failure-patterns.html">有來源的失敗模式</a></li><li><a href="../../handbook-review.html">手冊交付驗收</a></li><li><a href="../../inventory.html">案例盤點與證據索引</a></li><li><a href="../../methodology-draft.html">以證據驅動的軟體考古：方法草案</a></li><li><a href="../../pattern-matrix.html">跨專案模式矩陣</a></li><li><a href="../../pdf-release.html">PDF 排版與發行</a></li><li><a href="../../releases/v.1.0.0-20260905.html">三語手冊 PDF 與流程圖</a></li><li><a href="../../site-release.html">宣傳網站與公開交付</a></li></ul></nav></details></aside><main id="content"><div class="languages"><a href="../07-agent-workflows.html">繁體中文</a> · <a href="../en/07-agent-workflows.html">English</a> · <a href="07-agent-workflows.html">日本語</a></div><details class="toc"><summary>このページの内容</summary><ul><li class="depth-2"><a href="#書き換えて使えるタスク依頼">書き換えて使えるタスク依頼</a></li><li class="depth-2"><a href="#一回の作業サイクル">一回の作業サイクル</a></li><li class="depth-2"><a href="#阻害要因にも証拠が必要">阻害要因にも証拠が必要</a></li><li class="depth-2"><a href="#文書の役割と引き継ぎ">文書の役割と引き継ぎ</a></li><li class="depth-3"><a href="#出典と主張の範囲">出典と主張の範囲</a></li></ul></details><article><h1 id="07-印象ではなく証拠を引き継ぐ">07　印象ではなく証拠を引き継ぐ</h1>
+<p><a href="06-conformance.html">前の章</a> · <a href="README.html">目次</a> · <a href="08-failure-patterns.html">次の章</a></p>
+<p>エージェントのタスクには、検査可能な問いと今回の許可範囲が必要です。「ゲームを完成させる」は目標ですが、実行契約としては不足しています。現況、確定した判断、必須成果物、受入条件を加えます。証拠に応じて条件は具体化できますが、目標を勝手に置き換えてはいけません。</p>
+<h2 id="書き換えて使えるタスク依頼">書き換えて使えるタスク依頼</h2>
+<pre class="text"><code>目標：特定の利用者動作を調査／実装する。
+版：対象、候補、有効な仕様。
+既知の証拠：結論だけでなく ID を列挙。
+今回の許可：DRAFT まで調査、または READY 条項を実装、など。
+保持：出典データ、確定済みの製品判断、無関係のモジュール。
+成果物：生の観測、主張／仕様更新、比較または阻害証拠。
+受入：通常経路、必須フィールド、反例。
+停止：段階ゲート、または方向を変える利用者判断の不足。</code></pre>
+<p>資料にある「完了」や「次にこれをする」は、現在の指示ではありません。現在のコード、有効な仕様、最近の検証を見てから必要な履歴を読みます。FD2 F1 は質問の経路案内、現況、過去の引き継ぎを分け、古い作業が勝手に再開するのを防いでいます。</p>
+<h2 id="一回の作業サイクル">一回の作業サイクル</h2>
+<ol type="1">
+<li>作業ツリー、対象版、仕様、コンテナの道具を確認する。</li>
+<li>証拠を特定し、主張と競合する説明に ID を付ける。</li>
+<li>最小の判別観測を行い、盲点と失敗を記録する。</li>
+<li>確信度の変更を明示し、影響する参照も更新する。</li>
+<li>READY 後に正式実装し、不足は仕様へ戻す。</li>
+<li>局所検査、差分検査、必要な通常利用経路を実行する。</li>
+<li>結果、範囲、不明点、次のゲートを報告し、当該コンテナを片付ける。</li>
+</ol>
+<p>道具で分かる事実はエージェントが調べます。原版の欠陥を保つか、操作を変えるかといった価値判断は利用者が決めます。質問の前に、答えに依存しない調査を済ませ、具体的な選択肢と影響を示します。</p>
+<p>許可なく公開、出典プロジェクトの変更、無関係なリファクタリングを行いません。継続の許可は範囲を自由に広げる許可ではありません。一方、手引きを完成させる許可があれば、章、例、納品を完了させます。「続けられます」という申し出だけで終わらせません。</p>
+<h2 id="阻害要因にも証拠が必要">阻害要因にも証拠が必要</h2>
+<p>よい報告には、失敗したコマンドや観測、確認した道具と権限、安全な代替の試行、必要な未回答事項、完了した独立作業があります。検索ゼロ件を資料なしとせず、環境失敗を製品欠陥と呼びません。</p>
+<p>進捗は、何が判断を変えたか、次の観測で何が分かるかを伝えます。長い作業を見えるようにしつつ、詳細なコマンドは作業履歴に置き、大量の出力で結論を代用しません。</p>
+<h2 id="文書の役割と引き継ぎ">文書の役割と引き継ぎ</h2>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr class="header">
+<th>役割</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>README</td>
+<td>目的、安定した入口、現在の能力、閲覧／実行方法</td>
+</tr>
+<tr class="even">
+<td>現況文書</td>
+<td>有効な判断、状態、制約、最近の証拠入口</td>
+</tr>
+<tr class="odd">
+<td>作業リスト</td>
+<td>実行可能項目、完了条件、次のゲート</td>
+</tr>
+<tr class="even">
+<td>WORKLOG</td>
+<td>追記する作業履歴、失敗、検証、後片付け</td>
+</tr>
+<tr class="odd">
+<td>研究記録／仕様</td>
+<td>元の位置、主張、確信度、反証、受入契約</td>
+</tr>
+</tbody>
+</table></div>
+<p>各役割には既存の唯一の文書を使い、テンプレートのために同義文書を増やしません。引き継ぎには変更ファイル、証拠、四段階の主張、検査、失敗、未解決事項、推奨する次のタスクを含めます。スキップはスキップ、原版未実行は未実行と書きます。</p>
+<h3 id="出典と主張の範囲">出典と主張の範囲</h3>
+<p><a href="../../inventory.html#固定來源索引">F1、P2、T2、T3</a>は経路案内、仕様による許可、能力境界の例です。確認内容は <code>CONFIRMED</code>、依頼書とサイクルは <code>STRONG_INFERENCE</code> です。本章は手引きであり、PLAN 後半の独立したエージェント用ツールや、新しいエージェントによる実験の完了ではありません。</p>
+</article></main></div><footer><a href="../../index.html">王俊又 wicanr2</a> · AI 輔助軟體考古手冊 · <a href="../../library.html">全部文件 · All pages · 全ページ</a><p>證據先行，保留未知。 Evidence first. Keep uncertainty visible.</p></footer></body></html>

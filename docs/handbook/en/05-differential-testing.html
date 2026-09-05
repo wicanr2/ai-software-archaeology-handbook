@@ -1,0 +1,63 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>05 — Compare the Same Thing and Preserve the First Divergence｜AI 軟體考古</title><link rel="canonical" href="https://wicanr2.github.io/ai-software-archaeology-handbook/handbook/en/05-differential-testing.html"><link rel="stylesheet" href="../../assets/reader.css"><link rel="icon" href="../../assets/favicon.svg"></head><body><a class="skip" href="#content">Skip to content</a><header><a href="../../index.html">王俊又 wicanr2</a><nav><a href="../../library.html">全部文件 · All pages · 全ページ</a></nav></header><div class="layout"><aside><details open><summary>Chapters</summary><nav><ul><li><a href="README.html">AI-Assisted Software Archaeology Handbook</a></li><li><a href="00-principles.html">00 — Establish the Question Before the Answer</a></li><li><a href="01-evidence.html">01 — Make Evidence Findable by Someone Else</a></li><li><a href="02-hypotheses.html">02 — Give a Hypothesis a Chance to Fail</a></li><li><a href="03-specification-gates.html">03 — Review Evidence Before Authorizing Implementation</a></li><li><a href="04-oracles.html">04 — An Oracle Has Limits Too</a></li><li class="current"><a href="05-differential-testing.html">05 — Compare the Same Thing and Preserve the First Divergence</a></li><li><a href="06-conformance.html">06 — Make Completion an Auditable Conclusion</a></li><li><a href="07-agent-workflows.html">07 — Hand Off Evidence, Not Impressions</a></li><li><a href="08-failure-patterns.html">08 — Use Failure Mechanisms to Choose the Next Observation</a></li><li><a href="worked-example.html">Appendix — A Complete Chain from Evidence to a Report</a></li></ul></nav></details><details><summary>研究與專案文件</summary><nav><ul><li><a href="../../project/AGENTS.html">AGENTS.md — Oracle-Driven Software Archaeology</a></li><li><a href="../../project/PLAN.html">PLAN.md — Oracle-Driven Software Archaeology</a></li><li><a href="../../project/README.html">AI 輔助軟體考古手冊</a></li><li><a href="../../project/WORKLOG.html">工作歷程</a></li><li><a href="../../failure-patterns.html">有來源的失敗模式</a></li><li><a href="../../handbook-review.html">手冊交付驗收</a></li><li><a href="../../inventory.html">案例盤點與證據索引</a></li><li><a href="../../methodology-draft.html">以證據驅動的軟體考古：方法草案</a></li><li><a href="../../pattern-matrix.html">跨專案模式矩陣</a></li><li><a href="../../pdf-release.html">PDF 排版與發行</a></li><li><a href="../../releases/v.1.0.0-20260905.html">三語手冊 PDF 與流程圖</a></li><li><a href="../../site-release.html">宣傳網站與公開交付</a></li></ul></nav></details></aside><main id="content"><div class="languages"><a href="../05-differential-testing.html">繁體中文</a> · <a href="05-differential-testing.html">English</a> · <a href="../ja/05-differential-testing.html">日本語</a></div><details class="toc"><summary>On this page</summary><ul><li class="depth-2"><a href="#align-before-comparing">Align before comparing</a></li><li class="depth-2"><a href="#distinguish-at-least-six-outcomes">Distinguish at least six outcomes</a></li><li class="depth-2"><a href="#the-first-divergence-is-often-the-best-clue">The first divergence is often the best clue</a></li><li class="depth-2"><a href="#declare-tolerances-and-transformations-in-advance">Declare tolerances and transformations in advance</a></li><li class="depth-2"><a href="#test-the-comparator-and-the-final-output-path">Test the comparator and the final output path</a></li><li class="depth-3"><a href="#sources-and-claim-scope">Sources and claim scope</a></li></ul></details><article><h1 id="05--compare-the-same-thing-and-preserve-the-first-divergence">05 — Compare the Same Thing and Preserve the First Divergence</h1>
+<p><a href="04-oracles.html">Previous</a> · <a href="README.html">Contents</a> · <a href="06-conformance.html">Next</a></p>
+<p>Differential testing compares reference and candidate observations under the same conditions. The comparator also needs a contract: alignment, permitted transformations, treatment of missing data, and stopping rules. If it silently ignores missing observations, a correct candidate and an untested candidate can receive the same success signal.</p>
+<h2 id="align-before-comparing">Align before comparing</h2>
+<p>Check target versions, starting state, request sequence, checkpoint IDs, sampling points, and field meanings. Parhelion compares IPC, SP, and TOS after the same p-code instruction. Comparing a pre-instruction state with a post-instruction state would be an observation error, not an implementation defect (P3).</p>
+<p>Before sorting output or moving pixels, determine whether order and location are meaningful. Sorting a list whose order controls action priority would erase behavior under test.</p>
+<h2 id="distinguish-at-least-six-outcomes">Distinguish at least six outcomes</h2>
+<p>These are reporting concepts, not released enum values or schemas.</p>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr class="header">
+<th>Outcome</th>
+<th>Meaning</th>
+<th>Effect on required acceptance</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Exact agreement</td>
+<td>Required observations exist and match exactly</td>
+<td>Counts toward the declared denominator</td>
+</tr>
+<tr class="even">
+<td>Tolerated difference</td>
+<td>Complete observations meet a pre-reviewed tolerance or mapping</td>
+<td>Report separately; not raw-value equality</td>
+</tr>
+<tr class="odd">
+<td>Mismatch</td>
+<td>Comparable values violate the rule</td>
+<td>Blocks acceptance for that scope</td>
+</tr>
+<tr class="even">
+<td>Missing observation</td>
+<td>A required artifact, field, or checkpoint is absent</td>
+<td>Blocks acceptance; not zero or agreement</td>
+</tr>
+<tr class="odd">
+<td>Uncomparable / unknown</td>
+<td>Versions, semantics, or boundaries are incompatible</td>
+<td>Investigate or apply a predeclared exclusion; do not lower the gate after the fact</td>
+</tr>
+<tr class="even">
+<td>Skipped / unsupported</td>
+<td>The test did not run or the capability is absent</td>
+<td>Separate from passing; a required item remains incomplete</td>
+</tr>
+</tbody>
+</table></div>
+<p>OnePCE O2 skips the test when required environment variables are missing and skips some memory sections when their files are absent. This is an inspected control-flow risk, not a claim that its historical acceptance run lacked those files. It explains why actual coverage must be reported.</p>
+<h2 id="the-first-divergence-is-often-the-best-clue">The first divergence is often the best clue</h2>
+<p>For stateful systems, capture the first deviating checkpoint: specification and run IDs, step, input, field, reference value, candidate value, and raw artifacts. You may continue for diagnosis, but accumulated downstream errors are not necessarily independent defects.</p>
+<p>The appendix's wrong candidate turns 250 into 4 after <code>01 0A</code>; the reference is 255. That is already a counterexample. A later <code>02 00</code> resets both to zero, so comparing only the final state would miss the error.</p>
+<p>A parser may benefit from collecting several independent field differences. A temporal trace must preserve event order. Choose the strategy for the behavior; not every comparison requires the same first-difference algorithm.</p>
+<h2 id="declare-tolerances-and-transformations-in-advance">Declare tolerances and transformations in advance</h2>
+<p>OnePCE O1 uses a display window and color mapping, excluding the last row outside the reference. Its report must retain 76,480 compared pixels, 320 uncovered pixels per frame, and the mapping rule. Zero differences cannot be rewritten as complete equality of all native RGB values.</p>
+<p>A displacement search may diagnose where an image matches best. Acceptance still uses the position predicted by the specification. If the best position is two pixels away, revisit geometry or sampling rather than moving the expectation. Version tolerance changes and rerun affected cases while retaining the old results.</p>
+<h2 id="test-the-comparator-and-the-final-output-path">Test the comparator and the final output path</h2>
+<p>Give the comparator matching data, intentionally altered data, a missing field, and a misaligned checkpoint. Confirm that it rejects a wrong candidate and incomplete observations. Such deliberate defects reveal comparators that always pass. Do not generate all expected values from the same candidate being evaluated.</p>
+<p>Products also need their final output exercised: display, file, save, or delivered package. MM2's text-layer failure shows why useful offscreen comparisons do not cover a display transfer they never execute (M1). Sample normal and alternative paths separately, and do the same for supported platforms.</p>
+<h3 id="sources-and-claim-scope">Sources and claim scope</h3>
+<p><a href="../../inventory.html#固定來源索引">O1, O2, P3, M1</a> support the denominator, skip branches, divergence, and output-boundary examples. Source inspection is <code>CONFIRMED</code>; the six-outcome reporting model and comparator counterexamples are <code>STRONG_INFERENCE</code>. No source project's tests were executed for this chapter.</p>
+</article></main></div><footer><a href="../../index.html">王俊又 wicanr2</a> · AI 輔助軟體考古手冊 · <a href="../../library.html">全部文件 · All pages · 全ページ</a><p>證據先行，保留未知。 Evidence first. Keep uncertainty visible.</p></footer></body></html>

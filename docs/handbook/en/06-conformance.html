@@ -1,0 +1,64 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>06 — Make Completion an Auditable Conclusion｜AI 軟體考古</title><link rel="canonical" href="https://wicanr2.github.io/ai-software-archaeology-handbook/handbook/en/06-conformance.html"><link rel="stylesheet" href="../../assets/reader.css"><link rel="icon" href="../../assets/favicon.svg"></head><body><a class="skip" href="#content">Skip to content</a><header><a href="../../index.html">王俊又 wicanr2</a><nav><a href="../../library.html">全部文件 · All pages · 全ページ</a></nav></header><div class="layout"><aside><details open><summary>Chapters</summary><nav><ul><li><a href="README.html">AI-Assisted Software Archaeology Handbook</a></li><li><a href="00-principles.html">00 — Establish the Question Before the Answer</a></li><li><a href="01-evidence.html">01 — Make Evidence Findable by Someone Else</a></li><li><a href="02-hypotheses.html">02 — Give a Hypothesis a Chance to Fail</a></li><li><a href="03-specification-gates.html">03 — Review Evidence Before Authorizing Implementation</a></li><li><a href="04-oracles.html">04 — An Oracle Has Limits Too</a></li><li><a href="05-differential-testing.html">05 — Compare the Same Thing and Preserve the First Divergence</a></li><li class="current"><a href="06-conformance.html">06 — Make Completion an Auditable Conclusion</a></li><li><a href="07-agent-workflows.html">07 — Hand Off Evidence, Not Impressions</a></li><li><a href="08-failure-patterns.html">08 — Use Failure Mechanisms to Choose the Next Observation</a></li><li><a href="worked-example.html">Appendix — A Complete Chain from Evidence to a Report</a></li></ul></nav></details><details><summary>研究與專案文件</summary><nav><ul><li><a href="../../project/AGENTS.html">AGENTS.md — Oracle-Driven Software Archaeology</a></li><li><a href="../../project/PLAN.html">PLAN.md — Oracle-Driven Software Archaeology</a></li><li><a href="../../project/README.html">AI 輔助軟體考古手冊</a></li><li><a href="../../project/WORKLOG.html">工作歷程</a></li><li><a href="../../failure-patterns.html">有來源的失敗模式</a></li><li><a href="../../handbook-review.html">手冊交付驗收</a></li><li><a href="../../inventory.html">案例盤點與證據索引</a></li><li><a href="../../methodology-draft.html">以證據驅動的軟體考古：方法草案</a></li><li><a href="../../pattern-matrix.html">跨專案模式矩陣</a></li><li><a href="../../pdf-release.html">PDF 排版與發行</a></li><li><a href="../../releases/v.1.0.0-20260905.html">三語手冊 PDF 與流程圖</a></li><li><a href="../../site-release.html">宣傳網站與公開交付</a></li></ul></nav></details></aside><main id="content"><div class="languages"><a href="../06-conformance.html">繁體中文</a> · <a href="06-conformance.html">English</a> · <a href="../ja/06-conformance.html">日本語</a></div><details class="toc"><summary>On this page</summary><ul><li class="depth-2"><a href="#a-report-someone-can-audit">A report someone can audit</a></li><li class="depth-2"><a href="#audit-backward-from-the-requirements">Audit backward from the requirements</a></li><li class="depth-2"><a href="#early-stops-and-excluded-unknowns">Early stops and excluded unknowns</a></li><li class="depth-2"><a href="#new-versions-cannot-borrow-old-conclusions">New versions cannot borrow old conclusions</a></li><li class="depth-3"><a href="#sources-and-claim-scope">Sources and claim scope</a></li></ul></details><article><h1 id="06--make-completion-an-auditable-conclusion">06 — Make Completion an Auditable Conclusion</h1>
+<p><a href="05-differential-testing.html">Previous</a> · <a href="README.html">Contents</a> · <a href="07-agent-workflows.html">Next</a></p>
+<p>Conformance means a candidate passes a versioned contract within its declared acceptance scope. It is not an unconditional guarantee about an entire system. The subject of CONFORMED should be “this candidate version against this specification,” not an unversioned “project complete.”</p>
+<h2 id="a-report-someone-can-audit">A report someone can audit</h2>
+<pre class="text"><code>Target/candidate identity: versions, commits, binary hashes
+Specification: ID, version, acceptance scope, exclusions
+Oracle: kind, version, inputs, configuration
+Run: ID, starting state, input sequence, observation artifacts
+Comparison: rule version, fields, checkpoints, coverage denominator
+Results: exact, tolerated, mismatched, missing, skipped counts
+Stop reason: completed / unimplemented / timeout / capture failure / divergence
+Limits: untested platforms, unknown fields, approximations, non-blocking reasons
+Decision: whether declared conditions were met; reviewer and date
+Revalidation: input, tool, contract, or candidate changes that invalidate applicability</code></pre>
+<p>This is a manual report template, not evidence that <code>osa report</code> exists. The appendix shows how to report a paper exercise honestly when there are no execution artifacts.</p>
+<h2 id="audit-backward-from-the-requirements">Audit backward from the requirements</h2>
+<p>Begin with “completion is not yet established.” Enumerate the original requirements, then find evidence for each. Do not infer requirements only from existing tests: anything without a test would disappear.</p>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr class="header">
+<th>Required outcome</th>
+<th>Adequate evidence</th>
+<th>Inadequate substitute</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Normal operation completes</td>
+<td>Delivered artifact, normal entry, full input route, output</td>
+<td>Test-only entry directly into the result</td>
+</tr>
+<tr class="even">
+<td>Reference behavior agrees</td>
+<td>Same-state observations, rules, differential records</td>
+<td>Passing unit tests or a plausible screenshot</td>
+</tr>
+<tr class="odd">
+<td>Boundary and error semantics</td>
+<td>Discriminating cases and state after failure</td>
+<td>Normal inputs only</td>
+</tr>
+<tr class="even">
+<td>Supported platforms and data versions</td>
+<td>Necessary samples per scope with pinned inputs</td>
+<td>A build for another platform</td>
+</tr>
+<tr class="odd">
+<td>Required observations are complete</td>
+<td>Actual count meets the contract and artifacts are locatable</td>
+<td>One overall success exit code</td>
+</tr>
+</tbody>
+</table></div>
+<p>Uncomparable data is not passing, but it is not automatically a product defect either. It may be an evidence gap. Distinguish the two; a missing required observation still blocks CONFORMED.</p>
+<h2 id="early-stops-and-excluded-unknowns">Early stops and excluded unknowns</h2>
+<p>Parhelion P1 reports 306 matching instructions before an unimplemented instruction stopped the run. This supports that compared trace, not full p-System compatibility. Talos T1's large CPU corpus count likewise does not substitute for unfinished machine boot.</p>
+<p>If the contract originally requested a fixed instruction slice, other instructions may be outside scope. If the user requested complete boot, they remain incomplete work. Reducing the goal after testing is a change of question, not completion.</p>
+<p>Separate “remake work completed,” “exact original behavior unknown,” and “optional polish.” Whether an unknown blocks delivery follows the user objective. Difficult research must not be relabeled polish, and non-blocking unknowns must not keep delivery open indefinitely.</p>
+<h2 id="new-versions-cannot-borrow-old-conclusions">New versions cannot borrow old conclusions</h2>
+<p>Changes to the decoder, observer, tolerance, input version, or package may invalidate a report. Revalidate the affected scope proportionately, with an explicit dependency argument. Preserve old reports as evidence about old versions; new candidates need their own evidence. A newer file timestamp does not establish build provenance or binary identity.</p>
+<p>When delivering, distinguish handbook completion, toolkit completion, and a real case passing. Editorial checks can establish chapter, example, and source consistency; they do not recertify historical results as newly reproduced experiments.</p>
+<h3 id="sources-and-claim-scope">Sources and claim scope</h3>
+<p><a href="../../inventory.html#固定來源索引">P1, P3, T1, W1</a> support bounded slices, stopping reasons, and artifact-identity concerns. Records are <code>CONFIRMED</code>; the reporting and audit method is <code>STRONG_INFERENCE</code>. This book uses declared, finite validation scopes rather than claiming universal mathematical proof from samples.</p>
+</article></main></div><footer><a href="../../index.html">王俊又 wicanr2</a> · AI 輔助軟體考古手冊 · <a href="../../library.html">全部文件 · All pages · 全ページ</a><p>證據先行，保留未知。 Evidence first. Keep uncertainty visible.</p></footer></body></html>

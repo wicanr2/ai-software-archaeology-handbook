@@ -1,0 +1,131 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AI 支援ソフトウェア考古学ハンドブック｜AI 軟體考古</title><link rel="canonical" href="https://wicanr2.github.io/ai-software-archaeology-handbook/handbook/ja/README.html"><link rel="stylesheet" href="../../assets/reader.css"><link rel="icon" href="../../assets/favicon.svg"></head><body><a class="skip" href="#content">本文へ</a><header><a href="../../index.html">王俊又 wicanr2</a><nav><a href="../../library.html">全部文件 · All pages · 全ページ</a></nav></header><div class="layout"><aside><details open><summary>章一覧</summary><nav><ul><li class="current"><a href="README.html">AI 支援ソフトウェア考古学ハンドブック</a></li><li><a href="00-principles.html">00　答えの前に、何を確かめるかを定める</a></li><li><a href="01-evidence.html">01　別の人が再び見つけられる証拠を残す</a></li><li><a href="02-hypotheses.html">02　仮説が失敗できる検査を作る</a></li><li><a href="03-specification-gates.html">03　仕様は実装前の証拠審査</a></li><li><a href="04-oracles.html">04　判定基準にも限界がある</a></li><li><a href="05-differential-testing.html">05　同じものを比較し、最初の不一致を残す</a></li><li><a href="06-conformance.html">06　完了を監査できる結論にする</a></li><li><a href="07-agent-workflows.html">07　印象ではなく証拠を引き継ぐ</a></li><li><a href="08-failure-patterns.html">08　失敗の仕組みから次の観測を選ぶ</a></li><li><a href="worked-example.html">付録　証拠から報告までを一つの例でたどる</a></li></ul></nav></details><details><summary>研究與專案文件</summary><nav><ul><li><a href="../../project/AGENTS.html">AGENTS.md — Oracle-Driven Software Archaeology</a></li><li><a href="../../project/PLAN.html">PLAN.md — Oracle-Driven Software Archaeology</a></li><li><a href="../../project/README.html">AI 輔助軟體考古手冊</a></li><li><a href="../../project/WORKLOG.html">工作歷程</a></li><li><a href="../../failure-patterns.html">有來源的失敗模式</a></li><li><a href="../../handbook-review.html">手冊交付驗收</a></li><li><a href="../../inventory.html">案例盤點與證據索引</a></li><li><a href="../../methodology-draft.html">以證據驅動的軟體考古：方法草案</a></li><li><a href="../../pattern-matrix.html">跨專案模式矩陣</a></li><li><a href="../../pdf-release.html">PDF 排版與發行</a></li><li><a href="../../releases/v.1.0.0-20260905.html">三語手冊 PDF 與流程圖</a></li><li><a href="../../site-release.html">宣傳網站與公開交付</a></li></ul></nav></details></aside><main id="content"><div class="languages"><a href="../README.html">繁體中文</a> · <a href="../en/README.html">English</a> · <a href="README.html">日本語</a></div><details class="toc"><summary>このページの内容</summary><ul><li class="depth-2"><a href="#目次">目次</a></li><li class="depth-2"><a href="#証拠と翻訳の方針">証拠と翻訳の方針</a></li><li class="depth-2"><a href="#用語">用語</a></li></ul></details><article><h1 id="ai-支援ソフトウェア考古学ハンドブック">AI 支援ソフトウェア考古学ハンドブック</h1>
+<p><a href="../README.html">繁體中文</a> · <a href="../en/README.html">English</a> · 日本語</p>
+<p>本書は、コードは読めるもののリバースエンジニアリングの経験は必須ではない技術者と、その作業を支援する AI エージェントに向けた手引きです。最初から IDA やエミュレータの操作を知っている必要はありません。まず「この結論は何に支えられているか」を問い、その証拠を得る道具を選びます。</p>
+<p>小さな機能について、反証可能な仮説、証拠に基づく仕様、再現可能な比較条件、範囲を誇張しない適合性の声明を書けることを目指します。実行ファイル全体を一行ずつ翻訳する本ではありません。有限のテストを、あらゆる動作についての数学的証明と同一視しません。</p>
+<h2 id="目次">目次</h2>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr class="header">
+<th>章</th>
+<th>主題</th>
+<th>身につけること</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>00</td>
+<td><a href="00-principles.html">原則</a></td>
+<td>内部整合性、参照との一致、利用可能性を分ける</td>
+</tr>
+<tr class="even">
+<td>01</td>
+<td><a href="01-evidence.html">証拠</a></td>
+<td>追跡可能な観測を残し、道具が何を見られるか確認する</td>
+</tr>
+<tr class="odd">
+<td>02</td>
+<td><a href="02-hypotheses.html">仮説</a></td>
+<td>競合する説明を区別できる検査を設計する</td>
+</tr>
+<tr class="even">
+<td>03</td>
+<td><a href="03-specification-gates.html">仕様のゲート</a></td>
+<td>実装を開始できる条件を判断する</td>
+</tr>
+<tr class="odd">
+<td>04</td>
+<td><a href="04-oracles.html">判定基準</a></td>
+<td>裁定できる範囲を明示した参照を選ぶ</td>
+</tr>
+<tr class="even">
+<td>05</td>
+<td><a href="05-differential-testing.html">差分テスト</a></td>
+<td>最初の不一致と欠測、許容差を正しく扱う</td>
+</tr>
+<tr class="odd">
+<td>06</td>
+<td><a href="06-conformance.html">適合性</a></td>
+<td>監査可能で範囲の明確な完了声明を書く</td>
+</tr>
+<tr class="even">
+<td>07</td>
+<td><a href="07-agent-workflows.html">エージェントの作業手順</a></td>
+<td>タスクを区切り、ゲートを守り、引き継ぐ</td>
+</tr>
+<tr class="odd">
+<td>08</td>
+<td><a href="08-failure-patterns.html">失敗パターン</a></td>
+<td>八つの事例から誤りの形成過程を見分ける</td>
+</tr>
+<tr class="even">
+<td>付録</td>
+<td><a href="worked-example.html">一連の検証を通して学ぶ</a></td>
+<td>誤った候補と欠測を含む完全な流れを手計算する</td>
+</tr>
+</tbody>
+</table></div>
+<p>初回は順に読みます。不一致を調査中なら 04〜06 章から入り、01〜03 章で前提を見直してください。付録には自己確認の問いと答えがあり、歴史的なソフトウェアを動かさずに練習できます。</p>
+<h2 id="証拠と翻訳の方針">証拠と翻訳の方針</h2>
+<p>日本語版は先に作成した繁体字中国語の原稿に対応します。章番号、出典 ID、確信度、例の数値は共通です。M1、S3、O2 などは<a href="../../inventory.html#固定來源索引">固定出典一覧</a>を参照します。一覧の説明は繁体字中国語ですが、コミットを固定したリンク、パス、ハッシュは言語に依存しません。</p>
+<p>出典文書と選定したコードは静的に確認しました。過去の実行結果は元プロジェクトの記録であり、本書のために原版を再実行した結果ではありません。各章でその境界を明示します。一般的な作業上の推奨は主に <code>STRONG_INFERENCE</code> です。リポジトリの必須規則は方針であって、経験則の証明ではありません。合成例の期待値は教材の契約による定義であり、歴史的ソフトウェアの発見ではありません。</p>
+<h2 id="用語">用語</h2>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr class="header">
+<th>用語</th>
+<th>意味</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>証拠／生の観測</td>
+<td>解釈と分離され、場所と方法を追跡できる記録</td>
+</tr>
+<tr class="even">
+<td>主張／仮説</td>
+<td>範囲を持つ断言／判別する検査が必要な説明</td>
+</tr>
+<tr class="odd">
+<td>来歴</td>
+<td>出典、版、場所、取得方法を結ぶ情報</td>
+</tr>
+<tr class="even">
+<td>判定基準（オラクル）</td>
+<td>特定の比較を裁定する資格のある参照</td>
+</tr>
+<tr class="odd">
+<td>候補実装</td>
+<td>評価される実装</td>
+</tr>
+<tr class="even">
+<td>差分検証</td>
+<td>宣言した条件で参照と候補を比較すること</td>
+</tr>
+<tr class="odd">
+<td>適合性</td>
+<td>版を持つ契約の、宣言した受入範囲を満たすこと</td>
+</tr>
+<tr class="even">
+<td>観測境界</td>
+<td>状態を取得するイベントまたは時点</td>
+</tr>
+<tr class="odd">
+<td><code>CONFIRMED</code></td>
+<td>明示した範囲で直接の裏付けがある</td>
+</tr>
+<tr class="even">
+<td><code>STRONG_INFERENCE</code></td>
+<td>強い裏付けはあるが直接の接続が不足している</td>
+</tr>
+<tr class="odd">
+<td><code>HYPOTHESIS</code></td>
+<td>検査を待つ、もっともらしい説明</td>
+</tr>
+<tr class="even">
+<td><code>UNKNOWN</code></td>
+<td>証拠が不足している、または未解決</td>
+</tr>
+</tbody>
+</table></div>
+<p><code>DRAFT</code>、<code>READY</code>、<code>CONFORMED</code> は仕様の状態であり、確信度ではありません。作業表は読解と計画のためのもので、公開済みスキーマや API ではありません。本書によって計画中の <code>osa</code> CLI が実装されたわけではありません。</p>
+</article></main></div><footer><a href="../../index.html">王俊又 wicanr2</a> · AI 輔助軟體考古手冊 · <a href="../../library.html">全部文件 · All pages · 全ページ</a><p>證據先行，保留未知。 Evidence first. Keep uncertainty visible.</p></footer></body></html>

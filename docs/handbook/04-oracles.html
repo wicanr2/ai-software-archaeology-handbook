@@ -1,0 +1,56 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>04　行為基準也有能力邊界｜AI 軟體考古</title><link rel="canonical" href="https://wicanr2.github.io/ai-software-archaeology-handbook/handbook/04-oracles.html"><link rel="stylesheet" href="../assets/reader.css"><link rel="icon" href="../assets/favicon.svg"></head><body><a class="skip" href="#content">跳至內文</a><header><a href="../index.html">王俊又 wicanr2</a><nav><a href="../library.html">全部文件 · All pages · 全ページ</a></nav></header><div class="layout"><aside><details open><summary>章節導覽</summary><nav><ul><li><a href="README.html">AI 輔助軟體考古手冊</a></li><li><a href="00-principles.html">00　先證明題目，再證明答案</a></li><li><a href="01-evidence.html">01　讓證據能被另一個人重新找到</a></li><li><a href="02-hypotheses.html">02　讓假說有機會失敗</a></li><li><a href="03-specification-gates.html">03　規格是實作前的證據審查</a></li><li class="current"><a href="04-oracles.html">04　行為基準也有能力邊界</a></li><li><a href="05-differential-testing.html">05　比較同一件事，保留第一個分歧</a></li><li><a href="06-conformance.html">06　把完成聲明寫成可稽核的結論</a></li><li><a href="07-agent-workflows.html">07　讓代理帶著證據交接，而不是帶著印象</a></li><li><a href="08-failure-patterns.html">08　從錯誤形成方式選下一個觀測</a></li><li><a href="worked-example.html">附錄　從證據到符合性報告：一個完整演練</a></li></ul></nav></details><details><summary>研究與專案文件</summary><nav><ul><li><a href="../project/AGENTS.html">AGENTS.md — Oracle-Driven Software Archaeology</a></li><li><a href="../project/PLAN.html">PLAN.md — Oracle-Driven Software Archaeology</a></li><li><a href="../project/README.html">AI 輔助軟體考古手冊</a></li><li><a href="../project/WORKLOG.html">工作歷程</a></li><li><a href="../failure-patterns.html">有來源的失敗模式</a></li><li><a href="../handbook-review.html">手冊交付驗收</a></li><li><a href="../inventory.html">案例盤點與證據索引</a></li><li><a href="../methodology-draft.html">以證據驅動的軟體考古：方法草案</a></li><li><a href="../pattern-matrix.html">跨專案模式矩陣</a></li><li><a href="../pdf-release.html">PDF 排版與發行</a></li><li><a href="../releases/v.1.0.0-20260905.html">三語手冊 PDF 與流程圖</a></li><li><a href="../site-release.html">宣傳網站與公開交付</a></li></ul></nav></details></aside><main id="content"><div class="languages"><a href="04-oracles.html">繁體中文</a> · <a href="en/04-oracles.html">English</a> · <a href="ja/04-oracles.html">日本語</a></div><details class="toc"><summary>本頁目錄</summary><ul><li class="depth-2"><a href="#依問題選基準">依問題選基準</a></li><li class="depth-2"><a href="#一次可回查的執行">一次可回查的執行</a></li><li class="depth-2"><a href="#先驗重播再驗候選">先驗重播，再驗候選</a></li><li class="depth-2"><a href="#基準衝突怎麼處理">基準衝突怎麼處理</a></li><li class="depth-3"><a href="#來源與主張範圍">來源與主張範圍</a></li></ul></details><article><h1 id="04-行為基準也有能力邊界">04　行為基準也有能力邊界</h1>
+<p><a href="03-specification-gates.html">上一章</a> · <a href="README.html">目錄</a> · <a href="05-differential-testing.html">下一章</a></p>
+<p>行為基準（oracle）是用來裁決某個問題的參考。它可以是原版程式、外部模擬器、 明確規格或獨立參考實作；重要的是能說明它為什麼有資格裁決這個欄位。 「用了另一套工具」不是完整理由，另一套工具也可能共用同一個錯誤假設。</p>
+<h2 id="依問題選基準">依問題選基準</h2>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr class="header">
+<th>問題</th>
+<th>合適的參考形態</th>
+<th>應保留的限制</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>原版菜單如何回應按鍵</td>
+<td>固定版本原版，從正常入口重播</td>
+<td>模擬環境、初始狀態、按鍵接受時點</td>
+</tr>
+<tr class="even">
+<td>格式解碼是否得到相同內容</td>
+<td>獨立解碼器與相同輸入</td>
+<td>支援版本、編碼、錯誤處理及共用程式來源</td>
+</tr>
+<tr class="odd">
+<td>指令狀態轉移是否相同</td>
+<td>已知起始狀態的原版／外部核心</td>
+<td>僅覆蓋被比較的暫存器、記憶體與指令</td>
+</tr>
+<tr class="even">
+<td>硬體參數的合理近似</td>
+<td>公開硬體契約</td>
+<td>規格近似，不能稱為實機逐週期相同</td>
+</tr>
+<tr class="odd">
+<td>合成教學例子的正確結果</td>
+<td>明確人工契約與獨立手算</td>
+<td>只證明例子內的契約，沒有歷史相容性意義</td>
+</tr>
+</tbody>
+</table></div>
+<p>手冊、攻略與使用者記憶也能指出值得調查的行為，但要分清描述、觀察與程式實際狀態。 同一個「戰場大小」可能指畫面視野或內部陣列；先確認名詞指的層次，再判斷衝突。</p>
+<h2 id="一次可回查的執行">一次可回查的執行</h2>
+<p>固定原版／候選身分、基準版本、工具 image ID、設定、起始存檔或狀態、輸入序列與停止條件。 設定明確的執行預算，不讓失敗後的背景程序繼續跑。保存原始觀測，再產生比較； 不能用正規化後的資料覆寫原始輸出。</p>
+<p>觀測邊界應是可辨識事件，例如「處理完第 17 個請求」「剛到下一條指令入口」或 「指定畫格完成繪製」。只說「送按鍵後等一秒」不能保證每次都到同一狀態。 有些原版只能採時間驅動，這時記錄不確定性、重播次數與對齊條件，不捏造決定性。</p>
+<p>Parhelion 的 Capture 會在 dispatch 邊界擷取，並處理取指令已前進的差異； 這樣的狀態差分適合核心驗證，不能代替遊戲從正常選單走到目標的證據（P3）。</p>
+<h2 id="先驗重播再驗候選">先驗重播，再驗候選</h2>
+<p>同一個基準、同一條路線跑兩次，先比較基準彼此的結果。如果它自己不一致， 先判斷亂數、排程、設定、擷取時機或非決定性欄位，不把所有差異算在候選頭上。 兩次一致只支持這次重播條件，不是所有條件都決定性的證明。</p>
+<p>OnePCE 的紀錄指出，Mesen2 全速模式可能略過繪製，狀態到指定幀但畫面仍舊； 擷取腳本因此固定關閉跳幀（O1、O3）。這說明「模擬已完成」與「觀測已更新」需要分開驗證。</p>
+<p>檢查觀測器要有正對照與錯誤路徑：工具不存在應報錯，必要附件缺失應阻止驗收， 空目錄不能變成零差異。要觀察圖片內容時，用合成圖片確認尺寸、列距、通道及裁切沒有被轉換器破壞。</p>
+<h2 id="基準衝突怎麼處理">基準衝突怎麼處理</h2>
+<p>先對齊版本與定義，再逐欄比較各基準的證據力。Talos 的 TAS 規格明列外部語料的時序限制， 使用另一來源支持局部訂正，同時保留其他欄位的驗收（T4）。不要把「外部」等同「不會錯」。</p>
+<p>訂正基準時保存原值、修正值、理由、支持證據、受影響案例與未解範圍。 若沒有足夠證據裁決，標 <code>UNKNOWN</code> 並阻止相關符合性宣告。不能選最容易讓候選通過的那個參考。</p>
+<p>PCM／DAC／PIT 等時序問題依本專案停止線優先使用公開契約，記為 <code>hardware-spec approximation</code>；需要重新開啟硬體考古，必須有另外的明確授權。</p>
+<h3 id="來源與主張範圍">來源與主張範圍</h3>
+<p><a href="../inventory.html#固定來源索引">O1、O3、T4、P3、W2</a>分別提供擷取、語料勘誤、狀態邊界與格式參考的例子。 來源內容為 <code>CONFIRMED</code> 的文件／程式碼觀察；選基準與重播流程是 <code>STRONG_INFERENCE</code>。 沒有把上述模擬器的結果等同原始硬體實測。</p>
+</article></main></div><footer><a href="../index.html">王俊又 wicanr2</a> · AI 輔助軟體考古手冊 · <a href="../library.html">全部文件 · All pages · 全ページ</a><p>證據先行，保留未知。 Evidence first. Keep uncertainty visible.</p></footer></body></html>

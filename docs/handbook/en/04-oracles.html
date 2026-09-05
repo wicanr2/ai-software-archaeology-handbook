@@ -1,0 +1,56 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>04 — An Oracle Has Limits Too｜AI 軟體考古</title><link rel="canonical" href="https://wicanr2.github.io/ai-software-archaeology-handbook/handbook/en/04-oracles.html"><link rel="stylesheet" href="../../assets/reader.css"><link rel="icon" href="../../assets/favicon.svg"></head><body><a class="skip" href="#content">Skip to content</a><header><a href="../../index.html">王俊又 wicanr2</a><nav><a href="../../library.html">全部文件 · All pages · 全ページ</a></nav></header><div class="layout"><aside><details open><summary>Chapters</summary><nav><ul><li><a href="README.html">AI-Assisted Software Archaeology Handbook</a></li><li><a href="00-principles.html">00 — Establish the Question Before the Answer</a></li><li><a href="01-evidence.html">01 — Make Evidence Findable by Someone Else</a></li><li><a href="02-hypotheses.html">02 — Give a Hypothesis a Chance to Fail</a></li><li><a href="03-specification-gates.html">03 — Review Evidence Before Authorizing Implementation</a></li><li class="current"><a href="04-oracles.html">04 — An Oracle Has Limits Too</a></li><li><a href="05-differential-testing.html">05 — Compare the Same Thing and Preserve the First Divergence</a></li><li><a href="06-conformance.html">06 — Make Completion an Auditable Conclusion</a></li><li><a href="07-agent-workflows.html">07 — Hand Off Evidence, Not Impressions</a></li><li><a href="08-failure-patterns.html">08 — Use Failure Mechanisms to Choose the Next Observation</a></li><li><a href="worked-example.html">Appendix — A Complete Chain from Evidence to a Report</a></li></ul></nav></details><details><summary>研究與專案文件</summary><nav><ul><li><a href="../../project/AGENTS.html">AGENTS.md — Oracle-Driven Software Archaeology</a></li><li><a href="../../project/PLAN.html">PLAN.md — Oracle-Driven Software Archaeology</a></li><li><a href="../../project/README.html">AI 輔助軟體考古手冊</a></li><li><a href="../../project/WORKLOG.html">工作歷程</a></li><li><a href="../../failure-patterns.html">有來源的失敗模式</a></li><li><a href="../../handbook-review.html">手冊交付驗收</a></li><li><a href="../../inventory.html">案例盤點與證據索引</a></li><li><a href="../../methodology-draft.html">以證據驅動的軟體考古：方法草案</a></li><li><a href="../../pattern-matrix.html">跨專案模式矩陣</a></li><li><a href="../../pdf-release.html">PDF 排版與發行</a></li><li><a href="../../releases/v.1.0.0-20260905.html">三語手冊 PDF 與流程圖</a></li><li><a href="../../site-release.html">宣傳網站與公開交付</a></li></ul></nav></details></aside><main id="content"><div class="languages"><a href="../04-oracles.html">繁體中文</a> · <a href="04-oracles.html">English</a> · <a href="../ja/04-oracles.html">日本語</a></div><details class="toc"><summary>On this page</summary><ul><li class="depth-2"><a href="#match-the-reference-to-the-question">Match the reference to the question</a></li><li class="depth-2"><a href="#a-traceable-run">A traceable run</a></li><li class="depth-2"><a href="#check-replay-before-judging-the-candidate">Check replay before judging the candidate</a></li><li class="depth-2"><a href="#resolve-conflicts-between-references">Resolve conflicts between references</a></li><li class="depth-3"><a href="#sources-and-claim-scope">Sources and claim scope</a></li></ul></details><article><h1 id="04--an-oracle-has-limits-too">04 — An Oracle Has Limits Too</h1>
+<p><a href="03-specification-gates.html">Previous</a> · <a href="README.html">Contents</a> · <a href="05-differential-testing.html">Next</a></p>
+<p>An oracle is a reference qualified to decide a particular question. It may be the original program, an external emulator, a specification, or an independent implementation. Explain why it can decide the field under examination. “Another tool agrees” is insufficient if both tools share the same mistaken assumption.</p>
+<h2 id="match-the-reference-to-the-question">Match the reference to the question</h2>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr class="header">
+<th>Question</th>
+<th>Suitable reference</th>
+<th>Limitations to retain</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>How does the original menu respond?</td>
+<td>Pinned original version replayed from normal entry</td>
+<td>Environment, initial state, input acceptance timing</td>
+</tr>
+<tr class="even">
+<td>Does decoding produce the same content?</td>
+<td>Independent decoder with the same input</td>
+<td>Versions, encodings, errors, and shared code ancestry</td>
+</tr>
+<tr class="odd">
+<td>Does an instruction make the same transition?</td>
+<td>Original/external core with known starting state</td>
+<td>Only compared registers, memory, and instructions</td>
+</tr>
+<tr class="even">
+<td>What is a reasonable hardware approximation?</td>
+<td>Public hardware contract</td>
+<td>Specification approximation, not physical cycle parity</td>
+</tr>
+<tr class="odd">
+<td>What should a synthetic exercise output?</td>
+<td>Explicit contract and independent arithmetic</td>
+<td>Only the exercise; no historical compatibility claim</td>
+</tr>
+</tbody>
+</table></div>
+<p>Manuals, walkthroughs, and user recollections can identify useful questions. Distinguish descriptions, observations, and actual program state. “Battlefield size” might describe a viewport or an internal array; establish the layer before declaring a contradiction.</p>
+<h2 id="a-traceable-run">A traceable run</h2>
+<p>Pin original and candidate identities, oracle version, tool image ID, configuration, initial save/state, inputs, and stop conditions. Set an execution budget and prevent failed work from leaving background processes. Preserve raw observations before comparison; normalization must not overwrite them.</p>
+<p>Use identifiable boundaries such as “after request 17,” “at the next instruction entry,” or “after the specified frame has been rendered.” Waiting one second after a keypress does not guarantee the same state. When only time-driven control is practical, record uncertainty, repetitions, and alignment conditions rather than inventing determinism.</p>
+<p>Parhelion captures at a dispatch boundary and accounts for instruction fetch having advanced state. This is useful for core differential tests, not a substitute for reaching a game state through its normal menus (P3).</p>
+<h2 id="check-replay-before-judging-the-candidate">Check replay before judging the candidate</h2>
+<p>Run the reference twice under the same conditions and compare it with itself. If results differ, investigate randomness, scheduling, configuration, sampling, or explicitly nondeterministic fields before blaming the candidate. Two matching runs support those conditions; they do not prove universal determinism.</p>
+<p>OnePCE records that Mesen2's full-speed mode can skip rendering: memory reaches the requested frame while the captured image remains old. Its script disables frame skipping (O1, O3). Simulation completion and observation freshness are separate checks.</p>
+<p>Give the observer positive controls and error cases. Missing tools and required artifacts must fail; an empty directory cannot mean zero differences. For image capture, use known synthetic content to check geometry, stride, channels, and cropping.</p>
+<h2 id="resolve-conflicts-between-references">Resolve conflicts between references</h2>
+<p>Align versions and definitions, then assess authority per field. Talos's TAS specification records timing limitations in an external corpus, uses another reference to support a local correction, and retains other field comparisons (T4). External does not mean infallible.</p>
+<p>Preserve the original expectation, corrected value, reason, supporting evidence, affected cases, and unresolved scope. If evidence cannot decide, mark <code>UNKNOWN</code> and block the corresponding conformance claim. Do not choose the reference that most easily accepts the candidate.</p>
+<p>For PCM/DAC/PIT timing, this repository's stop line prioritizes public contracts and the label <code>hardware-spec approximation</code>. Reopening hardware archaeology requires separate explicit authorization.</p>
+<h3 id="sources-and-claim-scope">Sources and claim scope</h3>
+<p><a href="../../inventory.html#固定來源索引">O1, O3, T4, P3, W2</a> provide capture, corpus-correction, state-boundary, and decoder examples. Inspected source contents are <code>CONFIRMED</code>; reference selection and replay practice are <code>STRONG_INFERENCE</code>. Emulator results are not presented as measurements on original hardware.</p>
+</article></main></div><footer><a href="../../index.html">王俊又 wicanr2</a> · AI 輔助軟體考古手冊 · <a href="../../library.html">全部文件 · All pages · 全ページ</a><p>證據先行，保留未知。 Evidence first. Keep uncertainty visible.</p></footer></body></html>

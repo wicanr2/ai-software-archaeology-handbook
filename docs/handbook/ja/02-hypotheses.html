@@ -1,0 +1,57 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>02　仮説が失敗できる検査を作る｜AI 軟體考古</title><link rel="canonical" href="https://wicanr2.github.io/ai-software-archaeology-handbook/handbook/ja/02-hypotheses.html"><link rel="stylesheet" href="../../assets/reader.css"><link rel="icon" href="../../assets/favicon.svg"></head><body><a class="skip" href="#content">本文へ</a><header><a href="../../index.html">王俊又 wicanr2</a><nav><a href="../../library.html">全部文件 · All pages · 全ページ</a></nav></header><div class="layout"><aside><details open><summary>章一覧</summary><nav><ul><li><a href="README.html">AI 支援ソフトウェア考古学ハンドブック</a></li><li><a href="00-principles.html">00　答えの前に、何を確かめるかを定める</a></li><li><a href="01-evidence.html">01　別の人が再び見つけられる証拠を残す</a></li><li class="current"><a href="02-hypotheses.html">02　仮説が失敗できる検査を作る</a></li><li><a href="03-specification-gates.html">03　仕様は実装前の証拠審査</a></li><li><a href="04-oracles.html">04　判定基準にも限界がある</a></li><li><a href="05-differential-testing.html">05　同じものを比較し、最初の不一致を残す</a></li><li><a href="06-conformance.html">06　完了を監査できる結論にする</a></li><li><a href="07-agent-workflows.html">07　印象ではなく証拠を引き継ぐ</a></li><li><a href="08-failure-patterns.html">08　失敗の仕組みから次の観測を選ぶ</a></li><li><a href="worked-example.html">付録　証拠から報告までを一つの例でたどる</a></li></ul></nav></details><details><summary>研究與專案文件</summary><nav><ul><li><a href="../../project/AGENTS.html">AGENTS.md — Oracle-Driven Software Archaeology</a></li><li><a href="../../project/PLAN.html">PLAN.md — Oracle-Driven Software Archaeology</a></li><li><a href="../../project/README.html">AI 輔助軟體考古手冊</a></li><li><a href="../../project/WORKLOG.html">工作歷程</a></li><li><a href="../../failure-patterns.html">有來源的失敗模式</a></li><li><a href="../../handbook-review.html">手冊交付驗收</a></li><li><a href="../../inventory.html">案例盤點與證據索引</a></li><li><a href="../../methodology-draft.html">以證據驅動的軟體考古：方法草案</a></li><li><a href="../../pattern-matrix.html">跨專案模式矩陣</a></li><li><a href="../../pdf-release.html">PDF 排版與發行</a></li><li><a href="../../releases/v.1.0.0-20260905.html">三語手冊 PDF 與流程圖</a></li><li><a href="../../site-release.html">宣傳網站與公開交付</a></li></ul></nav></details></aside><main id="content"><div class="languages"><a href="../02-hypotheses.html">繁體中文</a> · <a href="../en/02-hypotheses.html">English</a> · <a href="02-hypotheses.html">日本語</a></div><details class="toc"><summary>このページの内容</summary><ul><li class="depth-2"><a href="#一つの主張には一つの断言">一つの主張には一つの断言</a></li><li class="depth-2"><a href="#判別実験を設計する">判別実験を設計する</a></li><li class="depth-2"><a href="#昇格撤回依存関係">昇格、撤回、依存関係</a></li><li class="depth-2"><a href="#不明点を実行可能な問いにする">不明点を実行可能な問いにする</a></li><li class="depth-3"><a href="#出典と主張の範囲">出典と主張の範囲</a></li></ul></details><article><h1 id="02-仮説が失敗できる検査を作る">02　仮説が失敗できる検査を作る</h1>
+<p><a href="01-evidence.html">前の章</a> · <a href="README.html">目次</a> · <a href="03-specification-gates.html">次の章</a></p>
+<p>仮説の価値は、次に何を観測すべきか示すことです。名前が分かりやすい、コードが動く、反対が出ていないという理由で事実にしてはいけません。二つの説明が同じテストに通るなら、どちらもまだ除外されていないだけです。</p>
+<p>春之石では、レベルとともに増えるフィールドを生命値と判定しましたが、経験値でも同じ傾向になります。二つを分けたのは、ダメージと死亡判定がどのフィールドを読み書きするかという証拠でした。単調な標本を増やすことではありません（S3）。</p>
+<h2 id="一つの主張には一つの断言">一つの主張には一つの断言</h2>
+<p>「これは生命値で、符号なし十六ビットで、死亡後は未使用」は少なくとも三つの主張です。一つに直接証拠があっても残りは確定しません。それぞれに ID、範囲、支持と反対の証拠を付けます。</p>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr class="header">
+<th>確信度</th>
+<th>適切な使い方</th>
+<th>不適切な使い方</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>CONFIRMED</code></td>
+<td>明示条件の直接証拠、または指定した権威ある契約による裏付け</td>
+<td>有限の標本から全域規則を断定する</td>
+</tr>
+<tr class="even">
+<td><code>STRONG_INFERENCE</code></td>
+<td>複数の判別力ある証拠はあるが直接の接続が不足</td>
+<td>強い言葉で未確認のアクセス箇所を補う</td>
+</tr>
+<tr class="odd">
+<td><code>HYPOTHESIS</code></td>
+<td>検査を提案した候補説明</td>
+<td>正式実装の隠れた既定値にする</td>
+</tr>
+<tr class="even">
+<td><code>UNKNOWN</code></td>
+<td>証拠不足、観測不能、矛盾がある</td>
+<td>不明をゼロや不存在に置き換える</td>
+</tr>
+</tbody>
+</table></div>
+<p>確信度を自動で百分率に変換しません。一つの古い結論を写した複数のノートは、独立証拠ではありません。<code>CONFIRMED</code> でも、対象版の誤り、観測器の欠陥、反証によって再検討します。</p>
+<h2 id="判別実験を設計する">判別実験を設計する</h2>
+<p>付録の合成アキュムレータで、初期値 10 に 1 を加えると、飽和でも八ビットの回り込みでも 11 です。250 に 10 を加えれば、予測は 255 と 4 に分かれます。これは教材のために設計した値であり、歴史的ゲームの観測ではありません。</p>
+<p>実行前に予測を書きます。</p>
+<pre class="text"><code>主張：C-SAT、上限を超えた加算は 255 で止まる。
+範囲：教材アキュムレータ v1 の加算。
+競合仮説：飽和／回り込み／拒否して状態維持。
+入力：初期値 250、要求 01 0A。
+予測：255／4／エラーで 250 のまま。
+必要観測：要求後の value と結果コード。どちらも必須。</code></pre>
+<p>先に予測すると、結果を見てから都合のよい説明を作ることを避けやすくなります。どの候補も結果を予測しなかったら、入力と観測方法を調べてから新しい仮説を提案します。最も近そうな説明に押し込みません。</p>
+<h2 id="昇格撤回依存関係">昇格、撤回、依存関係</h2>
+<p>確信度を変えるたびに、旧値、新値、日付、理由、証拠 ID、影響する仕様とテストを記録します。「生命値である」が撤回されたら、その前提から導いたダメージ式、表示名、セーブ解釈も再確認します。現行本文を修正し、旧主張と反証への索引は残します。</p>
+<p>反例は、実際に矛盾した範囲を否定します。一つの非対称な標本で「すべて鏡映」は否定できますが、「ほかも全部非対称」までは言えません。MM2 の局所的な対称性の推論が後の画像で否定された例も、この境界を示します（M1）。</p>
+<h2 id="不明点を実行可能な問いにする">不明点を実行可能な問いにする</h2>
+<p>「魔法は未解明」では引き継げません。「C-17 の費用控除時点は不明。効果関数内にはないが呼び出し元は未調査。次に費用の保存位置から後続の読み書きを追う」なら、調査できます。道具の盲点と動作の不存在を分けられます。</p>
+<p>不明点が正式規則を変えるなら仕様は DRAFT のままです。許可された切片に影響しないなら、対象外の範囲と非阻害の理由を記します。</p>
+<h3 id="出典と主張の範囲">出典と主張の範囲</h3>
+<p><a href="../../inventory.html#固定來源索引">S3、M1</a>はフィールド誤判定、外挿、呼び出し元の見落としを記録しています。記録の存在は <code>CONFIRMED</code>、判別と依存追跡の方法は <code>STRONG_INFERENCE</code> です。S3 で未確認だった経験値の解釈を、本書で確定に昇格しません。</p>
+</article></main></div><footer><a href="../../index.html">王俊又 wicanr2</a> · AI 輔助軟體考古手冊 · <a href="../../library.html">全部文件 · All pages · 全ページ</a><p>證據先行，保留未知。 Evidence first. Keep uncertainty visible.</p></footer></body></html>

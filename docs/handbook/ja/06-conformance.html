@@ -1,0 +1,64 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>06　完了を監査できる結論にする｜AI 軟體考古</title><link rel="canonical" href="https://wicanr2.github.io/ai-software-archaeology-handbook/handbook/ja/06-conformance.html"><link rel="stylesheet" href="../../assets/reader.css"><link rel="icon" href="../../assets/favicon.svg"></head><body><a class="skip" href="#content">本文へ</a><header><a href="../../index.html">王俊又 wicanr2</a><nav><a href="../../library.html">全部文件 · All pages · 全ページ</a></nav></header><div class="layout"><aside><details open><summary>章一覧</summary><nav><ul><li><a href="README.html">AI 支援ソフトウェア考古学ハンドブック</a></li><li><a href="00-principles.html">00　答えの前に、何を確かめるかを定める</a></li><li><a href="01-evidence.html">01　別の人が再び見つけられる証拠を残す</a></li><li><a href="02-hypotheses.html">02　仮説が失敗できる検査を作る</a></li><li><a href="03-specification-gates.html">03　仕様は実装前の証拠審査</a></li><li><a href="04-oracles.html">04　判定基準にも限界がある</a></li><li><a href="05-differential-testing.html">05　同じものを比較し、最初の不一致を残す</a></li><li class="current"><a href="06-conformance.html">06　完了を監査できる結論にする</a></li><li><a href="07-agent-workflows.html">07　印象ではなく証拠を引き継ぐ</a></li><li><a href="08-failure-patterns.html">08　失敗の仕組みから次の観測を選ぶ</a></li><li><a href="worked-example.html">付録　証拠から報告までを一つの例でたどる</a></li></ul></nav></details><details><summary>研究與專案文件</summary><nav><ul><li><a href="../../project/AGENTS.html">AGENTS.md — Oracle-Driven Software Archaeology</a></li><li><a href="../../project/PLAN.html">PLAN.md — Oracle-Driven Software Archaeology</a></li><li><a href="../../project/README.html">AI 輔助軟體考古手冊</a></li><li><a href="../../project/WORKLOG.html">工作歷程</a></li><li><a href="../../failure-patterns.html">有來源的失敗模式</a></li><li><a href="../../handbook-review.html">手冊交付驗收</a></li><li><a href="../../inventory.html">案例盤點與證據索引</a></li><li><a href="../../methodology-draft.html">以證據驅動的軟體考古：方法草案</a></li><li><a href="../../pattern-matrix.html">跨專案模式矩陣</a></li><li><a href="../../pdf-release.html">PDF 排版與發行</a></li><li><a href="../../releases/v.1.0.0-20260905.html">三語手冊 PDF 與流程圖</a></li><li><a href="../../site-release.html">宣傳網站與公開交付</a></li></ul></nav></details></aside><main id="content"><div class="languages"><a href="../06-conformance.html">繁體中文</a> · <a href="../en/06-conformance.html">English</a> · <a href="06-conformance.html">日本語</a></div><details class="toc"><summary>このページの内容</summary><ul><li class="depth-2"><a href="#追跡可能な報告">追跡可能な報告</a></li><li class="depth-2"><a href="#要求から証拠へ逆にたどる">要求から証拠へ逆にたどる</a></li><li class="depth-2"><a href="#早期停止と対象外の不明点">早期停止と対象外の不明点</a></li><li class="depth-2"><a href="#新版は旧版の結論を借りられない">新版は旧版の結論を借りられない</a></li><li class="depth-3"><a href="#出典と主張の範囲">出典と主張の範囲</a></li></ul></details><article><h1 id="06-完了を監査できる結論にする">06　完了を監査できる結論にする</h1>
+<p><a href="05-differential-testing.html">前の章</a> · <a href="README.html">目次</a> · <a href="07-agent-workflows.html">次の章</a></p>
+<p>適合性とは、版を持つ契約の宣言した受入範囲を候補が満たすことです。全システムの無条件保証ではありません。CONFORMED の主語は「この候補版がこの仕様に対して」であり、版も範囲もない「プロジェクト完了」ではありません。</p>
+<h2 id="追跡可能な報告">追跡可能な報告</h2>
+<pre class="text"><code>対象／候補の識別：版、コミット、バイナリのハッシュ
+仕様：ID、版、受入範囲、除外範囲
+基準：種類、版、入力、設定
+実行：ID、初期状態、入力列、観測成果物
+比較：規則版、フィールド、時点、検査分母
+結果：厳密一致、許容差、不一致、欠測、スキップの件数
+停止理由：完了／未実装／時間切れ／取得失敗／不一致
+制約：未検査環境、不明フィールド、近似、非阻害の理由
+裁定：宣言した条件を満たすか、審査者、日付
+再検証条件：どの入力、道具、仕様、候補の変更で適用できなくなるか</code></pre>
+<p>これは人が書く報告の雛形であり、<code>osa report</code> が存在する証拠ではありません。実行成果物がない場合の正直な紙上報告は付録に示します。</p>
+<h2 id="要求から証拠へ逆にたどる">要求から証拠へ逆にたどる</h2>
+<p>審査では「完了はまだ証明されていない」から始めます。元の要求を列挙して各項の証拠を探します。存在するテストからだけ要求を逆算すると、テストのない機能が消えてしまいます。</p>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr class="header">
+<th>必須結果</th>
+<th>十分な証拠</th>
+<th>不十分な代用品</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>通常操作で完了</td>
+<td>配布物、通常入口、全入力経路、出力</td>
+<td>テスト専用入口で結果へ直行</td>
+</tr>
+<tr class="even">
+<td>参照動作との一致</td>
+<td>同状態の観測、比較規則、差分記録</td>
+<td>単体テスト成功、似た画像</td>
+</tr>
+<tr class="odd">
+<td>境界とエラーの意味</td>
+<td>候補を判別する例、失敗後の状態</td>
+<td>正常入力だけ</td>
+</tr>
+<tr class="even">
+<td>対応環境とデータ版</td>
+<td>各範囲の必要標本と入力の固定</td>
+<td>別環境のビルド成功</td>
+</tr>
+<tr class="odd">
+<td>必須観測がそろう</td>
+<td>実取得数が契約を満たし、成果物へたどれる</td>
+<td>全体の終了コードだけ</td>
+</tr>
+</tbody>
+</table></div>
+<p>比較不能は合格ではありませんが、製品欠陥とも限りません。証拠不足の可能性があります。両者を分けつつ、必要な証拠の不足は CONFORMED を止めます。</p>
+<h2 id="早期停止と対象外の不明点">早期停止と対象外の不明点</h2>
+<p>Parhelion P1 は、306 命令が一致した後、未実装命令で停止したと記録しています。それは比較した軌跡を支えますが、p-System 全体の互換性ではありません。Talos T1 の大量の CPU テスト事例も、未完成のシステム起動の代わりにはなりません。</p>
+<p>最初から契約が特定の命令切片だけを要求していれば、他の命令は対象外にできます。利用者が完全起動を求めたなら、未実装命令は未完了の仕事です。検査後に目標を小さくするのは、完了でなく問いの変更です。</p>
+<p>「リメイク作業完了」「原版の厳密動作は不明」「任意の磨き込み」を分離します。不明点が妨げるかは利用者目標で決めます。難しい調査を任意作業に改称せず、非阻害の未知で納品を無期限に延ばすこともしません。</p>
+<h2 id="新版は旧版の結論を借りられない">新版は旧版の結論を借りられない</h2>
+<p>デコーダ、観測器、許容差、入力版、パッケージの変更は報告の適用を失わせる場合があります。依存関係を説明し、相応の範囲を再検査します。旧報告は旧版の証拠として残し、新候補には新しい証拠を用意します。ファイル時刻が新しいだけでは、ビルド由来やバイナリの識別になりません。</p>
+<p>納品では手引きの完成、ツールの完成、実事例の合格を分けます。編集検査で章、例、出典の整合性を示せても、過去の実行結果を再現済み実験として再認証はできません。</p>
+<h3 id="出典と主張の範囲">出典と主張の範囲</h3>
+<p><a href="../../inventory.html#固定來源索引">P1、P3、T1、W1</a>は切片の制約、停止理由、成果物識別の例です。記録は <code>CONFIRMED</code>、報告と逆向き監査の方法は <code>STRONG_INFERENCE</code> です。本書は宣言した有限範囲を検証し、標本から全域の数学的証明を主張しません。</p>
+</article></main></div><footer><a href="../../index.html">王俊又 wicanr2</a> · AI 輔助軟體考古手冊 · <a href="../../library.html">全部文件 · All pages · 全ページ</a><p>證據先行，保留未知。 Evidence first. Keep uncertainty visible.</p></footer></body></html>

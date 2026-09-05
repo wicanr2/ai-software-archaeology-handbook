@@ -1,0 +1,151 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>跨專案模式矩陣｜AI 軟體考古</title><link rel="canonical" href="https://wicanr2.github.io/ai-software-archaeology-handbook/pattern-matrix.html"><link rel="stylesheet" href="assets/reader.css"><link rel="icon" href="assets/favicon.svg"></head><body><a class="skip" href="#content">跳至內文</a><header><a href="index.html">王俊又 wicanr2</a><nav><a href="library.html">全部文件 · All pages · 全ページ</a></nav></header><div class="layout"><aside><details open><summary>章節導覽</summary><nav><ul><li><a href="handbook/README.html">AI 輔助軟體考古手冊</a></li><li><a href="handbook/00-principles.html">00　先證明題目，再證明答案</a></li><li><a href="handbook/01-evidence.html">01　讓證據能被另一個人重新找到</a></li><li><a href="handbook/02-hypotheses.html">02　讓假說有機會失敗</a></li><li><a href="handbook/03-specification-gates.html">03　規格是實作前的證據審查</a></li><li><a href="handbook/04-oracles.html">04　行為基準也有能力邊界</a></li><li><a href="handbook/05-differential-testing.html">05　比較同一件事，保留第一個分歧</a></li><li><a href="handbook/06-conformance.html">06　把完成聲明寫成可稽核的結論</a></li><li><a href="handbook/07-agent-workflows.html">07　讓代理帶著證據交接，而不是帶著印象</a></li><li><a href="handbook/08-failure-patterns.html">08　從錯誤形成方式選下一個觀測</a></li><li><a href="handbook/worked-example.html">附錄　從證據到符合性報告：一個完整演練</a></li></ul></nav></details><details><summary>研究與專案文件</summary><nav><ul><li><a href="project/AGENTS.html">AGENTS.md — Oracle-Driven Software Archaeology</a></li><li><a href="project/PLAN.html">PLAN.md — Oracle-Driven Software Archaeology</a></li><li><a href="project/README.html">AI 輔助軟體考古手冊</a></li><li><a href="project/WORKLOG.html">工作歷程</a></li><li><a href="failure-patterns.html">有來源的失敗模式</a></li><li><a href="handbook-review.html">手冊交付驗收</a></li><li><a href="inventory.html">案例盤點與證據索引</a></li><li><a href="methodology-draft.html">以證據驅動的軟體考古：方法草案</a></li><li><a href="pattern-matrix.html">跨專案模式矩陣</a></li><li><a href="pdf-release.html">PDF 排版與發行</a></li><li><a href="releases/v.1.0.0-20260905.html">三語手冊 PDF 與流程圖</a></li><li><a href="site-release.html">宣傳網站與公開交付</a></li></ul></nav></details></aside><main id="content"><div class="languages"></div><details class="toc"><summary>本頁目錄</summary><ul><li class="depth-2"><a href="#有來源支持的重複模式">有來源支持的重複模式</a></li><li class="depth-2"><a href="#建議項目的覆蓋核對">建議項目的覆蓋核對</a></li><li class="depth-2"><a href="#差異與不能直接一般化的做法">差異與不能直接一般化的做法</a></li><li class="depth-2"><a href="#尚待驗證的提案">尚待驗證的提案</a></li></ul></details><article><h1 id="跨專案模式矩陣">跨專案模式矩陣</h1>
+<p>本表只比較<a href="inventory.html#固定來源索引">來源索引</a>中的固定提交。 「反覆出現」指不同專案留下相同類型的可核對實踐或失敗紀錄，不代表統計上的普遍性。 七個專案來自同一作者，可能共用規範與工具，不能當成七個獨立團隊實驗。</p>
+<h2 id="有來源支持的重複模式">有來源支持的重複模式</h2>
+<p>每列的來源觀察為 <code>CONFIRMED</code>（本輪讀檔／讀碼）；右欄方法主張為 <code>STRONG_INFERENCE</code>，仍需後續案例挑戰。</p>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr class="header">
+<th>ID／模式</th>
+<th>跨專案觀察</th>
+<th>可重用規則與適用限制</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>R1 保存原始觀測與修正歷史</td>
+<td>MM2 M1／M3 保存舊路線及新測結果；春之石 S2／S3 保留錯誤過濾與錯誤判定；WinCV W1 記錄工具修復前後的解釋</td>
+<td>結論可撤回，原始定位與反證理由要留下；正文仍需指向現況，不能只追加歷史而放任舊規格繼續被引用</td>
+</tr>
+<tr class="even">
+<td>R2 信心依讀寫端與判別證據提升</td>
+<td>春之石 S3 分開已定位的生命值與仍缺結算端的經驗值；MM2 M1 保留鏡射強推論被新樣本否定的過程；Parhelion P2 分開證據、推論及自訂</td>
+<td>合理名稱、單調數據或少量樣本不夠；每個主張獨立分級，不能一批升格</td>
+</tr>
+<tr class="odd">
+<td>R3 先約定可實作範圍與閘門</td>
+<td>Parhelion P2 明定 DRAFT／READY／CONFORMED；Talos T2 是 READY、T3 仍是 DRAFT、T4 有排除範圍</td>
+<td>閘門應逐子系統判定；已完成控制協定不表示已完成整機或收據格式</td>
+</tr>
+<tr class="even">
+<td>R4 同一觀測邊界與可重播輸入</td>
+<td>MM2 M3 用新鮮副本重測選單至神殿；OnePCE O1／O3 固定畫格且關閉跳幀；Parhelion P3 在 dispatch 邊界擷取與逐步比較</td>
+<td>時間、輸入、起始狀態與擷取邊界都是實驗條件；相同按鍵字串不自動代表同一執行</td>
+</tr>
+<tr class="odd">
+<td>R5 比較層次與覆蓋分母分開</td>
+<td>MM2 M1 內部畫布測試漏掉最終顯示；OnePCE O1／O2 區分記憶體、像素及未覆蓋列；Talos T1 區分 CPU 語料與完整遊戲</td>
+<td>單元正確、決定性、行為一致、使用者路徑各自報告；未觀測欄位不可計為相符</td>
+</tr>
+<tr class="even">
+<td>R6 觀測工具與外部基準也會錯</td>
+<td>WinCV W1 的截圖位元組寬度錯誤；OnePCE O1 的跳幀污染；Talos T4 的語料時序限制；春之石 S2 的搜尋漏計</td>
+<td>比較失敗時先分類觀測鏈與候選實作；基準修正須有獨立理由，不能為了讓結果變綠調整預期</td>
+</tr>
+<tr class="odd">
+<td>R7 保留可定位的機器觀測及停止原因</td>
+<td>OnePCE O3 記錄輸入、工具及輸出雜湊；Parhelion P3 保存步數、欄位、期望值、實際值及停止原因；Talos T2 明定未實作錯誤</td>
+<td>機器輸出不能只有布林成功；需知道比了什麼、何處分歧、是否提前停止。這是資料需求，不是本輪正式 schema</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="建議項目的覆蓋核對">建議項目的覆蓋核對</h2>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr class="header">
+<th>PLAN 建議面向</th>
+<th>對應模式／證據</th>
+<th>未證實部分</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>證據保存、來源追溯</td>
+<td>R1、R7；O3、T4 有雜湊</td>
+<td>未核對所有歷史附件仍可重生</td>
+</tr>
+<tr class="even">
+<td>信心等級、原始資料與語意分開</td>
+<td>R2；S3、P2</td>
+<td>各專案並未全部採相同四級詞彙</td>
+</tr>
+<tr class="odd">
+<td>決定性重播、行為基準</td>
+<td>R4、R6</td>
+<td>本輪未實測重播的一致性</td>
+</tr>
+<tr class="even">
+<td>截圖／畫格與狀態比較</td>
+<td>R5；O1、P3</td>
+<td>像素一致不能取代未比較的狀態</td>
+</tr>
+<tr class="odd">
+<td>規格閘門</td>
+<td>R3</td>
+<td>未全面稽核來源專案是否每次都遵守</td>
+</tr>
+<tr class="even">
+<td>分層測試</td>
+<td>R5</td>
+<td>歷史通過數不是本輪測試數</td>
+</tr>
+<tr class="odd">
+<td>失敗文件</td>
+<td>R1、R6</td>
+<td>僅抽樣有明確反證鏈的案例</td>
+</tr>
+<tr class="even">
+<td>代理指令</td>
+<td>F1 問題路由、P2 閘門、T2 控制契約</td>
+<td>尚未做全新代理的獨立可用性試驗</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="差異與不能直接一般化的做法">差異與不能直接一般化的做法</h2>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr class="header">
+<th>分歧</th>
+<th>來源</th>
+<th>對本手冊的影響</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>原版程式、成熟模擬器、格式參考實作都可作基準，但裁決範圍不同</td>
+<td>M3、O1、W2、T4、P3</td>
+<td>每次先宣告基準能裁決什麼；不能統一稱為「原版真值」</td>
+</tr>
+<tr class="even">
+<td>正常玩家路徑與狀態擷取適合不同問題</td>
+<td>M1／M3 對比 P3</td>
+<td>指令核心可從已知狀態比較；產品可玩性仍須正常入口</td>
+</tr>
+<tr class="odd">
+<td>像素比對可含裁切與色彩對應規則</td>
+<td>O1 對比 W1 的格點與字模量測</td>
+<td>容差／正規化先聲明；不能把經色彩映射的結果描述成所有原生 RGB 完全一致</td>
+</tr>
+<tr class="even">
+<td>停止研究與完整平台支援是不同交付目標</td>
+<td>T1、P1、各 remake 現況</td>
+<td>明列已驗範圍；有限切片可以交付，但名稱要反映限制</td>
+</tr>
+<tr class="odd">
+<td>歷史文件職責並不一致</td>
+<td>P2 把勘誤集中 PLAN；S1／W1 放 CONTEXT；F1 另外路由歷史與現況</td>
+<td>本專案沿用目前狀態表與唯一 WORKLOG，不照抄檔名配置</td>
+</tr>
+<tr class="even">
+<td>素材與授權處置不同</td>
+<td>W2 與本專案 AGENTS §8</td>
+<td>本專案不匯入原版安裝檔、字庫、截圖或資料包；私人儲存庫也不豁免既有禁止事項</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="尚待驗證的提案">尚待驗證的提案</h2>
+<ul>
+<li><code>HYPOTHESIS</code>：統一的證據關聯與缺失觀測欄位可減少代理把「略過」誤報成「通過」。 可由後續合成範例與新代理試驗檢驗；現在不選定序列化格式。</li>
+<li><code>HYPOTHESIS</code>：自動提示結論的下游引用，比只在勘誤表追加更能防止舊假說繼續流通。 M1／M2、W1 提供動機，尚沒有本專案的效果測量。</li>
+<li><code>UNKNOWN</code>：上述方法對其他作者、非遊戲軟體及更大規模團隊的效益。</li>
+</ul>
+</article></main></div><footer><a href="index.html">王俊又 wicanr2</a> · AI 輔助軟體考古手冊 · <a href="library.html">全部文件 · All pages · 全ページ</a><p>證據先行，保留未知。 Evidence first. Keep uncertainty visible.</p></footer></body></html>

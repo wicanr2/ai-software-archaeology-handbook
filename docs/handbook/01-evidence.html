@@ -1,0 +1,86 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>01　讓證據能被另一個人重新找到｜AI 軟體考古</title><link rel="canonical" href="https://wicanr2.github.io/ai-software-archaeology-handbook/handbook/01-evidence.html"><link rel="stylesheet" href="../assets/reader.css"><link rel="icon" href="../assets/favicon.svg"></head><body><a class="skip" href="#content">跳至內文</a><header><a href="../index.html">王俊又 wicanr2</a><nav><a href="../library.html">全部文件 · All pages · 全ページ</a></nav></header><div class="layout"><aside><details open><summary>章節導覽</summary><nav><ul><li><a href="README.html">AI 輔助軟體考古手冊</a></li><li><a href="00-principles.html">00　先證明題目，再證明答案</a></li><li class="current"><a href="01-evidence.html">01　讓證據能被另一個人重新找到</a></li><li><a href="02-hypotheses.html">02　讓假說有機會失敗</a></li><li><a href="03-specification-gates.html">03　規格是實作前的證據審查</a></li><li><a href="04-oracles.html">04　行為基準也有能力邊界</a></li><li><a href="05-differential-testing.html">05　比較同一件事，保留第一個分歧</a></li><li><a href="06-conformance.html">06　把完成聲明寫成可稽核的結論</a></li><li><a href="07-agent-workflows.html">07　讓代理帶著證據交接，而不是帶著印象</a></li><li><a href="08-failure-patterns.html">08　從錯誤形成方式選下一個觀測</a></li><li><a href="worked-example.html">附錄　從證據到符合性報告：一個完整演練</a></li></ul></nav></details><details><summary>研究與專案文件</summary><nav><ul><li><a href="../project/AGENTS.html">AGENTS.md — Oracle-Driven Software Archaeology</a></li><li><a href="../project/PLAN.html">PLAN.md — Oracle-Driven Software Archaeology</a></li><li><a href="../project/README.html">AI 輔助軟體考古手冊</a></li><li><a href="../project/WORKLOG.html">工作歷程</a></li><li><a href="../failure-patterns.html">有來源的失敗模式</a></li><li><a href="../handbook-review.html">手冊交付驗收</a></li><li><a href="../inventory.html">案例盤點與證據索引</a></li><li><a href="../methodology-draft.html">以證據驅動的軟體考古：方法草案</a></li><li><a href="../pattern-matrix.html">跨專案模式矩陣</a></li><li><a href="../pdf-release.html">PDF 排版與發行</a></li><li><a href="../releases/v.1.0.0-20260905.html">三語手冊 PDF 與流程圖</a></li><li><a href="../site-release.html">宣傳網站與公開交付</a></li></ul></nav></details></aside><main id="content"><div class="languages"><a href="01-evidence.html">繁體中文</a> · <a href="en/01-evidence.html">English</a> · <a href="ja/01-evidence.html">日本語</a></div><details class="toc"><summary>本頁目錄</summary><ul><li class="depth-2"><a href="#最小證據卡">最小證據卡</a></li><li class="depth-2"><a href="#保留原始定位附加語意">保留原始定位，附加語意</a></li><li class="depth-2"><a href="#搜尋不到之前先證明搜尋看得到">搜尋不到之前，先證明搜尋看得到</a></li><li class="depth-2"><a href="#觀測工具也需要正對照">觀測工具也需要正對照</a></li><li class="depth-3"><a href="#來源與主張範圍">來源與主張範圍</a></li></ul></details><article><h1 id="01-讓證據能被另一個人重新找到">01　讓證據能被另一個人重新找到</h1>
+<p><a href="00-principles.html">上一章</a> · <a href="README.html">目錄</a> · <a href="02-hypotheses.html">下一章</a></p>
+<p>證據首先是可定位的觀測，不是替觀測取的名字。「記憶體某位置在扣血後減少」與 「這個欄位是生命值」是兩個層次。前者需要輸入、位置與擷取方法，後者還需要排除其他解釋。</p>
+<p>一張截圖也不是完整證據。它至少要能回答：哪個程式版本、哪個起始狀態、送了什麼輸入、 在哪個時間邊界擷取、是否經過縮放或轉色。缺少其中幾項仍可留下作線索，但不能假裝可精確重播。</p>
+<h2 id="最小證據卡">最小證據卡</h2>
+<p>這是人工工作表，不是正式 schema。沒有取得的資料寫 <code>UNKNOWN</code>，不要填假的範例雜湊。</p>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr class="header">
+<th>欄位</th>
+<th>要記什麼</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>證據 ID 與問題</td>
+<td>穩定識別碼；這筆觀測要裁決什麼</td>
+</tr>
+<tr class="even">
+<td>輸入身分</td>
+<td>原檔名、SHA-256、版本；對文件另記儲存庫與完整提交</td>
+</tr>
+<tr class="odd">
+<td>原始定位</td>
+<td>檔案路徑／頁碼／符號；地址另寫工具與位址空間</td>
+</tr>
+<tr class="even">
+<td>環境與方法</td>
+<td>工具版本、容器 image ID、設定、命令、輸入序列、預算</td>
+</tr>
+<tr class="odd">
+<td>起始及取樣條件</td>
+<td>存檔、亂數狀態、事件或畫格邊界、擷取前後狀態</td>
+</tr>
+<tr class="even">
+<td>原始產物</td>
+<td>路徑、雜湊、大小；畫面再記尺寸與像素格式</td>
+</tr>
+<tr class="odd">
+<td>原始觀察</td>
+<td>實際看到的值；不要先套語意名稱</td>
+</tr>
+<tr class="even">
+<td>主張與等級</td>
+<td>解釋、支持與反對證據、信心、缺失項</td>
+</tr>
+</tbody>
+</table></div>
+<p>來源文件的 SHA-256 證明你讀的是哪份筆記，不能取代筆記所引用的 EXE 雜湊。 Git 提交固定來源版本，工作樹可能在閱讀期間前進；取證與驗證都應讀同一個固定版本。</p>
+<h2 id="保留原始定位附加語意">保留原始定位，附加語意</h2>
+<p>反組譯時保留原始函式名、原始運算元、位元組及位址。自訂名稱容易看成既定事實， 應以附加註解或受版控的索引記錄「語意、信心、來源」，並在匯出時自動合併顯示。 只把索引藏在另一個檔案，要求接手者記得查，不能算完整的證據傳遞。</p>
+<p>對同一筆定位，呈現方式應像下面的工作表，而不是只剩 <code>health</code> 這個名稱：</p>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr class="header">
+<th>原始定位</th>
+<th>附加解釋</th>
+<th>信心</th>
+<th>證據</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>原檔＋原始運算元＋明示的位址空間</td>
+<td>可能參與某次狀態更新</td>
+<td><code>HYPOTHESIS</code>，尚未證實</td>
+<td>指向取樣與讀寫端；缺失另列</td>
+</tr>
+</tbody>
+</table></div>
+<p>IDA 線性位址、段內位移與檔案偏移不應並列成同一種數值。跨工具對照要保留各自基準與映射理由。 函式與資料流的關係以分析資料庫為主；平面組合語言文字適合搜尋，不足以證明所有間接存取。</p>
+<h2 id="搜尋不到之前先證明搜尋看得到">搜尋不到之前，先證明搜尋看得到</h2>
+<p>春之石的掃描曾因只接受 <code>int</code> 助憶碼而漏掉工具顯示成 <code>wait</code> 的呼叫（S2）。 所以「零命中」至少要通過四個檢查：</p>
+<ol type="1">
+<li>正對照：工具能找到一個已知存在的目標嗎？</li>
+<li>範圍：讀到的是全部相關區段，還是工具已判成程式碼的子集？</li>
+<li>表示法：是否兼顧符號、直接運算元、折入基底的偏移及間接存取？</li>
+<li>分母：掃了多少項、略過多少項、多少項無法解析？</li>
+</ol>
+<p>有大量讀取卻找不到寫入時，繼續追查取址與間接寫入。直接交叉參照缺項不能證明沒有寫入。 先分類為「這個搜尋方法未找到」，保留 <code>UNKNOWN</code>，不要改寫成「程式不存在此行為」。</p>
+<h2 id="觀測工具也需要正對照">觀測工具也需要正對照</h2>
+<p>用已知尺寸與色彩的合成圖驗證截圖轉換；用已知事件驗證 trace；檢查工具是否真的啟動、 完成及寫出結果。WinCV 的截圖轉換錯誤曾污染後續字型推論（W1）。 修好工具後，回查所有依賴其輸出的結論，不能只修下一次擷取。</p>
+<p>在共用主機上，分析與擷取放進有資源限制、外層逾時及明確生命週期的 Docker 容器； 原始資料唯讀，寫入目錄先驗 UID/GID，完成後清理本次容器。 本書只保存必要的來源索引與原創摘要；不因案例可存取就匯入其原版素材。</p>
+<h3 id="來源與主張範圍">來源與主張範圍</h3>
+<p><a href="../inventory.html#固定來源索引">S2、W1、O3</a>支持搜尋過濾、擷取錯誤及來源雜湊紀錄的案例敘述。 來源內容的核對為 <code>CONFIRMED</code>；證據卡與四項檢查是 <code>STRONG_INFERENCE</code> 的實務建議。 本章的非破壞註記及 Docker 作業要求沿用本專案規範。</p>
+</article></main></div><footer><a href="../index.html">王俊又 wicanr2</a> · AI 輔助軟體考古手冊 · <a href="../library.html">全部文件 · All pages · 全ページ</a><p>證據先行，保留未知。 Evidence first. Keep uncertainty visible.</p></footer></body></html>
