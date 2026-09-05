@@ -5,6 +5,13 @@
 先完成並審查繁體中文版，再擴充英文與日文版。第 0 階段的四份研究文件
 同樣使用繁體中文；第 1 階段以前不提前產出正式手冊章節。
 
+## 目前授權與交付邊界
+
+專案負責人在第 0 階段交付後要求「完成手冊」。據此完成第 1 階段的九章正文，
+並依先前語言指示先審讀繁體中文版、最後擴充英文與日文；完整教學例子及閱讀入口
+隨手冊提供。驗收紀錄見 [docs/handbook-review.md](docs/handbook-review.md)。
+後續第 2–7 階段仍是整體工具計畫，不以本次手冊完成代替其交付或自動取得實作授權。
+
 ## 1. Project Goal
 
 Extract the recurring engineering method from the wicanr2 reverse-engineering/remake projects and turn it into:
